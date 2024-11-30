@@ -1,0 +1,22 @@
+<div style="width: 300px;">
+  <mat-calendar
+    [dateClass]="dateClass"
+    [(selected)]="selectedDate"
+    (selectedChange)="onDateChange($event)"
+    (monthSelected)="onDateChange($event)"
+    class="disable-arrows"
+  >
+  </mat-calendar>
+</div>
+
+<p>Wybrana data: {{ selectedDate | date: 'dd/MM/yyyy' }}</p>
+
+<ul>
+  <li *ngFor="let event of paginatedEvents">
+    {{ event.title }} &mdash; {{ event.date | date:'HH:mm' }}, {{ event.genre }}
+  </li>
+</ul>
+
+<mat-paginator [length]="eventsByDate.length" [pageSize]="pageSize" [pageIndex]="1" [pageSizeOptions]="[1, 5, 10]">
+</mat-paginator>
+

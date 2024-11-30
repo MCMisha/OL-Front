@@ -1,0 +1,123 @@
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Performance } from "../models/performance";
+import { isSameDay } from 'date-fns';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatCalendar } from '@angular/material/datepicker';
+import { PerformancesService } from "../services/performances.service";
+import { Subject, takeUntil } from "rxjs";
+import { EventDatesService } from "../services/event-dates.service";
+import {PerformanceDatesTicket} from "../models/performance-dates-ticket";
+
+@Component({
+  selector: 'app-performances',
+  templateUrl: './performances.component.html',
+  styleUrls: ['./performances.component.scss']
+})
+export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
+  selectedDate: Date | null = null;
+  eventsByDate: Performance[] = [];
+  minDate: Date = new Date(2021, 9, 1);
+  maxDate: Date = new Date(2025, 0, 30);
+  events: Performance[] = [];
+  pageSize = 1; // Number of items per page
+  paginatedEvents: Performance[] = []; // Events to display on the current page
+  performanceDatesTickets: PerformanceDatesTicket[] = []; // Preloaded event dates
+  private destroy$ = new Subject<void>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>; // Ссылка на календарь
+
+  constructor(
+    private performancesService: PerformancesService,
+    private eventDatesService: EventDatesService,
+    private cdr: ChangeDetectorRef // Внедрение ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.eventDatesService.getEventDates()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (dates: PerformanceDatesTicket[]) => {
+          this.performanceDatesTickets = dates;
+          this.calendar.updateTodaysDate();
+          this.cdr.detectChanges();
+          this.calendar.updateTodaysDate();
+        },
+        error => console.error('Error loading event dates:', error)
+      );
+
+    this.performancesService.getPerformances()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: Performance[]) => {
+          this.events = data.map((event: Performance) => {
+            const matchingDate = this.performanceDatesTickets.find(
+              performance => performance.performanceId === event.id
+            )?.dateTimePerformance;
+
+            return {
+              ...event,
+              date: matchingDate ? new Date(matchingDate) : undefined // Сохраняем дату как объект Date
+            };
+          });
+
+          this.cdr.detectChanges();
+        },
+        error => console.error('Error loading performances:', error)
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.paginator.page.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.updatePaginatedEvents();
+      });
+    } else {
+      console.error('Paginator is not initialized.');
+    }
+  }
+
+  dateClass = (date: Date): string => {
+    if (this.performanceDatesTickets.length === 0) {
+      return '';
+    }
+
+    const currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return this.performanceDatesTickets.some(eventDate => {
+      return isSameDay(eventDate.dateTimePerformance, currentDate);
+    })
+      ? 'event-day'
+      : '';
+  };
+
+  onDateChange(date: Date | null): void {
+    this.selectedDate = date;
+    if (this.selectedDate) {
+      this.eventsByDate = this.events.filter(event => {
+        return this.performanceDatesTickets.some(performanceDate => {
+          return performanceDate.performanceId === event.id &&
+            isSameDay(new Date(performanceDate.dateTimePerformance), this.selectedDate!);
+        });
+      });
+    } else {
+      this.eventsByDate = [];
+    }
+    this.paginator?.firstPage();
+    this.updatePaginatedEvents();
+  }
+
+  private updatePaginatedEvents(): void {
+    if (!this.paginator) {
+      console.error('Paginator is not initialized.');
+      return;
+    }
+    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+    const endIndex = startIndex + this.paginator.pageSize;
+    this.paginatedEvents = this.eventsByDate.slice(startIndex, endIndex);
+  }
+}
