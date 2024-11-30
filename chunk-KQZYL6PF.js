@@ -1,0 +1,1 @@
+import"./chunk-BUSLOXXJ.js";import{_ as o,ja as i,pc as e}from"./chunk-U2GKKPW4.js";var f=(()=>{class t{static{this.\u0275fac=function(r){return new(r||t)}}static{this.\u0275mod=i({type:t})}static{this.\u0275inj=o({imports:[e]})}}return t})();export{f as AdminModule};
