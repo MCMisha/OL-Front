@@ -1,0 +1,1 @@
+import{ia as n,ib as o,jb as i,wb as m}from"./chunk-MM6CBZSB.js";var d=(()=>{class e{static{this.\u0275fac=function(t){return new(t||e)}}static{this.\u0275cmp=n({type:e,selectors:[["app-admin"]],decls:2,vars:0,template:function(t,r){t&1&&(o(0,"p"),m(1,"admin works!"),i())}})}}return e})();export{d as a};
