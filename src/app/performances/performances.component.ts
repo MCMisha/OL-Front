@@ -1,12 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Performance } from "../models/performance";
-import { isSameDay } from 'date-fns';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatCalendar } from '@angular/material/datepicker';
-import { PerformancesService } from "../services/performances.service";
-import { Subject, takeUntil } from "rxjs";
-import { EventDatesService } from "../services/event-dates.service";
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Performance} from "../models/performance";
+import {isSameDay} from 'date-fns';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatCalendar} from '@angular/material/datepicker';
+import {PerformancesService} from "../services/performances.service";
+import {Subject, takeUntil} from "rxjs";
+import {EventService} from "../services/event.service";
 import {PerformanceDatesTicket} from "../models/performance-dates-ticket";
+import {Genre} from "../models/genre";
 
 @Component({
   selector: 'app-performances',
@@ -19,6 +20,7 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
   minDate: Date = new Date(2021, 9, 1);
   maxDate: Date = new Date(2025, 0, 30);
   events: Performance[] = [];
+  genres: Genre[] = [];
   pageSize = 1; // Number of items per page
   paginatedEvents: Performance[] = []; // Events to display on the current page
   performanceDatesTickets: PerformanceDatesTicket[] = []; // Preloaded event dates
@@ -29,9 +31,10 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private performancesService: PerformancesService,
-    private eventDatesService: EventDatesService,
+    private eventDatesService: EventService,
     private cdr: ChangeDetectorRef // Внедрение ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.eventDatesService.getEventDates()
@@ -45,7 +48,15 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         error => console.error('Error loading event dates:', error)
       );
-
+    this.eventDatesService.getGenre()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (genres: any[]) => {
+          this.genres = genres;
+          this.cdr.detectChanges();
+        },
+        error => console.error('Error loading genres:', error)
+      );
     this.performancesService.getPerformances()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -57,7 +68,7 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
 
             return {
               ...event,
-              date: matchingDate ? new Date(matchingDate) : undefined // Сохраняем дату как объект Date
+              date: matchingDate ? new Date(matchingDate) : undefined,
             };
           });
 
@@ -119,5 +130,13 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     const endIndex = startIndex + this.paginator.pageSize;
     this.paginatedEvents = this.eventsByDate.slice(startIndex, endIndex);
+  }
+
+  getGenreName(genre: number | undefined) {
+    if (genre === undefined) {
+      return '';
+    }
+    const matchingGenre = this.genres.find(g => g.id === genre)?.name;
+    return matchingGenre ?? '';
   }
 }
