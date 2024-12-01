@@ -6,6 +6,7 @@ import {MatCalendar} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats} from "@angular/material/core";
 import {CustomDateAdapter} from "../adapters/custom-date-adapter";
 import {MatPaginator} from "@angular/material/paginator";
+import {PerformancesRoutingModule} from "./performances-routing.module";
 
 
 registerLocaleData(localePl);
@@ -32,7 +33,8 @@ export const CUSTOM_DATE_FORMATS: MatDateFormats = {
   imports: [
     CommonModule,
     MatCalendar,
-    MatPaginator
+    MatPaginator,
+    PerformancesRoutingModule
   ],
   providers:[
     { provide: LOCALE_ID, useValue: 'pl' },

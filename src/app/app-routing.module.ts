@@ -1,17 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PerformancesComponent} from "./performances/performances.component";
-import {AdminComponent} from "./admin/admin.component";
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./performances/performances.module').then(m => m.PerformancesModule),
-    component: PerformancesComponent
+    loadChildren: () => import('./performances/performances.module').then(m => m.PerformancesModule) // Лениво загружается PerformancesModule
   },
-  { path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    component: AdminComponent
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) // Лениво загружается AdminModule
+  },
+  {
+    path: '**', // Обработка неизвестных маршрутов
+    redirectTo: ''
   }
 ];
 
