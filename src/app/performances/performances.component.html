@@ -13,7 +13,7 @@
 
 <ul>
   <li *ngFor="let event of paginatedEvents">
-    {{ event.title }} &mdash; {{ event.date | date:'HH:mm' }}, {{ getGenreName(event.genre) }}
+    {{ event.title }} &mdash; {{ event.date | date:'HH:mm':'UTC' }}, {{ getGenreName(event.genre) }}
   </li>
 </ul>
 
