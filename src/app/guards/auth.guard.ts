@@ -1,4 +1,4 @@
-import { ActivatedRoute, CanActivate, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Observable, of } from 'rxjs';
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
             return false;
           }
         }),
-        catchError((err) => {
+        catchError((_) => {
           localStorage.removeItem('token');
           this.router.navigate(['..']);
           return of(false);
