@@ -22,10 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app
-        run: npm run build -- --output-path=dist/browser --base-href "https://MCMisha.github.io/OL-Front/"
-
-      - name: Verify build output
-        run: ls -la dist/browser
+        run: npm run build -- --output-path=dist --base-href "https://MCMisha.github.io/OL-Front/"
 
       - name: Copy 404.html
         run: cp dist/browser/index.html dist/browser/404.html
