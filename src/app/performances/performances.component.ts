@@ -25,16 +25,27 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
   paginatedEvents: Performance[] = []; // Events to display on the current page
   performanceDatesTickets: PerformanceDatesTicket[] = []; // Preloaded event dates
   private destroy$ = new Subject<void>();
+  dateClass = (date: Date): string => {
+    if (this.performanceDatesTickets.length === 0) {
+      return '';
+    }
 
+    const currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return this.performanceDatesTickets.some(eventDate => {
+      return isSameDay(eventDate.dateTimePerformance, currentDate);
+    })
+      ? 'event-day'
+      : '';
+  };
+  isLoading: any = true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>; // Ссылка на календарь
+  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   constructor(
     private performancesService: PerformancesService,
     private eventDatesService: EventService,
-    private cdr: ChangeDetectorRef // Внедрение ChangeDetectorRef
-  ) {
-  }
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.eventDatesService.getEventDates()
@@ -42,39 +53,41 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(
         (dates: PerformanceDatesTicket[]) => {
           this.performanceDatesTickets = dates;
-          this.calendar.updateTodaysDate();
           this.cdr.detectChanges();
           this.calendar.updateTodaysDate();
+          this.selectedDate = new Date();
+
+          this.eventDatesService.getGenre()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              (genres: any[]) => {
+                this.genres = genres;
+                this.cdr.detectChanges();
+              },
+              error => console.error('Error loading genres:', error)
+            );
+
+          this.performancesService.getPerformances()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              (data: Performance[]) => {
+                this.events = data.map((event: Performance) => {
+                  const matchingDate = this.performanceDatesTickets.find(
+                    performance => performance.performanceId === event.id
+                  )?.dateTimePerformance;
+
+                  return {
+                    ...event,
+                    date: matchingDate ? new Date(matchingDate) : undefined,
+                  };
+                });
+                this.cdr.detectChanges();
+                this.isLoading = false;
+              },
+              error => console.error('Error loading performances:', error)
+            );
         },
         error => console.error('Error loading event dates:', error)
-      );
-    this.eventDatesService.getGenre()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (genres: any[]) => {
-          this.genres = genres;
-          this.cdr.detectChanges();
-        },
-        error => console.error('Error loading genres:', error)
-      );
-    this.performancesService.getPerformances()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data: Performance[]) => {
-          this.events = data.map((event: Performance) => {
-            const matchingDate = this.performanceDatesTickets.find(
-              performance => performance.performanceId === event.id
-            )?.dateTimePerformance;
-
-            return {
-              ...event,
-              date: matchingDate ? new Date(matchingDate) : undefined,
-            };
-          });
-
-          this.cdr.detectChanges();
-        },
-        error => console.error('Error loading performances:', error)
       );
   }
 
@@ -93,18 +106,7 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  dateClass = (date: Date): string => {
-    if (this.performanceDatesTickets.length === 0) {
-      return '';
-    }
 
-    const currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    return this.performanceDatesTickets.some(eventDate => {
-      return isSameDay(eventDate.dateTimePerformance, currentDate);
-    })
-      ? 'event-day'
-      : '';
-  };
 
   onDateChange(date: Date | null): void {
     this.selectedDate = date;
@@ -130,6 +132,7 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     const endIndex = startIndex + this.paginator.pageSize;
     this.paginatedEvents = this.eventsByDate.slice(startIndex, endIndex);
+    this.cdr.detectChanges();
   }
 
   getGenreName(genre: number | undefined) {

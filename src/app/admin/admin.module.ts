@@ -6,6 +6,7 @@ import {MatFormField} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 
 
@@ -13,13 +14,14 @@ import {MatButton} from "@angular/material/button";
   declarations: [
     AdminComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MatFormField,
-    MatInputModule,
-    FormsModule,
-    MatButton
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MatFormField,
+        MatInputModule,
+        FormsModule,
+        MatButton,
+        MatProgressSpinner
+    ]
 })
 export class AdminModule { }

@@ -12,6 +12,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   login: string = '';
   password: string = '';
   subscription = new Subscription();
+  isLoading: boolean = false;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
@@ -27,12 +28,17 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
   onLogin() {
+    this.isLoading = true;
     this.subscription.add(
       this.userService.login(this.login, this.password).subscribe(res => {
-        localStorage.setItem('token', res);
-        console.log('token taken')
-        this.router.navigate(['panel'], {relativeTo:this.route});
-      })
+          localStorage.setItem('token', res);
+          this.router.navigate(['panel'], {relativeTo: this.route});
+        },
+        error => {
+          console.error('Error during login:', error);
+          this.isLoading = false;
+        }
+      )
     )
   }
 }
