@@ -31,5 +31,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/browser
+          folder: dist/opera-front/browser
           token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
