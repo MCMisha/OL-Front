@@ -106,8 +106,6 @@ export class PerformancesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
-
   onDateChange(date: Date | null): void {
     this.selectedDate = date;
     if (this.selectedDate) {

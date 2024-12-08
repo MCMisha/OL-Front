@@ -9,13 +9,25 @@ import {MatListModule} from "@angular/material/list";
 import {RouterOutlet} from "@angular/router";
 import {AdminPanelRoutingModule} from "./admin-panel-routing.module";
 import { AdminPanelMainComponent } from './admin-panel-main/admin-panel-main.component';
+import { AdminPanelGenreComponent } from './admin-panel-genre/admin-panel-genre.component';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow,
+  MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 
 @NgModule({
   declarations: [
     AdminPanelComponent,
-    AdminPanelMainComponent
+    AdminPanelMainComponent,
+    AdminPanelGenreComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +37,18 @@ import { AdminPanelMainComponent } from './admin-panel-main/admin-panel-main.com
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    RouterOutlet
+    RouterOutlet,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatPaginator,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatHeaderRow
   ]
 })
 export class AdminPanelModule { }
