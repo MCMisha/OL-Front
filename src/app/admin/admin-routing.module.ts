@@ -6,7 +6,8 @@ import {AuthGuard} from "../guards/auth.guard";
 
 const routes: Routes = [
   { path: '', component: AdminComponent},
-  { path: 'panel', component: AdminPanelComponent, canActivate: [AuthGuard]}
+  { path: 'panel', component: AdminPanelComponent, loadChildren: () => import('./admin-panel/admin-panel.module').then(m => m.AdminPanelModule),
+    canActivate: [AuthGuard]}
 ];
 
 @NgModule({

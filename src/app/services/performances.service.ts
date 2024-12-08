@@ -14,7 +14,7 @@ export class PerformancesService {
   private cache = new Map<string, PerformanceDisplay[]>();
 
   getPerformances(): Observable<Performance[]> {
-    return this.http.get<Performance[]>(`${environment.baseApiUri}/Performance`).pipe(catchError(this.handleError<Performance[]>('getPerformanceData')));
+    return this.http.get<Performance[]>(`${environment.baseApiUri}/Performance/all`).pipe(catchError(this.handleError<Performance[]>('getPerformanceData')));
   }
 
   getPerformancesByDate(date: string): Observable<PerformanceDisplay[]> {
