@@ -12,6 +12,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {AdminPanelModule} from "./admin/admin-panel/admin-panel.module";
+import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin-panel-genre.module";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {MatListModule} from "@angular/material/list";
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    AdminPanelModule,
+    AdminPanelGenreModule
   ],
   providers: [
     provideAnimationsAsync(),

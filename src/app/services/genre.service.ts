@@ -20,10 +20,10 @@ export class GenreService {
   }
 
   updateGenre(genre: Genre): Observable<Genre> {
-    return this.http.put<Genre>(`${environment.baseApiUri}/AdminGenre`, genre);
+    return this.http.put<Genre>(`${environment.baseApiUri}/AdminGenre/update`, genre);
   }
 
   deleteGenre(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.baseApiUri}/AdminGenre/${id}`);
+    return this.http.delete<void>(`${environment.baseApiUri}/AdminGenre/delete/${id}`);
   }
 }

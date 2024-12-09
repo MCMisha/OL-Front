@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GenreService} from "../../../services/genre.service";
 import {Genre} from "../../../models/genre";
 import {Subject, Subscription, takeUntil} from "rxjs";
@@ -8,7 +8,7 @@ import {MatTableDataSource} from "@angular/material/table";
 @Component({
   selector: 'app-admin-panel-genre',
   templateUrl: './admin-panel-genre.component.html',
-  styleUrl: './admin-panel-genre.component.scss'
+  styleUrls: ['./admin-panel-genre.component.scss']
 })
 export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestroy {
   genres: Genre[] = [];
@@ -16,13 +16,16 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   pageSize = 5;
   pageIndex = 0;
   paginatedGenres: Genre[] = [];
+  selectedRowIndex: any;
+  selectedRow?: Genre;
   dataSourceWithPageSize = new MatTableDataSource(this.genres);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
 
-  constructor(private genreService: GenreService,
-              private cdr: ChangeDetectorRef) {
+  constructor(
+    private genreService: GenreService
+  ) {
   }
 
   ngOnInit() {
@@ -44,16 +47,21 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
     this.subscription.unsubscribe();
   }
 
-  updatePaginatedGenres() {
-    if (!this.paginator) {
-      console.error('Paginator is not initialized.');
-      return;
+  highlightRow(row: any) {
+    if (this.selectedRowIndex == row.id) {
+      this.selectedRowIndex = 0;
+      this.selectedRow = undefined;
+    } else {
+      this.selectedRowIndex = row.id;
+      this.selectedRow = row;
     }
-    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    console.log(startIndex)
-    const endIndex = startIndex + this.paginator.pageSize;
-    this.paginatedGenres = this.genres.slice(startIndex, endIndex);
-    console.log('Paginated Genres', this.paginatedGenres)
-    this.cdr.detectChanges();
+  }
+
+  deleteGenre() {
+    if (!!this.selectedRow) {
+      this.genreService.deleteGenre(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.ngOnInit();
+      });
+    }
   }
 }

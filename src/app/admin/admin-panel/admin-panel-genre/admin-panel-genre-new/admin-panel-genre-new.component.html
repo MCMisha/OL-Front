@@ -1,0 +1,30 @@
+<mat-progress-bar *ngIf="newGenreForm.get('genreName')?.pending" mode="indeterminate"></mat-progress-bar>
+<form [formGroup]="newGenreForm" (ngSubmit)="saveGenre()">
+  <mat-form-field appearance="fill" style="width: 300px;">
+    <mat-label>Nazwa gatunku</mat-label>
+    <input matInput formControlName="genreName" placeholder="Wprowadź nazwę gatunku">
+    <mat-error *ngIf="newGenreForm.get('genreName')?.hasError('required')">
+      Nazwa gatunku jest wymagana
+    </mat-error>
+    <mat-error *ngIf="newGenreForm.get('genreName')?.hasError('genreExists')">
+      Gatunek już istnieje
+    </mat-error>
+  </mat-form-field>
+</form>
+<div class="row ms-1 mb-1 d-flex align-items-center">
+  <div class="col-auto">
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      (click)="saveGenre()"
+      [disabled]="newGenreForm.invalid || newGenreForm.get('genreName')?.pending">
+      Zapisz
+    </button>
+  </div>
+  <div class="col-auto">
+    <button mat-flat-button color="warn" type="button" (click)="router.navigate(['..'], { relativeTo: route })">
+      Anuluj
+    </button>
+  </div>
+</div>
