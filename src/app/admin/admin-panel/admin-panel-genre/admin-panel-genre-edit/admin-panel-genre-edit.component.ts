@@ -44,7 +44,7 @@ export class AdminPanelGenreEditComponent implements OnInit, OnDestroy {
             this.editGenreForm = this.fb.group({
               genreName: [
                 currentGenre.name,
-                [Validators.required],
+                [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
                 [this.genreExistsValidator.bind(this)],
               ],
             });

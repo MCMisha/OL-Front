@@ -30,7 +30,8 @@ export class AdminPanelGenreNewComponent implements OnInit, OnDestroy {
     );
 
     this.newGenreForm = this.fb.group({
-      genreName: ['', [Validators.required], [this.genreExistsValidator.bind(this)]],
+      genreName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+        [this.genreExistsValidator.bind(this)]],
     });
   }
 

@@ -7,6 +7,12 @@
       <mat-error *ngIf="editGenreForm.get('genreName')?.hasError('required')">
         Nazwa gatunku jest wymagana
       </mat-error>
+      <mat-error *ngIf="editGenreForm.get('genreName')?.hasError('minlength')">
+        Długość musi być więcej niż 2
+      </mat-error>
+      <mat-error *ngIf="editGenreForm.get('genreName')?.hasError('maxlength')">
+        Długość musi być mniej niż 51
+      </mat-error>
       <mat-error *ngIf="editGenreForm.get('genreName')?.hasError('genreExists')">
         Gatunek już istnieje
       </mat-error>
