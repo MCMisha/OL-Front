@@ -1,1 +1,36 @@
+<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-center" *ngIf="showMenu">
+  <a routerLink="/">
+    <img src="assets/logo/logo.png" style="width: 150px; height: auto;" alt="Opera Lubelska">
+  </a>
+  <div class="navbar-expand"
+       id="navbarNav"
+  >
+    <ul class="navbar-nav align-middle">
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase link-underline-opacity-25-hover" routerLink="/calendar">Kalendarium</a>
+      </li>
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase" href="#">Spektakle</a>
+      </li>
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase" href="#">Aktualności</a>
+      </li>
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase" href="#">O nas</a>
+      </li>
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase" href="#">Kontakt</a>
+      </li>
+      <li class="nav-item align-middle pt-3">
+        <a class="nav-link active text-uppercase" href="#">Kup bilet</a>
+      </li>
+      <li class="nav-item align-middle">
+        <a class="nav-link active" href="https://www.lubelskie.pl/">
+          <img src="assets/logo/logo_urzad.png" style="width: 150px; height: auto;"
+               alt="Urząd Marszałkowski Województwa Lubelskiego w Lublinie">
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <router-outlet></router-outlet>

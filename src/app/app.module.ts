@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {PerformancesModule} from "./performances/performances.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
@@ -14,6 +12,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {AdminPanelModule} from "./admin/admin-panel/admin-panel.module";
 import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin-panel-genre.module";
+import {MainModule} from "./main/main.module";
 
 @NgModule({
   declarations: [
@@ -23,14 +22,14 @@ import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    PerformancesModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     AdminPanelModule,
-    AdminPanelGenreModule
+    AdminPanelGenreModule,
+    MainModule
   ],
   providers: [
     provideAnimationsAsync(),
