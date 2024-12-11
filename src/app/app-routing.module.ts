@@ -11,6 +11,13 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
+    path: 'performances',
+    loadChildren: () => import('./performances/performances.module').then(m => m.PerformancesModule)
+  },
+  { path: 'news', loadChildren: () => import('./news/news.module').then(m => m.NewsModule) },
+  { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
+  { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
+  {
     path: '**',
     redirectTo: ''
   }
