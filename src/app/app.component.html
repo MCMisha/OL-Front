@@ -1,11 +1,23 @@
-<nav class="navbar navbar-expand navbar-light bg-white d-flex justify-content-center" *ngIf="showMenu">
-  <a class="pe-3" routerLink="/">
+<nav class="navbar navbar-expand navbar-light bg-white d-flex align-items-center" *ngIf="showMenu">
+  <a class="ps-3" routerLink="/">
     <img src="assets/logo/logo.png" style="width: 150px; height: auto;" alt="Opera Lubelska">
   </a>
-  <div class="navbar-expand"
-       id="navbarNav"
-  >
-    <ul class="navbar-nav align-middle">
+  <div class="d-flex justify-content-center flex-grow-1 align-items-center ms-auto">
+    <button type="button" mat-button class="burger-button" [matMenuTriggerFor]="menu">
+      <mat-icon class="burger-button" aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/">Strona główna</a>
+      <a mat-menu-item routerLink="/calendar">Kalendarium</a>
+      <a mat-menu-item routerLink="/performances">Spektakle</a>
+      <a mat-menu-item routerLink="/news">Aktualności</a>
+      <a mat-menu-item routerLink="/about">O nas</a>
+      <a mat-menu-item routerLink="/contact">Kontakt</a>
+      <a mat-menu-item href="#">Kup bilet</a>
+    </mat-menu>
+  </div>
+  <div class="navbar-nav-container d-flex w-100 align-items-center desktop-menu">
+    <ul class="navbar-nav align-middle justify-content-center">
       <li class="nav-item align-middle pt-3 pb-3 hover-link">
         <a class="nav-link text-uppercase link-underline-opacity-25-hover" routerLink="/calendar">Kalendarium</a>
       </li>
@@ -24,13 +36,13 @@
       <li class="nav-item align-middle pt-3 hover-link">
         <a class="nav-link text-uppercase" href="#">Kup bilet</a>
       </li>
-      <li class="nav-item align-middle ps-3">
-        <a class="nav-link" href="https://www.lubelskie.pl/">
-          <img src="assets/logo/logo_urzad.png" style="width: 150px; height: auto;"
-               alt="Urząd Marszałkowski Województwa Lubelskiego w Lublinie">
-        </a>
-      </li>
     </ul>
+  </div>
+  <div class="pe-3 ms-auto">
+    <a class="nav-link" href="https://www.lubelskie.pl/">
+      <img src="assets/logo/logo_urzad.png" style="width: 150px; height: auto;"
+           alt="Urząd Marszałkowski Województwa Lubelskiego w Lublinie">
+    </a>
   </div>
 </nav>
 <router-outlet></router-outlet>

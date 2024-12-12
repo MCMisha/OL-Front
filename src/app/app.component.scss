@@ -4,3 +4,40 @@
   }
 }
 li.nav-item.hover-link:hover { background-color: rgba(218, 218, 218, 0.99) !important; }
+
+.navbar-nav-container {
+  display: flex;
+  align-items: center;
+}
+.navbar-nav {
+  display: flex;
+  flex-grow: 1;
+}
+
+.burger-button {
+  display: none;
+  border-radius: 5px;
+}
+
+
+@media only screen and (max-width: 980px) {
+  div.desktop-menu{
+    display: none !important;
+  }
+
+  .burger-button {
+    display: block;
+    margin: 0 auto;
+  }
+  .navbar {
+    justify-content: space-between;
+  }
+  .d-flex.justify-content-center {
+    flex-grow: 1;
+  }
+
+  .ms-auto {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}

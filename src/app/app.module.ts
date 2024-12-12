@@ -13,6 +13,7 @@ import {MatListModule} from "@angular/material/list";
 import {AdminPanelModule} from "./admin/admin-panel/admin-panel.module";
 import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin-panel-genre.module";
 import {MainModule} from "./main/main.module";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {MainModule} from "./main/main.module";
     AppRoutingModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
