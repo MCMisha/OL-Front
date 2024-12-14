@@ -6,7 +6,7 @@
     <button mat-flat-button color="accent" routerLink="{{selectedRow?.id}}/edit" [disabled]="!selectedRow" class="me-2">Edytuj</button>
   </div>
   <div class="col-auto">
-    <button mat-flat-button color="warn" (click)="deleteGenre()" [disabled]="!selectedRow">Usuń</button>
+    <button mat-flat-button color="warn" (click)="openDialog()" [disabled]="!selectedRow">Usuń</button>
   </div>
 </div>
 <table mat-table [dataSource]="dataSourceWithPageSize" class="mat-elevation-z8 pe-2">

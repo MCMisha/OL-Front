@@ -4,6 +4,8 @@ import {Genre} from "../../../models/genre";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 
 @Component({
   selector: 'app-admin-panel-genre',
@@ -24,7 +26,8 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   private destroy$ = new Subject<void>();
 
   constructor(
-    private genreService: GenreService
+    private genreService: GenreService,
+    protected dialog: MatDialog
   ) {
   }
 
@@ -55,6 +58,18 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
       this.selectedRowIndex = row.id;
       this.selectedRow = row;
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      data: { message: 'Czy na pewno chcesz usunąć ten element?' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteGenre();
+      }
+    });
   }
 
   deleteGenre() {

@@ -11,10 +11,12 @@ import {RouterLink} from "@angular/router";
 import {AdminPanelGenreRoutingModule} from "./admin-panel-genre-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 
 
 @NgModule({
-  declarations: [AdminPanelGenreComponent, AdminPanelGenreEditComponent, AdminPanelGenreNewComponent],
+  declarations: [AdminPanelGenreComponent, AdminPanelGenreEditComponent, AdminPanelGenreNewComponent, DialogConfirmComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,6 +28,7 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     RouterLink,
     FormsModule,
     MatProgressBar,
+    MatDialogModule
   ]
 })
 export class AdminPanelGenreModule {
