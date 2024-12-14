@@ -26,6 +26,8 @@
           "options": {
             "outputPath": "dist/browser",
             "index": "src/index.html",
+            "baseHref": "/OL-Front/",
+            "deployUrl": "/OL-Front/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
