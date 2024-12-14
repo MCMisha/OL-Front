@@ -10,7 +10,7 @@
     <mat-nav-list *ngFor="let menuItem of menuItems">
       <a [routerLink]="menuItem.link" mat-list-item>
         <span class="entry">
-          <mat-icon>{{menuItem.icon}}</mat-icon>
+          <mat-icon [matTooltip]="menuItem.title">{{menuItem.icon}}</mat-icon>
           <span *ngIf="!isCollapsed">{{ menuItem.title }}</span>
         </span>
       </a>

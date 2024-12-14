@@ -19,6 +19,7 @@ import {
   MatTable
 } from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatTooltip} from "@angular/material/tooltip";
 
 
 
@@ -46,7 +47,8 @@ import {MatPaginator} from "@angular/material/paginator";
     MatHeaderRowDef,
     MatRowDef,
     MatRow,
-    MatHeaderRow
+    MatHeaderRow,
+    MatTooltip
   ]
 })
 export class AdminPanelModule { }
