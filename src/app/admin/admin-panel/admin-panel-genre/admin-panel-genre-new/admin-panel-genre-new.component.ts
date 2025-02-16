@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Genre} from "../../../../models/genre";
 import {Subscription, Observable} from "rxjs";
-import {GenreService} from "../../../../services/genre.service";
 import {FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import {ActivatedRoute, Router} from "@angular/router";
+import {AdminGenreService} from "../../../../services/admin/admin-genre.service";
 
 @Component({
   selector: 'app-admin-panel-genre-new',
@@ -16,7 +16,7 @@ export class AdminPanelGenreNewComponent implements OnInit, OnDestroy {
   existingGenres: Genre[] = [];
   subscription = new Subscription();
 
-  constructor(private genreService: GenreService,
+  constructor(private genreService: AdminGenreService,
               private fb: FormBuilder,
               protected router: Router,
               protected route: ActivatedRoute) {

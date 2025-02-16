@@ -8,6 +8,7 @@ import {Subject, takeUntil} from "rxjs";
 import {EventService} from "../services/event.service";
 import {PerformanceDatesTicket} from "../models/performance-dates-ticket";
 import {Genre} from "../models/genre";
+import {GenreService} from "../services/genre.service";
 
 @Component({
   selector: 'app-calendar',
@@ -44,6 +45,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private performancesService: PerformancesService,
     private eventDatesService: EventService,
+    private genreService: GenreService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -57,7 +59,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
           this.calendar.updateTodaysDate();
           this.selectedDate = new Date();
 
-          this.eventDatesService.getGenre()
+          this.genreService.getGenres()
             .pipe(takeUntil(this.destroy$))
             .subscribe(
               (genres: any[]) => {

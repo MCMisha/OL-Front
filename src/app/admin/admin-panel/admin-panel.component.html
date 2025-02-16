@@ -1,8 +1,9 @@
+<div class="full-height">
 <mat-toolbar color="primary">
   <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
     <mat-icon>menu</mat-icon>
   </button>
-  <h1>System zarządzania treścią Opery Lubelskiej</h1>
+  <h1>Panel administratora</h1>
 </mat-toolbar>
 <mat-sidenav-container autosize>
   <mat-sidenav  [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'"
@@ -21,3 +22,4 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+</div>

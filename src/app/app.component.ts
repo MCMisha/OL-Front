@@ -10,6 +10,7 @@ import {Subscription} from "rxjs";
 export class AppComponent implements OnInit, OnDestroy {
   title = 'opera-front';
   showMenu: boolean = true;
+  isLoading: boolean = true;
   private subscription = new Subscription();
 
   constructor(private router: Router) {
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.showMenu = !event.url.startsWith('/admin');
+        this.isLoading = false;
       }
     });
   }

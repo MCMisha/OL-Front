@@ -17,7 +17,9 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   private basePath = '/admin/panel';
   protected menuItems = [
     { icon: 'home', title: 'Strona głowna', link: `${this.basePath}/main` },
-    { icon: 'theater_comedy', title: 'Gatunki', link: `${this.basePath}/genre` }
+    { icon: 'theater_comedy', title: 'Gatunki', link: `${this.basePath}/genre` },
+    { icon: 'pin_drop', title: 'Miejsca', link: `${this.basePath}/place`},
+    { icon: 'event', title: 'Spektakle', link: `${this.basePath}/performance` }
   ];
 
   protected currentTitle = '';
