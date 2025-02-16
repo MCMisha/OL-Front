@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Genre } from "../../../../models/genre";
 import { Observable, Subscription } from "rxjs";
-import { GenreService } from "../../../../services/genre.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map, switchMap } from "rxjs/operators";
+import {AdminGenreService} from "../../../../services/admin/admin-genre.service";
 
 @Component({
   selector: 'app-admin-panel-genre-edit',
@@ -19,7 +19,7 @@ export class AdminPanelGenreEditComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   constructor(
-    private genreService: GenreService,
+    private genreService: AdminGenreService,
     private fb: FormBuilder,
     protected router: Router,
     protected route: ActivatedRoute

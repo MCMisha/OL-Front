@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {GenreService} from "../../../services/genre.service";
+import {AdminGenreService} from "../../../services/admin/admin-genre.service";
 import {Genre} from "../../../models/genre";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
@@ -26,7 +26,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   private destroy$ = new Subject<void>();
 
   constructor(
-    private genreService: GenreService,
+    private genreService: AdminGenreService,
     protected dialog: MatDialog
   ) {
   }
