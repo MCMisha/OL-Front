@@ -13,12 +13,20 @@ import {
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import { AdminPanelPlaceNewComponent } from './admin-panel-place-new/admin-panel-place-new.component';
+import { AdminPanelPlaceEditComponent } from './admin-panel-place-edit/admin-panel-place-edit.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 
 
 @NgModule({
   declarations: [
-    AdminPanelPlaceComponent
+    AdminPanelPlaceComponent,
+    AdminPanelPlaceNewComponent,
+    AdminPanelPlaceEditComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +42,14 @@ import {MatPaginator} from "@angular/material/paginator";
     MatRow,
     MatRowDef,
     MatTable,
-    MatHeaderCellDef
+    MatHeaderCellDef,
+    FormsModule,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatProgressBar,
+    ReactiveFormsModule
   ]
 })
 export class AdminPanelPlaceModule { }

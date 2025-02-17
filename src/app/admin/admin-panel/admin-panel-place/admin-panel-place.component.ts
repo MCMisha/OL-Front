@@ -55,13 +55,22 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        //this.deleteGenre();
-        console.log("TODO: usunąć miejsce");
+        this.deletePlace();
       }
     });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private deletePlace() {
+    if (!!this.selectedRow) {
+      this.subscription.add(
+        this.adminPlaceService.deletePlace(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+          this.ngOnInit();
+        })
+      )
+    }
   }
 }

@@ -1,0 +1,36 @@
+<mat-progress-bar *ngIf="newPlaceForm.get('placeName')?.pending" mode="indeterminate"></mat-progress-bar>
+<form [formGroup]="newPlaceForm" (ngSubmit)="savePlace()">
+  <mat-form-field appearance="fill" style="width: 300px;">
+    <mat-label>Nazwa miejsca</mat-label>
+    <input matInput formControlName="placeName" placeholder="Wprowadź nazwę miejsca">
+    <mat-error *ngIf="newPlaceForm.get('placeName')?.hasError('required')">
+      Nazwa miejsca jest wymagana
+    </mat-error>
+    <mat-error *ngIf="newPlaceForm.get('placeName')?.hasError('minlength')">
+      Długość musi być więcej niż 2
+    </mat-error>
+    <mat-error *ngIf="newPlaceForm.get('placeName')?.hasError('maxlength')">
+      Długość musi być mniej niż 51
+    </mat-error>
+    <mat-error *ngIf="newPlaceForm.get('placeName')?.hasError('placeExists')">
+      Miejsce już istnieje
+    </mat-error>
+  </mat-form-field>
+</form>
+<div class="row ms-1 mb-1 d-flex align-items-center">
+  <div class="col-auto">
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      (click)="savePlace()"
+      [disabled]="newPlaceForm.invalid || newPlaceForm.get('placeName')?.pending">
+      Zapisz
+    </button>
+  </div>
+  <div class="col-auto">
+    <button mat-flat-button color="warn" type="button" (click)="router.navigate(['..'], { relativeTo: route })">
+      Anuluj
+    </button>
+  </div>
+</div>
