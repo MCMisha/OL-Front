@@ -1,3 +1,3 @@
 export const environment = {
-  baseApiUri: 'https://localhost:7023'
+  baseApiUri: 'https://ol-63xt.onrender.com'
 };
