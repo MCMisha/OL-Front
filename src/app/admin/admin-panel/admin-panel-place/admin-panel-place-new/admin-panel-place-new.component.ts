@@ -51,7 +51,7 @@ export class AdminPanelPlaceNewComponent implements OnInit, OnDestroy {
   savePlace() {
     if (this.newPlaceForm.valid) {
       const newPlaceName = this.newPlaceForm.value.placeName;
-      this.placeService.createPlace({id: 0, name: newPlaceName, performances: []}).subscribe(() => {
+      this.placeService.createPlace({id: 0, name: newPlaceName}).subscribe(() => {
         this.router.navigate(['..'], {relativeTo: this.route});
       });
     }

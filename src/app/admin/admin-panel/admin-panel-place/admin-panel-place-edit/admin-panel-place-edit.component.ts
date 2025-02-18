@@ -43,7 +43,6 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
           const currentPlace = places.find(genre => genre.id === this.currentPlaceId);
 
           if (currentPlace) {
-            this.placePerformances = currentPlace.performances;
             this.editPlaceForm = this.fb.group({
               placeName: [
                 currentPlace.name,
@@ -77,7 +76,7 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
   savePlace() {
     if (this.editPlaceForm.valid) {
       const updatedPlaceName = this.editPlaceForm.value.placeName;
-      this.placeService.updatePlace({ id: this.currentPlaceId, name: updatedPlaceName, performances: this.placePerformances }).subscribe(() => {
+      this.placeService.updatePlace({ id: this.currentPlaceId, name: updatedPlaceName }).subscribe(() => {
         this.router.navigate(['../..'], { relativeTo: this.route });
       });
     }
