@@ -63,7 +63,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
-      data: { message: 'Czy na pewno chcesz usunąć ten element?' }
+      data: {message: 'Czy na pewno chcesz usunąć ten element?'}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -74,9 +74,11 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
 
   deleteGenre() {
     if (!!this.selectedRow) {
-      this.genreService.deleteGenre(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this.ngOnInit();
-      });
+      this.subscription.add(
+        this.genreService.deleteGenre(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
+          this.ngOnInit();
+        })
+      );
     }
   }
 }
