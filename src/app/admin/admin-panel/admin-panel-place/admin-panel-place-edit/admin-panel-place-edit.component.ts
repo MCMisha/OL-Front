@@ -34,7 +34,7 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
       this.route.params
         .pipe(
           switchMap(params => {
-            this.currentPlaceId = +params['id']; // Получаем ID жанра из параметров маршрута
+            this.currentPlaceId = +params['id'];
             return this.placeService.getPlaces();
           })
         )

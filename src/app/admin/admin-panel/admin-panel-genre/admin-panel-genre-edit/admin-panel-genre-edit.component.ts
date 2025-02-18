@@ -32,7 +32,7 @@ export class AdminPanelGenreEditComponent implements OnInit, OnDestroy {
       this.route.params
         .pipe(
           switchMap(params => {
-            this.currentGenreId = +params['id']; // Получаем ID жанра из параметров маршрута
+            this.currentGenreId = +params['id'];
             return this.genreService.getGenres();
           })
         )
@@ -64,7 +64,7 @@ export class AdminPanelGenreEditComponent implements OnInit, OnDestroy {
         const genreExists = genres.some(
           genre =>
             genre.name.toLowerCase() === control.value.toLowerCase() &&
-            genre.id !== this.currentGenreId // Исключаем текущий редактируемый жанр
+            genre.id !== this.currentGenreId
         );
         return genreExists ? { genreExists: true } : null;
       })
