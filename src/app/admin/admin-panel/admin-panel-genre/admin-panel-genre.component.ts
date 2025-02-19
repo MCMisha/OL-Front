@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AdminGenreService} from "../../../services/admin/admin-genre.service";
 import {Genre} from "../../../models/genre";
 import {Subject, Subscription, takeUntil} from "rxjs";
@@ -6,6 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-admin-panel-genre',
@@ -24,6 +25,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private genreService: AdminGenreService,
@@ -77,6 +79,9 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
       this.subscription.add(
         this.genreService.deleteGenre(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.ngOnInit();
+        }, resp => {
+          this._snackBar.open(`Bląd podczas logowania: ${resp.error}`,'Zamknij', { duration: 5000 });
+
         })
       );
     }
