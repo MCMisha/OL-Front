@@ -13,12 +13,16 @@ import {
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import { AdminPanelPerformanceNewComponent } from './admin-panel-performance-new/admin-panel-performance-new.component';
+import { AdminPanelPerformanceEditComponent } from './admin-panel-performance-edit/admin-panel-performance-edit.component';
 
 
 
 @NgModule({
   declarations: [
-    AdminPanelPerformanceComponent
+    AdminPanelPerformanceComponent,
+    AdminPanelPerformanceNewComponent,
+    AdminPanelPerformanceEditComponent
   ],
   imports: [
     CommonModule,

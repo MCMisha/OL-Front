@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AdminPlaceService} from "../../../services/admin/admin-place.service";
 import {Subject, Subscription, takeUntil} from 'rxjs';
 import {Place} from "../../../models/place";
@@ -6,6 +6,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-admin-panel-place',
@@ -23,6 +24,7 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
+  private _snackBar = inject(MatSnackBar);
 
   constructor(private dialog: MatDialog, private adminPlaceService: AdminPlaceService) {
   }
@@ -69,8 +71,10 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.adminPlaceService.deletePlace(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.ngOnInit();
+        }, resp => {
+          this._snackBar.open(`Bląd podczas usunięcia: ${resp.error}`, 'Zamknij', {duration: 5000});
         })
-      )
+      );
     }
   }
 }

@@ -80,8 +80,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
         this.genreService.deleteGenre(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
           this.ngOnInit();
         }, resp => {
-          this._snackBar.open(`Bląd podczas logowania: ${resp.error}`,'Zamknij', { duration: 5000 });
-
+          this._snackBar.open(`Bląd podczas usunięcia: ${resp.error}`,'Zamknij', { duration: 5000 });
         })
       );
     }
