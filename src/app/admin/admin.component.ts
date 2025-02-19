@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +14,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   password: string = '';
   subscription = new Subscription();
   isLoading: boolean = false;
+  private _snackBar = inject(MatSnackBar);
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
@@ -34,8 +36,8 @@ export class AdminComponent implements OnInit, OnDestroy {
           localStorage.setItem('token', res);
           this.router.navigate(['panel'], {relativeTo: this.route});
         },
-        error => {
-          console.error('Error during login:', error);
+        resp => {
+          this._snackBar.open(`Bląd podczas logowania: ${resp.error}`,'Zamknij', { duration: 5000 });
           this.isLoading = false;
         }
       )
