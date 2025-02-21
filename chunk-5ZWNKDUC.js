@@ -1,1 +1,0 @@
-import{a}from"./chunk-WIPP6ZQA.js";import"./chunk-SKCIPK7T.js";import"./chunk-KO2X6OK7.js";import"./chunk-2M6DIGDE.js";import"./chunk-5HU7OLIM.js";import"./chunk-FRV55GM5.js";import"./chunk-TMIP2HPW.js";import"./chunk-BKP4CZB2.js";import"./chunk-SNZU7OSD.js";import"./chunk-Q64FFBLU.js";import"./chunk-ZZO7MJK5.js";import"./chunk-YKDFZCCH.js";export{a as AdminPanelGenreModule};
