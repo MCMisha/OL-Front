@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AdminPerformanceService} from "../../../../services/admin/admin-performance.service";
 import {AdminPlaceService} from "../../../../services/admin/admin-place.service";
@@ -34,42 +34,72 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
               protected route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.editPerformanceForm = this.fb.group({
+      id: [''],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      genre: ['', [Validators.required]],
+      place: ['', [Validators.required]],
+      duration: ['', [Validators.required]],
+      breaksCount: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.maxLength(5000)]],
+      mainImage: [null, [Validators.required]],
+      poster: [null, [Validators.required]]
+    });
+
     const performanceId = +this.route.snapshot.paramMap.get('id')!;
     if (performanceId) {
-      this.editPerformanceForm = this.fb.group({
-        title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-        genre: ['', [Validators.required]],
-        place: ['', [Validators.required]],
-        duration: ['', [Validators.required]],
-        breaksCount: ['', [Validators.required]],
-        description: ['', [Validators.required, Validators.maxLength(5000)]],
-        mainImage: [null, [Validators.required]],
-        poster: [null, [Validators.required]]
-      });
-      this.performanceService.getPerformanceById(performanceId).subscribe(performance => {
-        this.editPerformanceForm.patchValue({
-          title: performance.title,
-          genre: performance.genre,
-          place: performance.place,
-          duration: this.durations.includes(<string>performance.duration?.substring(1, 5)) ? performance.duration?.substring(1, 5) : null,
-          breaksCount: this.breaksCount.includes(Number(performance?.breaksCount)) ? Number(performance?.breaksCount) : null,
-          description: performance.description
-        });
-        this.selectedFiles.mainImage = performance.mainImage;
-        this.selectedFiles.poster = performance.poster;
-        this.selectedFileNames.mainImage = performance.mainImage ? 'Uploaded Image' : undefined;
-        this.selectedFileNames.poster = performance.poster ? 'Uploaded Poster' : undefined;
-        this.isFileLoaded.mainImage = !!performance.mainImage;
-        this.isFileLoaded.poster = !!performance.poster;
+      forkJoin({
+        places: this.placeService.getPlaces(),
+        genres: this.genreService.getGenres(),
+        performance: this.performanceService.getPerformanceById(performanceId)
+      }).subscribe(({ places, genres, performance }) => {
+        this.places = places;
+        this.genres = genres;
+
+        if (performance) {
+          this.editPerformanceForm.patchValue({
+            id: performance.id,
+            title: performance.title,
+            genre: performance.genre,
+            place: performance.place,
+            duration: this.durations.includes(performance.duration!.substring(1, 5))
+              ? performance.duration?.substring(1, 5)
+              : '',
+            breaksCount: this.breaksCount.includes(Number(performance.breaksCount))
+              ? Number(performance.breaksCount)
+              : '',
+            description: performance.description
+          });
+
+          Object.keys(this.editPerformanceForm.controls).forEach(field => {
+            this.editPerformanceForm.get(field)?.updateValueAndValidity();
+          });
+          this.updateFileState('mainImage', performance.mainImage, 'Uploaded Image');
+          this.updateFileState('poster', performance.poster, 'Uploaded Poster');
+
+          this.selectedFiles.mainImage = performance.mainImage;
+          this.selectedFiles.poster = performance.poster;
+          this.selectedFileNames.mainImage = performance.mainImage ? 'Uploaded Image' : undefined;
+          this.selectedFileNames.poster = performance.poster ? 'Uploaded Poster' : undefined;
+          this.isFileLoaded.mainImage = !!performance.mainImage;
+          this.isFileLoaded.poster = !!performance.poster;
+        }
       });
     }
-    this.subscription.add(this.placeService.getPlaces().subscribe(places => this.places = places));
-    this.subscription.add(this.genreService.getGenres().subscribe(genres => this.genres = genres));
-    this.subscription.add(this.performanceService.getPerformances().subscribe(performances => this.existingPerformances = performances));
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  updateFileState(field: 'mainImage' | 'poster', fileData: string | undefined, fileName: string) {
+    if (fileData) {
+      this.selectedFiles[field] = fileData;
+      this.selectedFileNames[field] = fileName;
+      this.isFileLoaded[field] = true;
+      this.editPerformanceForm.patchValue({ [field]: fileName });
+      this.editPerformanceForm.get(field)?.updateValueAndValidity();
+    }
   }
 
   onFileSelected(event: Event, field: 'mainImage' | 'poster') {
@@ -97,6 +127,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
     }
 
     const performanceData = {
+      id: this.editPerformanceForm.value.id,
       title: this.editPerformanceForm.value.title,
       genre: this.editPerformanceForm.value.genre,
       place: this.editPerformanceForm.value.place,
@@ -108,7 +139,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
     };
 
     this.performanceService.updatePerformance(performanceData).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+      this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 }

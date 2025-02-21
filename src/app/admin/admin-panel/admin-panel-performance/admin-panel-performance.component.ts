@@ -7,9 +7,9 @@ import {GenreService} from "../../../services/genre.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 import {Performance} from "../../../models/performance";
-import {PerformancesService} from "../../../services/performances.service";
 import {AdminPlaceService} from "../../../services/admin/admin-place.service";
 import {Place} from "../../../models/place";
+import { AdminPerformanceService } from '../../../services/admin/admin-performance.service';
 
 @Component({
   selector: 'app-admin-panel-performance',
@@ -32,7 +32,7 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
   private destroy$ = new Subject<void>();
 
   constructor(
-    private performancesService: PerformancesService,
+    private performancesService: AdminPerformanceService,
     private placeService: AdminPlaceService,
     private genreService: GenreService,
     protected dialog: MatDialog
@@ -100,9 +100,11 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
 
   deleteGenre() {
     if (!!this.selectedRow) {
-      // this.performancesService.deletePerformance(this.selectedRow.id).pipe(takeUntil(this.destroy$)).subscribe(() => {
-      //   this.ngOnInit();
-      // });
+      this.performancesService.deletePerformance(this.selectedRow.id!).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.selectedRowIndex = -1;
+        this.selectedRow = undefined;
+        this.ngOnInit();
+      });
     }
   }
 
