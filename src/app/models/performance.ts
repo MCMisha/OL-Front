@@ -4,7 +4,7 @@ export interface Performance {
   genre?: number;
   place?: number;
   duration?: string;
-  breakCount?: number;
+  breaksCount?: number;
   description?: string;
   mainImage?: string;
   poster?: string;

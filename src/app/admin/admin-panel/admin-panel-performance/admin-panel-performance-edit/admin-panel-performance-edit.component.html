@@ -1,0 +1,126 @@
+<mat-progress-bar *ngIf="editPerformanceForm.get('title')?.pending" mode="indeterminate"></mat-progress-bar>
+<form [formGroup]="editPerformanceForm">
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Nazwa spektaklu</mat-label>
+      <input matInput formControlName="title" placeholder="Wprowadź nazwę miejsca">
+      <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('required')">
+        Nazwa miejsca jest wymagana
+      </mat-error>
+      <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('minlength')">
+        Długość musi być więcej niż 2
+      </mat-error>
+      <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('maxlength')">
+        Długość musi być mniej niż 256
+      </mat-error>
+      <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('placeExists')">
+        Nazwa spektaklu już istnieje
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Gatunek</mat-label>
+      <mat-select [value]="editPerformanceForm.get('genre')?.value" formControlName="genre">
+        <mat-option *ngFor="let genre of genres" [value]="genre.id">
+          {{ genre.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="editPerformanceForm.get('genre')?.hasError('required')">
+        Gatunek jest wymagany
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Miejsce</mat-label>
+      <mat-select [value]="editPerformanceForm.get('place')?.value" formControlName="place">
+        <mat-option *ngFor="let place of places" [value]="place.id">
+          {{ place.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="editPerformanceForm.get('place')?.hasError('required')">
+        Miejsce jest wymagane
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Czas trwania</mat-label>
+      <mat-select formControlName="duration">
+        <mat-option *ngFor="let duration of durations" [value]="duration">
+          {{ duration }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="editPerformanceForm.get('duration')?.hasError('required')">
+        Czas trwania jest wymagany
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Ilość przerw</mat-label>
+      <mat-select formControlName="breaksCount">
+        <mat-option *ngFor="let breaks of breaksCount" [value]="breaks">
+          {{ breaks }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="editPerformanceForm.get('breaksCount')?.hasError('required')">
+        Ilość przerw jest wymagana
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Opis</mat-label>
+      <textarea matInput formControlName="description" placeholder="Wprowadź opis"></textarea>
+      <mat-error *ngIf="editPerformanceForm.get('description')?.hasError('required')">
+        Opis jest wymagany
+      </mat-error>
+      <mat-error *ngIf="editPerformanceForm.get('description')?.hasError('maxlength')">
+        Długość musi być mniej niż 5001 znak
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class=" ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Główny obraz<sup>*</sup></mat-label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event, 'mainImage')" hidden #mainImageInput>
+      <input matInput [value]="selectedFileNames.mainImage || 'Nie wybrano pliku'" readonly (click)="mainImageInput.click()">
+      <button mat-icon-button matSuffix (click)="mainImageInput.click()">
+        <mat-icon matSuffix>image</mat-icon>
+      </button>
+      <mat-error *ngIf="editPerformanceForm.get('mainImage')?.hasError('required')">
+        Główny obraz jest wymagany
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Plakat<sup>*</sup></mat-label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event, 'poster')" hidden #posterInput>
+      <input matInput [value]="selectedFileNames.poster || 'Nie wybrano pliku'" readonly (click)="posterInput.click()">
+      <button mat-icon-button matSuffix (click)="posterInput.click()">
+        <mat-icon matSuffix>image</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</form>
+<div class="ms-1 mb-1 d-flex align-items-center">
+  <div class="me-4">
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="savePerformance()"
+      [disabled]="editPerformanceForm.invalid">
+      Zapisz
+    </button>
+  </div>
+  <div>
+    <button mat-flat-button color="warn" type="button" (click)="router.navigate(['..'], { relativeTo: route })">
+      Anuluj
+    </button>
+  </div>
+</div>
+
