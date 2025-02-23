@@ -1,5 +1,5 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<form *ngIf="editPlaceForm" [formGroup]="editPlaceForm" (ngSubmit)="savePlace()">
+<form *ngIf="editPlaceForm" [formGroup]="editPlaceForm">
   <mat-form-field appearance="fill" style="width: 300px;">
     <mat-label>Nazwa miejsca</mat-label>
     <input matInput formControlName="placeName" placeholder="Wprowadź nazwę miejsca">

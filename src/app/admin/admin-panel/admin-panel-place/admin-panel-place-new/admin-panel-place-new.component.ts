@@ -15,6 +15,7 @@ export class AdminPanelPlaceNewComponent implements OnInit, OnDestroy {
   newPlaceForm!: FormGroup;
   existingPlaces: Place[] = [];
   subscription = new Subscription();
+  protected isLoading: boolean = true;
 
   constructor(private placeService: AdminPlaceService,
               private fb: FormBuilder,
@@ -23,16 +24,19 @@ export class AdminPanelPlaceNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(
-      this.placeService.getPlaces().subscribe(places => {
-        this.existingPlaces = places;
-      })
-    );
-
     this.newPlaceForm = this.fb.group({
       placeName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
         [this.placeExistsValidator.bind(this)]],
     });
+
+    this.subscription.add(
+      this.placeService.getPlaces().subscribe(places => {
+        this.existingPlaces = places;
+        this.isLoading = false;
+      })
+    );
+
+
   }
 
   ngOnDestroy() {
