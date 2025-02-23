@@ -95,6 +95,9 @@
       </mat-error>
     </mat-form-field>
   </div>
+  <div *ngIf="isFileLoaded['mainImage']" class="ms-1 mb-1 d-flex align-items-center">
+    <img [src]="mainImage" width="25%" height="25%" alt="Główny obraz"/>
+  </div>
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Plakat<sup>*</sup></mat-label>
@@ -104,6 +107,9 @@
         <mat-icon matSuffix>image</mat-icon>
       </button>
     </mat-form-field>
+  </div>
+  <div *ngIf="isFileLoaded['poster']" class="ms-1 mb-1 d-flex align-items-center">
+    <img [src]="poster" width="25%" height="25%" alt="Plakat"/>
   </div>
 </form>
 <div class="ms-1 mb-1 d-flex align-items-center">

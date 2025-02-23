@@ -18,6 +18,8 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
   newPerformanceForm!: FormGroup;
   existingPerformances: Performance[] = [];
   subscription = new Subscription();
+  mainImage = 'data:image/jpeg;base64,';
+  poster = 'data:image/jpeg;base64,';
   places: Place[] = [];
   genres: Genre[] = [];
   durations: string[] = ['0:30', '1:00', '1:30', '1:40', '2:00', '2:30', '3:00'];
@@ -60,11 +62,15 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       const file = input.files[0];
       this.selectedFileNames[field] = file.name;
       this.isFileLoaded[field] = false;
-
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.selectedFiles[field] = (reader.result as string).split(',')[1];
+        if (field === 'mainImage') {
+          this.mainImage += this.selectedFiles[field];
+        }else {
+          this.poster += this.selectedFiles[field];
+        }
         this.isFileLoaded[field] = true;
         this.newPerformanceForm.patchValue({ [field]: file.name });
         this.newPerformanceForm.get(field)?.updateValueAndValidity();

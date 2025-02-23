@@ -17,6 +17,8 @@ import {Genre} from "../../../../models/genre";
 export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
   editPerformanceForm!: FormGroup;
   existingPerformances: Performance[] = [];
+  mainImage = 'data:image/jpeg;base64,';
+  poster = 'data:image/jpeg;base64,';
   subscription = new Subscription();
   places: Place[] = [];
   genres: Genre[] = [];
@@ -44,7 +46,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
       poster: [null, [Validators.required]]
-    });
+    }, { updateOn: 'blur' });
 
     const performanceId = +this.route.snapshot.paramMap.get('id')!;
     if (performanceId) {
@@ -74,7 +76,9 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
           Object.keys(this.editPerformanceForm.controls).forEach(field => {
             this.editPerformanceForm.get(field)?.updateValueAndValidity();
           });
+          this.mainImage += performance.mainImage;
           this.updateFileState('mainImage', performance.mainImage, 'Uploaded Image');
+          this.poster += performance.poster;
           this.updateFileState('poster', performance.poster, 'Uploaded Poster');
 
           this.selectedFiles.mainImage = performance.mainImage;
