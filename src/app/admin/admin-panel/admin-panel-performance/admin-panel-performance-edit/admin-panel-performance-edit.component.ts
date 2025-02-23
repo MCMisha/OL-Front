@@ -27,6 +27,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
   selectedFiles: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
   selectedFileNames: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
   isFileLoaded = { mainImage: false, poster: false };
+  isLoading: boolean = true;
 
   constructor(private performanceService: AdminPerformanceService,
               private placeService: AdminPlaceService,
@@ -87,6 +88,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
           this.selectedFileNames.poster = performance.poster ? 'Uploaded Poster' : undefined;
           this.isFileLoaded.mainImage = !!performance.mainImage;
           this.isFileLoaded.poster = !!performance.poster;
+          this.isLoading = false;
         }
       });
     }

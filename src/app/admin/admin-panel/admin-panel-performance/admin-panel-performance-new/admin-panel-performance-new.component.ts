@@ -27,6 +27,7 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
   selectedFiles: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
   selectedFileNames: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
   isFileLoaded = { mainImage: false, poster: false };
+  isLoading: boolean = true;
 
   constructor(private performanceService: AdminPerformanceService,
               private placeService: AdminPlaceService,
@@ -38,8 +39,10 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(this.placeService.getPlaces().subscribe(places => this.places = places));
     this.subscription.add(this.genreService.getGenres().subscribe(genres => this.genres = genres));
-    this.subscription.add(this.performanceService.getPerformances().subscribe(performances => this.existingPerformances = performances));
-
+    this.subscription.add(this.performanceService.getPerformances().subscribe(performances => {
+      this.existingPerformances = performances;
+      this.isLoading = false;
+    }));
     this.newPerformanceForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       genre: ['', [Validators.required]],

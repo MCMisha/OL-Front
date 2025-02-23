@@ -15,6 +15,7 @@ export class AdminPanelGenreNewComponent implements OnInit, OnDestroy {
   newGenreForm!: FormGroup;
   existingGenres: Genre[] = [];
   subscription = new Subscription();
+  isLoading: boolean = true;
 
   constructor(private genreService: AdminGenreService,
               private fb: FormBuilder,
@@ -23,16 +24,18 @@ export class AdminPanelGenreNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(
-      this.genreService.getGenres().subscribe(genres => {
-        this.existingGenres = genres;
-      })
-    );
-
     this.newGenreForm = this.fb.group({
       genreName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
         [this.genreExistsValidator.bind(this)]],
     });
+
+    this.subscription.add(
+      this.genreService.getGenres().subscribe(genres => {
+        this.existingGenres = genres;
+        this.isLoading = false;
+      })
+    );
+
   }
 
   ngOnDestroy() {

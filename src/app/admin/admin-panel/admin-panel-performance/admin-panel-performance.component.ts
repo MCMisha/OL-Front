@@ -30,6 +30,7 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
+  protected isLoading: boolean = true;
 
   constructor(
     private performancesService: AdminPerformanceService,
@@ -51,7 +52,9 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
 
     this.placeService.getPlaces().pipe(takeUntil(this.destroy$)).subscribe(places => {
       this.places = places;
+      this.isLoading = false;
     });
+
   }
 
   ngAfterViewInit() {

@@ -26,6 +26,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
   private _snackBar = inject(MatSnackBar);
+  protected isLoading: boolean = true;
 
   constructor(
     private genreService: AdminGenreService,
@@ -37,6 +38,7 @@ export class AdminPanelGenreComponent implements OnInit, AfterViewInit, OnDestro
     this.genreService.getGenres().pipe(takeUntil(this.destroy$)).subscribe(genres => {
       this.genres = genres;
       this.dataSourceWithPageSize.data = this.genres;
+      this.isLoading = false;
     });
   }
 

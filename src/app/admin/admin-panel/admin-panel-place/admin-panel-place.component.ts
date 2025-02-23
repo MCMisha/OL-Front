@@ -25,6 +25,7 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   private destroy$ = new Subject<void>();
   private _snackBar = inject(MatSnackBar);
+  protected isLoading: boolean = true;
 
   constructor(private dialog: MatDialog, private adminPlaceService: AdminPlaceService) {
   }
@@ -35,6 +36,7 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
         (places) => {
           this.places = places;
           this.dataSourceWithPageSize.data = this.places;
+          this.isLoading = false;
         }
       )
     )

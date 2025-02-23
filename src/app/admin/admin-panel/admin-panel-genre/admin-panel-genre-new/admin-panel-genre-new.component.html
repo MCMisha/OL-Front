@@ -1,4 +1,4 @@
-<mat-progress-bar *ngIf="newGenreForm.get('genreName')?.pending" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 <form [formGroup]="newGenreForm" (ngSubmit)="saveGenre()">
   <mat-form-field appearance="fill" style="width: 300px;">
     <mat-label>Nazwa gatunku</mat-label>

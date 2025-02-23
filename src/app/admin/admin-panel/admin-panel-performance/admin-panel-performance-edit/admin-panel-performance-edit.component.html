@@ -1,4 +1,4 @@
-<mat-progress-bar *ngIf="editPerformanceForm.get('title')?.pending" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 <form [formGroup]="editPerformanceForm">
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">

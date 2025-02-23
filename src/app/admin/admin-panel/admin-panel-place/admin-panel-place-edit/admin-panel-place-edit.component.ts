@@ -29,7 +29,9 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-
+    this.editPlaceForm = this.fb.group({
+      placeName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)], [this.placeExistsValidator.bind(this)]],
+    })
     this.subscription.add(
       this.route.params
         .pipe(
@@ -43,13 +45,7 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
           const currentPlace = places.find(genre => genre.id === this.currentPlaceId);
 
           if (currentPlace) {
-            this.editPlaceForm = this.fb.group({
-              placeName: [
-                currentPlace.name,
-                [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
-                [this.genreExistsValidator.bind(this)],
-              ],
-            });
+            this.editPlaceForm.patchValue({placeName: currentPlace.name});
           }
           this.isLoading = false;
         })
@@ -60,7 +56,7 @@ export class AdminPanelPlaceEditComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  genreExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+  placeExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     return this.placeService.getPlaces().pipe(
       map(places => {
         const placeExists = places.some(
