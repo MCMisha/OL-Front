@@ -24,9 +24,15 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
   genres: Genre[] = [];
   durations: string[] = ['0:30', '1:00', '1:30', '1:40', '2:00', '2:30', '3:00'];
   breaksCount = [0, 1, 2, 3];
-  selectedFiles: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
-  selectedFileNames: { mainImage: string | undefined; poster: string | undefined } = { mainImage: undefined, poster: undefined };
-  isFileLoaded = { mainImage: false, poster: false };
+  selectedFiles: { mainImage: string | undefined; poster: string | undefined } = {
+    mainImage: undefined,
+    poster: undefined
+  };
+  selectedFileNames: { mainImage: string | undefined; poster: string | undefined } = {
+    mainImage: undefined,
+    poster: undefined
+  };
+  isFileLoaded = {mainImage: false, poster: false};
   isLoading: boolean = true;
 
   constructor(private performanceService: AdminPerformanceService,
@@ -34,7 +40,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
               private genreService: AdminGenreService,
               private fb: FormBuilder,
               protected router: Router,
-              protected route: ActivatedRoute) {}
+              protected route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.editPerformanceForm = this.fb.group({
@@ -46,8 +53,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       breaksCount: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
-      poster: [null, [Validators.required]]
-    }, { updateOn: 'blur' });
+      poster: [null]
+    }, {updateOn: 'blur'});
 
     const performanceId = +this.route.snapshot.paramMap.get('id')!;
     if (performanceId) {
@@ -55,7 +62,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
         places: this.placeService.getPlaces(),
         genres: this.genreService.getGenres(),
         performance: this.performanceService.getPerformanceById(performanceId)
-      }).subscribe(({ places, genres, performance }) => {
+      }).subscribe(({places, genres, performance}) => {
         this.places = places;
         this.genres = genres;
 
@@ -103,7 +110,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       this.selectedFiles[field] = fileData;
       this.selectedFileNames[field] = fileName;
       this.isFileLoaded[field] = true;
-      this.editPerformanceForm.patchValue({ [field]: fileName });
+      this.editPerformanceForm.patchValue({[field]: fileName});
       this.editPerformanceForm.get(field)?.updateValueAndValidity();
     }
   }
@@ -120,9 +127,12 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       reader.onload = () => {
         this.selectedFiles[field] = (reader.result as string).split(',')[1];
         this.isFileLoaded[field] = true;
-        this.editPerformanceForm.patchValue({ [field]: file.name });
+        this[field] = reader.result as string;
+        this.editPerformanceForm.patchValue({[field]: file.name});
         this.editPerformanceForm.get(field)?.updateValueAndValidity();
       };
+
+      input.value = '';
     }
   }
 
@@ -145,7 +155,16 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
     };
 
     this.performanceService.updatePerformance(performanceData).subscribe(() => {
-      this.router.navigate(['../..'], { relativeTo: this.route });
+      this.router.navigate(['../..'], {relativeTo: this.route});
     });
+  }
+
+  onDeleteImage(field: 'mainImage' | 'poster') {
+    this.selectedFiles[field] = undefined;
+    this.selectedFileNames[field] = undefined;
+    this.isFileLoaded[field] = false;
+    this.editPerformanceForm.patchValue({[field]: null});
+    this.editPerformanceForm.get(field)?.updateValueAndValidity();
+    this[field] = '';
   }
 }

@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AdminPerformanceService} from "../../../../services/admin/admin-performance.service";
-import {AdminPlaceService} from "../../../../services/admin/admin-place.service";
-import {AdminGenreService} from "../../../../services/admin/admin-genre.service";
-import {Performance} from "../../../../models/performance";
-import {Place} from "../../../../models/place";
-import {Genre} from "../../../../models/genre";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Subscription } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AdminPerformanceService } from "../../../../services/admin/admin-performance.service";
+import { AdminPlaceService } from "../../../../services/admin/admin-place.service";
+import { AdminGenreService } from "../../../../services/admin/admin-genre.service";
+import { Performance } from "../../../../models/performance";
+import { Place } from "../../../../models/place";
+import { Genre } from "../../../../models/genre";
 
 @Component({
   selector: 'app-admin-panel-performance-new',
@@ -43,6 +43,7 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       this.existingPerformances = performances;
       this.isLoading = false;
     }));
+
     this.newPerformanceForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       genre: ['', [Validators.required]],
@@ -51,7 +52,7 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       breaksCount: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
-      poster: [null, [Validators.required]]
+      poster: [null]
     });
   }
 
@@ -61,24 +62,23 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: Event, field: 'mainImage' | 'poster') {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.selectedFileNames[field] = file.name;
-      this.isFileLoaded[field] = false;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.selectedFiles[field] = (reader.result as string).split(',')[1];
-        if (field === 'mainImage') {
-          this.mainImage += this.selectedFiles[field];
-        }else {
-          this.poster += this.selectedFiles[field];
-        }
-        this.isFileLoaded[field] = true;
-        this.newPerformanceForm.patchValue({ [field]: file.name });
-        this.newPerformanceForm.get(field)?.updateValueAndValidity();
-      };
-    }
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    this.selectedFileNames[field] = file.name;
+    this.isFileLoaded[field] = false;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.selectedFiles[field] = (reader.result as string).split(',')[1];
+      this[field] = reader.result as string;
+      this.isFileLoaded[field] = true;
+      this.newPerformanceForm.patchValue({ [field]: file.name });
+      this.newPerformanceForm.get(field)?.updateValueAndValidity();
+    };
+
+    input.value = '';
   }
 
   savePerformance() {
@@ -101,5 +101,14 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
     this.performanceService.createPerformance(performanceData).subscribe(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
     });
+  }
+
+  onDeleteImage(field: 'mainImage' | 'poster') {
+    this.selectedFiles[field] = undefined;
+    this.selectedFileNames[field] = undefined;
+    this.isFileLoaded[field] = false;
+    this.newPerformanceForm.patchValue({ [field]: null });
+    this.newPerformanceForm.get(field)?.updateValueAndValidity();
+    this[field] = '';
   }
 }
