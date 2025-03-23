@@ -52,7 +52,8 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       breaksCount: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
-      poster: [null]
+      poster: [null],
+      externalId: ['', [Validators.required]]
     });
   }
 
@@ -95,7 +96,8 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       breaksCount: this.newPerformanceForm.value.breaksCount,
       description: this.newPerformanceForm.value.description,
       mainImage: this.selectedFiles.mainImage,
-      poster: this.selectedFiles.poster
+      poster: this.selectedFiles.poster,
+      externalId: this.newPerformanceForm.value.externalId
     };
 
     this.performanceService.createPerformance(performanceData).subscribe(() => {

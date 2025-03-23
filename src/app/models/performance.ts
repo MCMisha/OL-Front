@@ -8,5 +8,5 @@ export interface Performance {
   description?: string;
   mainImage?: string;
   poster?: string;
-  date?: string | Date;
+  externalId?: number;
 }

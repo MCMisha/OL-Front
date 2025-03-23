@@ -74,7 +74,8 @@
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Opis</mat-label>
       <textarea matInput formControlName="description" placeholder="Wprowadź opis"></textarea>
-      <mat-error *ngIf="editPerformanceForm.get('description')?.hasError('required') && editPerformanceForm.get('description')?.dirty">
+      <mat-error
+        *ngIf="editPerformanceForm.get('description')?.hasError('required') && editPerformanceForm.get('description')?.dirty">
         Opis jest wymagany
       </mat-error>
       <mat-error *ngIf="editPerformanceForm.get('description')?.hasError('maxlength')">
@@ -86,14 +87,16 @@
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Główny obraz</mat-label>
       <input type="file" accept="image/*" (change)="onFileSelected($event, 'mainImage')" hidden #mainImageInput>
-      <input matInput [value]="selectedFileNames.mainImage || 'Nie wybrano pliku'" readonly required (click)="mainImageInput.click()">
+      <input matInput [value]="selectedFileNames.mainImage || 'Nie wybrano pliku'" readonly required
+             (click)="mainImageInput.click()">
       <button mat-icon-button matSuffix *ngIf="!selectedFiles.mainImage" (click)="mainImageInput.click()">
         <mat-icon matSuffix>image</mat-icon>
       </button>
       <button mat-icon-button matSuffix *ngIf="selectedFiles.mainImage" (click)="onDeleteImage('mainImage')">
         <mat-icon matSuffix>delete</mat-icon>
       </button>
-      <mat-error *ngIf="editPerformanceForm.get('mainImage')?.hasError('required') && editPerformanceForm.get('mainImage')?.dirty">
+      <mat-error
+        *ngIf="editPerformanceForm.get('mainImage')?.hasError('required') && editPerformanceForm.get('mainImage')?.dirty">
         Główny obraz jest wymagany
       </mat-error>
     </mat-form-field>
@@ -116,6 +119,15 @@
   </div>
   <div *ngIf="isFileLoaded['poster']" class="ms-1 mb-1 d-flex align-items-center">
     <img [src]="poster" width="25%" height="25%" alt="plakat"/>
+  </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Identyfikator na stronie bilety24.pl</mat-label>
+      <input matInput formControlName="externalId" placeholder="Wprowadź identyfikator">
+      <mat-error *ngIf="editPerformanceForm.get('externalId')?.hasError('required')">
+        Identyfikator jest wymagany
+      </mat-error>
+    </mat-form-field>
   </div>
 </form>
 <div class="ms-1 mb-1 d-flex align-items-center">

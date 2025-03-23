@@ -53,7 +53,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       breaksCount: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
-      poster: [null]
+      poster: [null],
+      externalId: ['', [Validators.required]]
     }, {updateOn: 'blur'});
 
     const performanceId = +this.route.snapshot.paramMap.get('id')!;
@@ -78,7 +79,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
             breaksCount: this.breaksCount.includes(Number(performance.breaksCount))
               ? Number(performance.breaksCount)
               : '',
-            description: performance.description
+            description: performance.description,
+            externalId: performance.externalId
           });
 
           Object.keys(this.editPerformanceForm.controls).forEach(field => {
@@ -151,7 +153,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       breaksCount: this.editPerformanceForm.value.breaksCount,
       description: this.editPerformanceForm.value.description,
       mainImage: this.selectedFiles.mainImage,
-      poster: this.selectedFiles.poster
+      poster: this.selectedFiles.poster,
+      externalId: +this.editPerformanceForm.value.externalId
     };
 
     this.performanceService.updatePerformance(performanceData).subscribe(() => {

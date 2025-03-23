@@ -1,4 +1,5 @@
 <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
 <div style="width: 300px;">
   <mat-calendar
     [dateClass]="dateClass"
@@ -6,7 +7,7 @@
     [minDate]="minDate"
     [maxDate]="maxDate"
     (selectedChange)="onDateChange($event)"
-    (monthSelected)="onDateChange($event)"
+    (monthSelected)="onMonthChange($event)"
     class="disable-arrows"
   >
   </mat-calendar>
@@ -16,10 +17,18 @@
 
 <ul>
   <li *ngFor="let event of paginatedEvents">
-    {{ event.title }} &mdash; {{ event.date | date:'HH:mm':'UTC' }}, {{ getGenreName(event.genre) }}
+    <a [href]="event.buyLink">
+      <strong>{{ event.title }}</strong>
+      — {{ event.dateTime | date:'HH:mm' }}
+      <span> <!--*ngIf="getGenreName(event.genre)"-->
+    ({{ 'Gatunek' }})</span>
+    </a>
   </li>
 </ul>
 
-<mat-paginator [length]="eventsByDate.length" [pageSize]="pageSize" [pageIndex]="0" [pageSizeOptions]="[1, 5, 10]">
+<mat-paginator
+  [length]="eventsByDate.length"
+  [pageSize]="pageSize"
+  [pageIndex]="0"
+  [pageSizeOptions]="[1, 5, 10]">
 </mat-paginator>
-
