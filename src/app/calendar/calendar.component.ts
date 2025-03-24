@@ -12,7 +12,7 @@ import { MatCalendar } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
 import { Performance } from '../models/performance';
 import { Genre } from '../models/genre';
-import { EventInstanceInfo } from "../models/EventInstanceInfo";
+import { EventInstanceInfo } from "../models/event-instance-info";
 import { EventService } from '../services/event.service';
 import { PerformancesService } from '../services/performances.service';
 import { GenreService } from '../services/genre.service';
@@ -25,8 +25,8 @@ import { GenreService } from '../services/genre.service';
 export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedDate: Date | null = null;
   eventsByDate: EventInstanceInfo[] = [];
-  minDate: Date = new Date(2021, 9, 1);
-  maxDate: Date = new Date(2025, 5, 30);
+  minDate: Date | null = null;
+  maxDate: Date | null = null;
   events: Performance[] = [];
   genres: Genre[] = [];
   pageSize = 1;
@@ -48,9 +48,19 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const now = new Date();
-    this.loadMonthData(now);
-    this.selectedDate = now;
+    this.eventService.getMinMaxDates()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.minDate = new Date(res.minDate);
+        this.maxDate = new Date(res.maxDate);
+        this.selectedDate = new Date(res.minDate);
+        this.calendar.activeDate = this.selectedDate;
+        this.cdr.detectChanges();
+        this.calendar.updateTodaysDate();
+        this.currentLoadedMonth = '';
+
+        this.loadMonthData(this.minDate);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -63,13 +73,28 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.calendar.stateChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const activeDate = this.calendar.activeDate;
       const newMonth = `${activeDate.getFullYear()}-${String(activeDate.getMonth() + 1).padStart(2, '0')}`;
-      if (newMonth !== this.currentLoadedMonth) {
-        this.onMonthChange(activeDate);
+
+      if (this.minDate && this.maxDate) {
+        const current = new Date(activeDate.getFullYear(), activeDate.getMonth(), 1);
+        const min = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+        const max = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+
+        if (current >= min && current <= max && newMonth !== this.currentLoadedMonth) {
+          this.loadMonthData(activeDate);
+        }
       }
     });
   }
 
-  onMonthChange(date: Date) {
+  onMonthChange(date: Date): void {
+    if (!this.minDate || !this.maxDate) return;
+
+    const current = new Date(date.getFullYear(), date.getMonth(), 1);
+    const min = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    const max = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+
+    if (current < min || current > max) return;
+
     const newMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     if (newMonth !== this.currentLoadedMonth) {
       this.loadMonthData(date);
@@ -93,6 +118,13 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadMonthData(date: Date) {
+    if (!this.minDate || !this.maxDate) return;
+
+    const current = new Date(date.getFullYear(), date.getMonth(), 1);
+    const min = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
+    const max = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+    if (current < min || current > max) return;
+
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const yearMonth = `${date.getFullYear()}-${month}`;
     this.currentLoadedMonth = yearMonth;
@@ -144,7 +176,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
       : '';
   };
 
-  getGenreName(genre: number | undefined) {
+  getGenreName(genre: number | undefined): string {
     if (genre === undefined) return '';
     const found = this.genres.find(g => g.id === genre);
     return found?.name ?? '';
