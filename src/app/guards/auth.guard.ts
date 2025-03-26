@@ -14,28 +14,19 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean> {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      return this.userService.checkToken().pipe(
-        map((res: any) => {
-          if (res.isValid) {
-            return true;
-          } else {
-            localStorage.removeItem('token');
-            this.router.navigate(['..']);
-            return false;
-          }
-        }),
-        catchError((_) => {
-          localStorage.removeItem('token');
+    return this.userService.checkToken().pipe(
+      map((res: any) => {
+        if (res.isValid) {
+          return true;
+        } else {
           this.router.navigate(['..']);
-          return of(false);
-        })
-      );
-    } else {
-      this.router.navigate(['..']);
-      return of(false);
-    }
+          return false;
+        }
+      }),
+      catchError((_) => {
+        this.router.navigate(['..']);
+        return of(false);
+      })
+    );
   }
 }

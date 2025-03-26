@@ -32,10 +32,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   onLogin() {
     this.isLoading = true;
     this.subscription.add(
-      this.userService.login(this.login, this.password).subscribe(res => {
-          localStorage.setItem('token', res);
-          this.router.navigate(['panel'], {relativeTo: this.route});
-        },
+      this.userService.login(this.login, this.password).subscribe(_ => {
+          this.router.navigate(['/admin/panel']);
+          },
         resp => {
           this._snackBar.open(`Bląd podczas logowania: ${resp.error}`,'Zamknij', { duration: 5000 });
           this.isLoading = false;
