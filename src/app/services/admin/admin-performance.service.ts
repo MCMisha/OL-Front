@@ -12,23 +12,23 @@ export class AdminPerformanceService {
   constructor(private http: HttpClient) {}
 
   createPerformance(performance: Performance): Observable<Performance> {
-    return this.http.post<Performance>(`${environment.baseApiUri}/AdminPerformance/new`, performance);
+    return this.http.post<Performance>(`${environment.baseApiUri}/AdminPerformance/new`, performance, {withCredentials: true});
   }
 
   getPerformances(): Observable<Performance[]> {
-    return this.http.get<Performance[]>(`${environment.baseApiUri}/AdminPerformance/all`).pipe(catchError(this.handleError<Performance[]>('getPerformanceData')));
+    return this.http.get<Performance[]>(`${environment.baseApiUri}/AdminPerformance/all`, {withCredentials: true}).pipe(catchError(this.handleError<Performance[]>('getPerformanceData')));
   }
 
   getPerformanceById(id: number): Observable<Performance> {
-    return this.http.get<Performance>(`${environment.baseApiUri}/AdminPerformance/${id}`);
+    return this.http.get<Performance>(`${environment.baseApiUri}/AdminPerformance/${id}`, {withCredentials: true});
   }
 
   updatePerformance(performance: Performance) : Observable<Performance> {
-    return this.http.put<Performance>(`${environment.baseApiUri}/AdminPerformance/update`, performance);
+    return this.http.put<Performance>(`${environment.baseApiUri}/AdminPerformance/update`, performance, {withCredentials: true});
   }
 
   deletePerformance(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.baseApiUri}/AdminPerformance/delete/${id}`);
+    return this.http.delete<void>(`${environment.baseApiUri}/AdminPerformance/delete/${id}`, {withCredentials: true});
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

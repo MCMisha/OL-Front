@@ -1,12 +1,15 @@
-<div *ngFor="let performance of performances" class="d-flex flex-column align-items-center">
-  <div class="d-flex justify-content-center w-50 mb-4">
-    <img width="25%" height="25%"
-         [src]="'data:image/jpeg;base64,' + performance.mainImage"
-         alt="{{ performance.title }}"
-         class="performance-image me-3">
-    <div class="d-flex flex-column text-start">
-      <span class="fw-semibold" style="font-size: 20px;">{{ performance.title }}</span>
-      <span class="text-muted">{{ getGenreNameById(performance.genre) }} &mdash; {{"Waldemar Zawodziński"}}</span>
+<div *ngFor="let performance of performances" class="performance-wrapper">
+  <div class="performance-card">
+    <img
+      [src]="'data:image/jpeg;base64,' + performance.mainImage"
+      alt="{{ performance.title }}"
+      class="performance-image"
+    />
+    <div class="performance-info">
+      <span class="performance-title">{{ performance.title }}</span>
+      <span class="text-muted">
+        {{ getGenreNameById(performance.genre) }} &mdash; Waldemar Zawodziński
+      </span>
     </div>
   </div>
 </div>

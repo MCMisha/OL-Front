@@ -12,18 +12,18 @@ export class AdminPlaceService {
   constructor(private http: HttpClient) { }
 
   getPlaces(): Observable<Place[]> {
-    return this.http.get<Place[]>(`${environment.baseApiUri}/AdminPlace/all`);
+    return this.http.get<Place[]>(`${environment.baseApiUri}/AdminPlace/all`, {withCredentials: true});
   }
 
   createPlace(place: Place): Observable<Place> {
-    return this.http.post<Place>(`${environment.baseApiUri}/AdminPlace/new`, place);
+    return this.http.post<Place>(`${environment.baseApiUri}/AdminPlace/new`, place, {withCredentials: true});
   }
 
   updatePlace(place: Place): Observable<Place> {
-    return this.http.put<Place>(`${environment.baseApiUri}/AdminPlace/update/${place.id}`, place);
+    return this.http.put<Place>(`${environment.baseApiUri}/AdminPlace/update/${place.id}`, place, {withCredentials: true});
   }
 
   deletePlace(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.baseApiUri}/AdminPlace/delete/${id}`);
+    return this.http.delete<void>(`${environment.baseApiUri}/AdminPlace/delete/${id}`, {withCredentials: true});
   }
 }
