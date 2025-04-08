@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { PerformancesRoutingModule } from './performances-routing.module';
 import { PerformancesComponent } from './performances.component';
+import {MatProgressBar} from "@angular/material/progress-bar";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { PerformancesComponent } from './performances.component';
   ],
   imports: [
     CommonModule,
-    PerformancesRoutingModule
+    PerformancesRoutingModule,
+    MatProgressBar,
+    MatPaginator
   ]
 })
 export class PerformancesModule { }

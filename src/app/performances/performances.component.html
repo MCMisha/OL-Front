@@ -1,4 +1,6 @@
-<div *ngFor="let performance of performances" class="performance-wrapper">
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<div *ngFor="let performance of paginatedPerformances" class="performance-wrapper">
   <div class="performance-card">
     <img
       [src]="'data:image/jpeg;base64,' + performance.mainImage"
@@ -13,3 +15,11 @@
     </div>
   </div>
 </div>
+
+<mat-paginator
+  [length]="performances.length"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="[2, 5, 10]"
+  (page)="onPageChange($event)">
+</mat-paginator>
