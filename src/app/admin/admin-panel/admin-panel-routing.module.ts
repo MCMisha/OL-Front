@@ -22,6 +22,24 @@ const routes: Routes = [
       import('./admin-panel-performance/admin-panel-performance.module').then(
         (m) => m.AdminPanelPerformanceModule
       )
+  },
+  {
+    path: 'news', loadChildren: () =>
+      import('./admin-panel-news/admin-panel-news.module').then(
+        (m) => m.AdminPanelNewsModule
+      )
+  },
+  {
+    path: 'about-us', loadChildren: () =>
+      import('./admin-panel-about/admin-panel-about.module').then(
+        (m) => m.AdminPanelAboutModule
+      )
+  },
+  {
+    path: 'contact', loadChildren: () =>
+      import('./admin-panel-contact/admin-panel-contact.module').then(
+        (m) => m.AdminPanelContactModule
+      )
   }
 ]
 

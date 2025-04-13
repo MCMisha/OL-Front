@@ -3,3 +3,8 @@
   border-radius: 50%; /* Закругление */
   color: #000; /* Цвет текста */
 }
+
+mat-paginator {
+  display: flex;
+  justify-content: start;
+}
