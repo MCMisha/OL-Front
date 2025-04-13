@@ -1,0 +1,1 @@
+import{Oc as n,ba as e,ma as o}from"./chunk-DQM3UAK6.js";var l=(()=>{class t{static{this.\u0275fac=function(i){return new(i||t)}}static{this.\u0275mod=o({type:t})}static{this.\u0275inj=e({imports:[n]})}}return t})();export{l as AdminPanelAboutModule};
