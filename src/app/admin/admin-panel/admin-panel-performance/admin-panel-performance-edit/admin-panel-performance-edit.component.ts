@@ -87,14 +87,14 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
             this.editPerformanceForm.get(field)?.updateValueAndValidity();
           });
           this.mainImage += performance.mainImage;
-          this.updateFileState('mainImage', performance.mainImage, 'Uploaded Image');
+          this.updateFileState('mainImage', performance.mainImage, 'Przesłany główny obraz');
           this.poster += performance.poster;
-          this.updateFileState('poster', performance.poster, 'Uploaded Poster');
+          this.updateFileState('poster', performance.poster, 'Przesłany plakat');
 
           this.selectedFiles.mainImage = performance.mainImage;
           this.selectedFiles.poster = performance.poster;
-          this.selectedFileNames.mainImage = performance.mainImage ? 'Uploaded Image' : undefined;
-          this.selectedFileNames.poster = performance.poster ? 'Uploaded Poster' : undefined;
+          this.selectedFileNames.mainImage = performance.mainImage ? 'Przesłany główny obraz' : undefined;
+          this.selectedFileNames.poster = performance.poster ? 'Przesłany plakat' : undefined;
           this.isFileLoaded.mainImage = !!performance.mainImage;
           this.isFileLoaded.poster = !!performance.poster;
           this.isLoading = false;
@@ -140,7 +140,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
 
   savePerformance() {
     if (this.editPerformanceForm.invalid) {
-      console.error("Form is invalid or file is still loading!");
+      console.error("Formularz jest nieprawidłowy lub plik nadal się ładuje!");
       return;
     }
 

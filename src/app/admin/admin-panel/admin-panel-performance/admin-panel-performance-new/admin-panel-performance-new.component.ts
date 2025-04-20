@@ -84,7 +84,7 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
 
   savePerformance() {
     if (this.newPerformanceForm.invalid) {
-      console.error("Form is invalid or file is still loading!");
+      console.error("Formularz jest nieprawidłowy lub plik nadal się ładuje!");
       return;
     }
 
