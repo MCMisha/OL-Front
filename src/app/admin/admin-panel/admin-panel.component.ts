@@ -22,7 +22,8 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     { icon: 'event', title: 'Spektakle', link: `${this.basePath}/performance` },
     { icon: 'newspaper', title: 'Aktualności', link: `${this.basePath}/news` },
     { icon: 'info', title: 'O nas', link: `${this.basePath}/about-us`},
-    { icon: 'contact_page', title: 'Kontakt', link: `${this.basePath}/contact`}
+    { icon: 'contact_page', title: 'Kontakt', link: `${this.basePath}/contact`},
+    { icon: 'person_outline', title: 'Artyści', link: `${this.basePath}/artists` }
   ];
 
   protected currentTitle = '';

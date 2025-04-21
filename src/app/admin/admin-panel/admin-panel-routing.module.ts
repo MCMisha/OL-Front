@@ -40,6 +40,12 @@ const routes: Routes = [
       import('./admin-panel-contact/admin-panel-contact.module').then(
         (m) => m.AdminPanelContactModule
       )
+  },
+  {
+    path: 'artists', loadChildren: () =>
+      import('./admin-panel-artists/admin-panel-artists.module').then(
+        (m) => m.AdminPanelArtistsModule
+      )
   }
 ]
 
