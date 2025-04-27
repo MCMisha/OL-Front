@@ -1,1 +1,40 @@
-<p>admin-panel-news works!</p>
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class="row mb-1 d-flex align-items-center">
+  <div class="col-auto">
+    <button mat-flat-button color="primary" routerLink="new" class="me-2">Dodaj</button>
+  </div>
+  <div class="col-auto">
+    <button mat-flat-button color="accent" routerLink="{{selectedRow?.id}}/edit" [disabled]="!selectedRow" class="me-2">Edytuj</button>
+  </div>
+  <div class="col-auto">
+    <button mat-flat-button color="warn" (click)="openDialog()" [disabled]="!selectedRow">Usuń</button>
+  </div>
+</div>
+<!--<app-rich-text-editor [(ngModel)]="editorContent"></app-rich-text-editor>-->
+<!--<button mat-flat-button color="primary" (click)="onSave()">Zapisz</button>-->
+<table mat-table [dataSource]="dataSourceWithPageSize" class="mat-elevation-z8 pe-2">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Nazwa</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="subtitle">
+    <th mat-header-cell *matHeaderCellDef>Podtytuł</th>
+    <td mat-cell *matCellDef="let element">{{ element.subtitle }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="creationDate">
+    <th mat-header-cell *matHeaderCellDef>Data utworzenia</th>
+    <td mat-cell *matCellDef="let element">{{ element.creationDate }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="highlightRow(row)"
+      [ngClass]="{'highlighted': selectedRowIndex == row.id}"></tr>
+</table>
+<mat-paginator [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[2, 5, 10]"></mat-paginator>

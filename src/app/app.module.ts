@@ -12,8 +12,9 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {AdminPanelModule} from "./admin/admin-panel/admin-panel.module";
 import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin-panel-genre.module";
-import {MainModule} from "./main/main.module";
 import {MatMenuModule} from "@angular/material/menu";
+import {FormsModule} from "@angular/forms";
+import {RichTextEditorModule} from "./shared/rich-text-editor/rich-text-editor.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatListModule,
     AdminPanelModule,
     AdminPanelGenreModule,
-    MainModule
+    RichTextEditorModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync(),

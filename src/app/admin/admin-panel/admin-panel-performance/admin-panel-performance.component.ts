@@ -9,7 +9,7 @@ import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-conf
 import {Performance} from "../../../models/performance";
 import {AdminPlaceService} from "../../../services/admin/admin-place.service";
 import {Place} from "../../../models/place";
-import { AdminPerformanceService } from '../../../services/admin/admin-performance.service';
+import {AdminPerformanceService} from '../../../services/admin/admin-performance.service';
 
 @Component({
   selector: 'app-admin-panel-performance',
@@ -41,19 +41,24 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
   }
 
   ngOnInit() {
-    this.performancesService.getPerformances().pipe(takeUntil(this.destroy$)).subscribe(performances => {
-      this.performances = performances;
-      this.dataSourceWithPageSize.data = this.performances;
-    });
+    this.subscription.add(
+      this.performancesService.getPerformances().pipe(takeUntil(this.destroy$)).subscribe(performances => {
+        this.performances = performances;
+        this.dataSourceWithPageSize.data = this.performances;
+      })
+    );
+    this.subscription.add(
+      this.genreService.getGenres().pipe(takeUntil(this.destroy$)).subscribe(genres => {
+        this.genres = genres;
+      })
+    );
 
-    this.genreService.getGenres().pipe(takeUntil(this.destroy$)).subscribe(genres => {
-      this.genres = genres;
-    });
-
-    this.placeService.getPlaces().pipe(takeUntil(this.destroy$)).subscribe(places => {
-      this.places = places;
-      this.isLoading = false;
-    });
+    this.subscription.add(
+      this.placeService.getPlaces().pipe(takeUntil(this.destroy$)).subscribe(places => {
+        this.places = places;
+        this.isLoading = false;
+      })
+    );
 
   }
 
@@ -92,7 +97,7 @@ export class AdminPanelPerformanceComponent implements OnInit, AfterViewInit, On
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '300px',
-      data: { message: 'Czy na pewno chcesz usunąć ten element?' }
+      data: {message: 'Czy na pewno chcesz usunąć ten element?'}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
