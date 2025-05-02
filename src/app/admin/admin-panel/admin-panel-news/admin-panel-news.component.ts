@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AdminNewsService} from "../../../services/admin/admin-news.service";
-import {Subscription} from "rxjs";
+import {Subject, Subscription, takeUntil} from "rxjs";
 import {News} from "../../../models/news";
 import {MatTableDataSource} from "@angular/material/table";
+import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 
 @Component({
   selector: 'app-admin-panel-news',
@@ -18,6 +19,7 @@ export class AdminPanelNewsComponent implements OnInit, OnDestroy {
 
   news: News[] = [];
   subscription = new Subscription();
+  private destroy$ = new Subject<void>();
   dataSourceWithPageSize = new MatTableDataSource(this.news);
   pageSize = 5;
   pageIndex = 0;
@@ -43,7 +45,15 @@ export class AdminPanelNewsComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      data: {message: 'Czy na pewno chcesz usunąć ten element?'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteNews();
+      }
+    });
   }
 
   highlightRow(row: any) {
@@ -56,4 +66,13 @@ export class AdminPanelNewsComponent implements OnInit, OnDestroy {
     }
   }
 
+  deleteNews() {
+    if (!!this.selectedRow) {
+      this.newsService.deleteNews(this.selectedRow.id!).pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.selectedRowIndex = -1;
+        this.selectedRow = undefined;
+        this.ngOnInit();
+      });
+    }
+  }
 }

@@ -1,16 +1,16 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<form [formGroup]="newNewsForm">
+<form [formGroup]="editNewsForm">
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Tytuł aktualności</mat-label>
       <input matInput formControlName="title" placeholder="Wprowadź nazwę miejsca">
-      <mat-error *ngIf="newNewsForm.get('title')?.hasError('required')">
+      <mat-error *ngIf="editNewsForm.get('title')?.hasError('required')">
         Tytuł jest wymagany
       </mat-error>
-      <mat-error *ngIf="newNewsForm.get('title')?.hasError('minlength')">
+      <mat-error *ngIf="editNewsForm.get('title')?.hasError('minlength')">
         Długość musi być więcej niż 2
       </mat-error>
-      <mat-error *ngIf="newNewsForm.get('title')?.hasError('maxlength')">
+      <mat-error *ngIf="editNewsForm.get('title')?.hasError('maxlength')">
         Długość musi być mniej niż 101
       </mat-error>
     </mat-form-field>
@@ -19,13 +19,13 @@
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Podtytuł aktualności</mat-label>
       <input matInput formControlName="subTitle" placeholder="Wprowadź nazwę miejsca">
-      <mat-error *ngIf="newNewsForm.get('subTitle')?.hasError('required')">
+      <mat-error *ngIf="editNewsForm.get('subTitle')?.hasError('required')">
         Podtytuł jest wymagany
       </mat-error>
-      <mat-error *ngIf="newNewsForm.get('subTitle')?.hasError('minlength')">
+      <mat-error *ngIf="editNewsForm.get('subTitle')?.hasError('minlength')">
         Długość musi być więcej niż 2
       </mat-error>
-      <mat-error *ngIf="newNewsForm.get('subTitle')?.hasError('maxlength')">
+      <mat-error *ngIf="editNewsForm.get('subTitle')?.hasError('maxlength')">
         Długość musi być mniej niż 101
       </mat-error>
     </mat-form-field>
@@ -41,7 +41,7 @@
       <button mat-icon-button matSuffix *ngIf="selectedFileName" (click)="onDeleteImage()">
         <mat-icon matSuffix>delete</mat-icon>
       </button>
-      <mat-error *ngIf="newNewsForm.get('mainImage')?.hasError('required')">
+      <mat-error *ngIf="editNewsForm.get('mainImage')?.hasError('required')">
         Główny obraz jest wymagany
       </mat-error>
     </mat-form-field>
@@ -60,12 +60,12 @@
       color="primary"
       type="button"
       (click)="saveNews()"
-      [disabled]="newNewsForm.invalid">
+      [disabled]="editNewsForm.invalid">
       Zapisz
     </button>
   </div>
   <div>
-    <button mat-flat-button color="warn" type="button" (click)="router.navigate(['..'], { relativeTo: route })">
+    <button mat-flat-button color="warn" type="button" (click)="router.navigate(['../..'], { relativeTo: route })">
       Anuluj
     </button>
   </div>

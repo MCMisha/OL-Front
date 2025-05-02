@@ -10,8 +10,6 @@
     <button mat-flat-button color="warn" (click)="openDialog()" [disabled]="!selectedRow">Usuń</button>
   </div>
 </div>
-<!--<app-rich-text-editor [(ngModel)]="editorContent"></app-rich-text-editor>-->
-<!--<button mat-flat-button color="primary" (click)="onSave()">Zapisz</button>-->
 <table mat-table [dataSource]="dataSourceWithPageSize" class="mat-elevation-z8 pe-2">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>Id</th>

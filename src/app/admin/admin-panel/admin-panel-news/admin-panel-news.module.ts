@@ -20,13 +20,15 @@ import { AdminPanelNewsNewComponent } from './admin-panel-news-new/admin-panel-n
 import {MatError, MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
+import { AdminPanelNewsEditComponent } from './admin-panel-news-edit/admin-panel-news-edit.component';
 
 
 
 @NgModule({
   declarations: [
     AdminPanelNewsComponent,
-    AdminPanelNewsNewComponent
+    AdminPanelNewsNewComponent,
+    AdminPanelNewsEditComponent
   ],
   imports: [
     CommonModule,
