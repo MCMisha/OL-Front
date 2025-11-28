@@ -1,21 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AdminNewsService} from "../../../services/admin/admin-news.service";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {News} from "../../../models/news";
 import {MatTableDataSource} from "@angular/material/table";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-admin-panel-news',
   templateUrl: './admin-panel-news.component.html',
   styleUrl: './admin-panel-news.component.scss'
 })
-export class AdminPanelNewsComponent implements OnInit, OnDestroy {
+export class AdminPanelNewsComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading: boolean = true;
   selectedRow?: News;
   selectedRowIndex?: number;
   displayedColumns = ['id', 'title', 'subtitle', 'creationDate'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   news: News[] = [];
   subscription = new Subscription();
@@ -38,6 +40,14 @@ export class AdminPanelNewsComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.dataSourceWithPageSize.paginator = this.paginator;
+    } else {
+      console.error('Paginator is not initialized.');
+    }
   }
 
   ngOnDestroy(): void {

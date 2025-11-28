@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AdminPlaceService} from "../../../services/admin/admin-place.service";
 import {Subject, Subscription, takeUntil} from 'rxjs';
 import {Place} from "../../../models/place";
@@ -13,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './admin-panel-place.component.html',
   styleUrl: './admin-panel-place.component.scss'
 })
-export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
+export class AdminPanelPlaceComponent implements OnInit, AfterViewInit, OnDestroy {
   places: Place[] = [];
   selectedRowIndex: any;
   selectedRow?: Place;
@@ -40,6 +40,14 @@ export class AdminPanelPlaceComponent implements OnInit, OnDestroy {
         }
       )
     )
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.dataSourceWithPageSize.paginator = this.paginator;
+    } else {
+      console.error('Paginator is not initialized.');
+    }
   }
 
   highlightRow(row: any) {

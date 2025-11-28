@@ -1,21 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 import {AdminArtistService} from "../../../services/admin/admin-artist.service";
 import {Artist} from "../../../models/artist";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-admin-panel-artists',
   templateUrl: './admin-panel-artists.component.html',
   styleUrl: './admin-panel-artists.component.scss'
 })
-export class AdminPanelArtistsComponent implements OnInit, OnDestroy {
+export class AdminPanelArtistsComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading: boolean = true;
   selectedRow?: Artist;
   selectedRowIndex?: number;
   displayedColumns = ['id', 'firstName', 'lastName', 'photo'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   news: Artist[] = [];
   subscription = new Subscription();
@@ -38,6 +40,14 @@ export class AdminPanelArtistsComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.dataSourceWithPageSize.paginator = this.paginator;
+    } else {
+      console.error('Paginator is not initialized.');
+    }
   }
 
   ngOnDestroy(): void {
