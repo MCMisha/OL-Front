@@ -22,11 +22,10 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
 
 
-
 @NgModule({
   declarations: [
     AdminPanelComponent,
-    AdminPanelMainComponent
+    AdminPanelMainComponent,
   ],
   imports: [
     CommonModule,

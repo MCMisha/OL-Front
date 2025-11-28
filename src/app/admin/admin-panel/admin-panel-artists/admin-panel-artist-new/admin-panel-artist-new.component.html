@@ -1,0 +1,111 @@
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<form [formGroup]="artistForm">
+
+  <!-- First name -->
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Imię artysty</mat-label>
+      <input matInput formControlName="firstName" placeholder="Wprowadź imię">
+
+      <mat-error *ngIf="artistForm.get('firstName')?.hasError('required')">
+        Imię jest wymagane
+      </mat-error>
+      <mat-error *ngIf="artistForm.get('firstName')?.hasError('minlength')">
+        Długość musi mieć więcej niż 2 znaki
+      </mat-error>
+      <mat-error *ngIf="artistForm.get('firstName')?.hasError('maxlength')">
+        Długość musi mieć mniej niż 51 znaków
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Last name -->
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Nazwisko artysty</mat-label>
+      <input matInput formControlName="lastName" placeholder="Wprowadź nazwisko">
+
+      <mat-error *ngIf="artistForm.get('lastName')?.hasError('required')">
+        Nazwisko jest wymagane
+      </mat-error>
+      <mat-error *ngIf="artistForm.get('lastName')?.hasError('minlength')">
+        Długość musi mieć więcej niż 2 znaki
+      </mat-error>
+      <mat-error *ngIf="artistForm.get('lastName')?.hasError('maxlength')">
+        Długość musi mieć mniej niż 51 znaków
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Category -->
+  <div class="ms-1 mb-3 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Kategoria artysty</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let cat of categories" [value]="cat.value">
+          {{ cat.label }}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="artistForm.get('category')?.hasError('required')">
+        Kategoria jest wymagana
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Description (Rich text editor!) -->
+  <div class="ms-1 mb-3 d-flex align-items-center">
+    <mat-label class="mb-1">Opis artysty</mat-label>
+  </div>
+
+  <div class="ms-1 mb-3">
+    <app-rich-text-editor formControlName="description"></app-rich-text-editor>
+
+    <mat-error *ngIf="artistForm.get('description')?.hasError('maxlength')">
+      Opis może mieć maksymalnie 2000 znaków
+    </mat-error>
+  </div>
+
+  <!-- Photo upload -->
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Zdjęcie artysty</mat-label>
+
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden #imageInput>
+      <input matInput [value]="selectedFileName || 'Nie wybrano pliku'" readonly (click)="imageInput.click()">
+
+      <button mat-icon-button matSuffix *ngIf="!isFileLoaded" (click)="imageInput.click()">
+        <mat-icon>image</mat-icon>
+      </button>
+      <button mat-icon-button matSuffix *ngIf="isFileLoaded" (click)="onDeleteImage()">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-error *ngIf="artistForm.get('photo')?.hasError('required')">
+        Zdjęcie jest wymagane
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Preview -->
+  <div *ngIf="isFileLoaded" class="ms-1 mb-1 d-flex align-items-center">
+    <img [src]="previewImage" width="25%" height="25%" alt="Zdjęcie artysty"/>
+  </div>
+
+</form>
+
+<!-- Buttons -->
+<div class="ms-1 mb-1 d-flex align-items-center">
+  <div class="me-4">
+    <button mat-flat-button color="primary" (click)="createArtist()" [disabled]="artistForm.invalid || isLoading">
+      Zapisz
+    </button>
+  </div>
+
+  <div>
+    <button mat-flat-button color="warn" (click)="cancel()">
+      Anuluj
+    </button>
+  </div>
+</div>

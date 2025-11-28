@@ -3,16 +3,16 @@
   <mat-form-field appearance="fill" style="width: 300px;">
     <mat-label>Nazwa miejsca</mat-label>
     <input matInput formControlName="placeName" placeholder="Wprowadź nazwę miejsca">
-    <mat-error *ngIf="editPlaceForm?.get('placeName')?.hasError('required')">
+    <mat-error *ngIf="editPlaceForm.get('placeName')!.hasError('required')">
       Nazwa miejsca jest wymagana
     </mat-error>
-    <mat-error *ngIf="editPlaceForm?.get('placeName')?.hasError('minlength')">
+    <mat-error *ngIf="editPlaceForm.get('placeName')!.hasError('minlength')">
       Długość musi być więcej niż 2
     </mat-error>
-    <mat-error *ngIf="editPlaceForm?.get('placeName')?.hasError('maxlength')">
+    <mat-error *ngIf="editPlaceForm.get('placeName')!.hasError('maxlength')">
       Długość musi być mniej niż 51
     </mat-error>
-    <mat-error *ngIf="editPlaceForm?.get('placeName')?.hasError('placeExists')">
+    <mat-error *ngIf="editPlaceForm.get('placeName')!.hasError('placeExists')">
       Miejsce już istnieje
     </mat-error>
   </mat-form-field>
