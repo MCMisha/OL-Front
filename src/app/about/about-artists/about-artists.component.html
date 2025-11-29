@@ -1,0 +1,28 @@
+<div class="artists-page">
+
+  <div class="filters">
+    <button
+      *ngFor="let c of categories"
+      class="filter-btn"
+      [class.active]="c.value === selectedCategory"
+      (click)="selectCategory(c.value)">
+      {{ c.label }}
+    </button>
+  </div>
+
+  <div class="artists-grid">
+    <div class="artist-card" *ngFor="let artist of filteredArtists">
+
+      <div class="photo-container">
+        <img [src]="getImage(artist.photo)" [alt]="artist.firstName + ' ' + artist.lastName">
+      </div>
+
+      <div class="info">
+        <div class="name">{{ artist.firstName }} {{ artist.lastName }}</div>
+
+        <div class="description" [innerHTML]="artist.description"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
