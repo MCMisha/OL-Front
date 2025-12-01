@@ -41,7 +41,7 @@
   <!-- Category -->
   <div class="ms-1 mb-3 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
-      <mat-label>Kategoria artysty</mat-label>
+      <mat-label>Rola artysty</mat-label>
       <mat-select formControlName="category">
         <mat-option *ngFor="let cat of categories" [value]="cat.value">
           {{ cat.label }}
@@ -49,7 +49,7 @@
       </mat-select>
 
       <mat-error *ngIf="artistForm.get('category')?.hasError('required')">
-        Kategoria jest wymagana
+        Rola jest wymagana
       </mat-error>
     </mat-form-field>
   </div>

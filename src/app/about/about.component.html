@@ -1,18 +1,30 @@
-<div class="container">
-  <aside class="sidebar">
-    <ul>
-      <li>Inauguracja sezonu</li>
-      <li>Dyrekcja</li>
-      <li><a routerLink="artists">Artyści</a></li>
-      <li>Misja Opery</li>
-      <li>Mecenasi</li>
-      <li>Partnerzy</li>
-      <li>Promocje</li>
-    </ul>
-  </aside>
+<!-- DESKTOP SIDEBAR -->
+<aside class="sidebar desktop-only">
+  <ul>
+    <li *ngFor="let item of menu"
+        [routerLink]="item.link"
+        routerLinkActive="active">
+      {{ item.label }}
+    </li>
+  </ul>
+</aside>
 
-  <main class="content">
-    <h1>O nas</h1>
-    <router-outlet></router-outlet>
-  </main>
+<!-- MOBILE ACCORDION -->
+<div class="mobile-menu mobile-only">
+  <button class="accordion-btn" (click)="menuOpen = !menuOpen">
+    Rozwiń sekcję "O nas"
+  </button>
+
+  <div class="accordion-panel" *ngIf="menuOpen">
+    <ul>
+      <a>
+        <li *ngFor="let item of menu" [routerLink]="item.link" (click)="menuOpen = false">
+          {{ item.label }}
+        </li>
+      </a>
+    </ul>
+  </div>
 </div>
+<section class="content-area">
+  <router-outlet></router-outlet>
+</section>

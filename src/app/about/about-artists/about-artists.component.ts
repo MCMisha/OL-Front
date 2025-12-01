@@ -12,16 +12,16 @@ import {Subscription} from "rxjs";
   styleUrls: ['./about-artists.component.scss']
 })
 export class AboutArtistsComponent implements OnInit, OnDestroy {
-
+  isLoading: boolean = true;
   artists: Artist[] = [];
   filteredArtists: Artist[] = [];
 
   selectedCategory: ArtistCategory | string = 'all';
   subscription = new Subscription();
-  // экспортируем labels в HTML
+
   ArtistCategoryLabels = ArtistCategoryLabels;
 
-  // генерируем категории автоматически
+
   categories = [
     {label: 'Wszyscy', value: 'all'},
     ...Object.values(ArtistCategory)
@@ -49,6 +49,7 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.artists = data;
           this.filteredArtists = data;
+          this.isLoading = false;
         },
         error: (err) => console.error(err)
       })

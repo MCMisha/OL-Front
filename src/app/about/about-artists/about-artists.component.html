@@ -1,14 +1,14 @@
-<div class="artists-page">
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 
-  <div class="filters">
-    <button
-      *ngFor="let c of categories"
-      class="filter-btn"
-      [class.active]="c.value === selectedCategory"
-      (click)="selectCategory(c.value)">
-      {{ c.label }}
-    </button>
-  </div>
+<div class="artists-page">
+  <mat-form-field appearance="outline" class="artist-filter-select">
+    <mat-label>Wybierz rolę</mat-label>
+    <mat-select [(value)]="selectedCategory" [disabled]="isLoading" (selectionChange)="selectCategory($event.value)">
+      <mat-option *ngFor="let c of categories" [value]="c.value">
+        {{ c.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <div class="artists-grid">
     <div class="artist-card" *ngFor="let artist of filteredArtists">

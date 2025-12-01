@@ -16,7 +16,7 @@ export class AdminPanelArtistsComponent implements OnInit, AfterViewInit, OnDest
   isLoading: boolean = true;
   selectedRow?: Artist;
   selectedRowIndex?: number;
-  displayedColumns = ['id', 'firstName', 'lastName', 'photo'];
+  displayedColumns = ['id', 'firstName', 'lastName', 'category', 'photo'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   news: Artist[] = [];

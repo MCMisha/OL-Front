@@ -28,6 +28,10 @@
     <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef></th>
+  </ng-container>
+
   <ng-container matColumnDef="photo">
     <th mat-header-cell *matHeaderCellDef>Zdjęcie</th>
     <td mat-cell *matCellDef="let element">
