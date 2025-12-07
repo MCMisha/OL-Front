@@ -1,3 +1,4 @@
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 <div class="container py-4" *ngIf="news">
   <h1>{{ news.title }}</h1>
   <h4 class="text-muted">{{ news.subtitle }}</h4>
