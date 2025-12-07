@@ -1,0 +1,1 @@
+import{Tc as o,da as e,oa as n}from"./chunk-YAIKHCVE.js";var d=(()=>{class t{static{this.\u0275fac=function(i){return new(i||t)}}static{this.\u0275mod=n({type:t})}static{this.\u0275inj=e({imports:[o]})}}return t})();export{d as AdminPanelContactModule};
