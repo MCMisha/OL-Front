@@ -1,0 +1,21 @@
+<div class="container py-4" *ngIf="news">
+  <h1>{{ news.title }}</h1>
+  <h4 class="text-muted">{{ news.subtitle }}</h4>
+
+  <p class="text-muted mb-3">
+    {{ news.creationDate | date:'dd MMMM yyyy' }}
+  </p>
+
+  <img
+    [src]="'data:image/jpeg;base64,' + news.mainImage"
+    *ngIf="news.mainImage"
+    class="w-100 rounded mb-4"
+    alt="Główny obrazek"
+  />
+
+  <div [innerHTML]="news.content"></div>
+
+  <button class="btn btn-secondary mt-4" routerLink="/news">
+    ← Powrót
+  </button>
+</div>

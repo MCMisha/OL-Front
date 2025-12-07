@@ -1,1 +1,36 @@
-<p>news works!</p>
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class="container py-4">
+  <h1 class="mb-4">Aktualności</h1>
+
+  <div class="row" *ngIf="news.length">
+    <div class="col-md-4 mb-4" *ngFor="let n of news">
+      <div class="card shadow-sm h-100 news-card">
+
+        <img
+          [src]="'data:image/jpeg;base64,' + n.mainImage"
+          alt="{{ n.title }}"
+          class="card-img-top"
+          *ngIf="n.mainImage"
+        >
+
+        <div class="card-body">
+          <h5>{{ n.title }}</h5>
+
+          <p class="text-muted small">
+            {{ n.creationDate | date:'dd MMM yyyy' }}
+          </p>
+
+          <p class="text-muted">
+            {{ n.subtitle }}
+          </p>
+
+          <a
+            [routerLink]="['/news', n.id]"
+            class="btn btn-outline-primary w-100 mt-2">
+            Czytaj więcej
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

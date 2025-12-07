@@ -30,6 +30,5 @@ export class AdminNewsService {
 
   getNewsById(id: number): Observable<News> {
     return this.http.get<News>(`${environment.baseApiUri}/AdminNews/${id}`, {withCredentials: true});
-
   }
 }
