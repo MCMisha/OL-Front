@@ -6,6 +6,8 @@ import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-conf
 import {AdminArtistService} from "../../../services/admin/admin-artist.service";
 import {Artist} from "../../../models/artist";
 import {MatPaginator} from "@angular/material/paginator";
+import {ArtistCategoryLabels} from "../../../models/enums/artist-category-labels";
+import {ArtistCategory} from "../../../models/enums/artist-category.enum";
 
 @Component({
   selector: 'app-admin-panel-artists',
@@ -18,11 +20,11 @@ export class AdminPanelArtistsComponent implements OnInit, AfterViewInit, OnDest
   selectedRowIndex?: number;
   displayedColumns = ['id', 'firstName', 'lastName', 'category', 'photo'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  news: Artist[] = [];
+  artists: Artist[] = [];
   subscription = new Subscription();
   private destroy$ = new Subject<void>();
-  dataSourceWithPageSize = new MatTableDataSource(this.news);
+  protected readonly ArtistCategoryLabels = ArtistCategoryLabels;
+  dataSourceWithPageSize = new MatTableDataSource(this.artists);
   pageSize = 5;
   pageIndex = 0;
 
@@ -34,9 +36,9 @@ export class AdminPanelArtistsComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit(): void {
     this.subscription.add(
-      this.artistService.getArtists().subscribe(news => {
-        this.news = news;
-        this.dataSourceWithPageSize.data = this.news;
+      this.artistService.getArtists().subscribe(artists => {
+        this.artists = artists;
+        this.dataSourceWithPageSize.data = this.artists;
         this.isLoading = false;
       })
     );
@@ -85,4 +87,9 @@ export class AdminPanelArtistsComponent implements OnInit, AfterViewInit, OnDest
       });
     }
   }
+
+  getCategoryLabel(cat: number): string {
+    return ArtistCategoryLabels[cat as ArtistCategory];
+  }
+
 }

@@ -14,4 +14,8 @@ export class ArtistService {
   getAll(): Observable<Artist[]> {
     return this.http.get<Artist[]>(`${environment.baseApiUri}/Artist/all`);
   }
+
+  getById(id: number): Observable<Artist> {
+    return this.http.get<Artist>(`${environment.baseApiUri}/Artist/by-id/${id}`)
+  }
 }

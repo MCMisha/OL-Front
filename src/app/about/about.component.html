@@ -1,15 +1,3 @@
-<!-- DESKTOP SIDEBAR -->
-<aside class="sidebar desktop-only">
-  <ul>
-    <li *ngFor="let item of menu"
-        [routerLink]="item.link"
-        routerLinkActive="active">
-      {{ item.label }}
-    </li>
-  </ul>
-</aside>
-
-<!-- MOBILE ACCORDION -->
 <div class="mobile-menu mobile-only">
   <button class="accordion-btn" (click)="menuOpen = !menuOpen">
     Rozwiń sekcję "O nas"
@@ -17,9 +5,9 @@
 
   <div class="accordion-panel" *ngIf="menuOpen">
     <ul>
-      <a>
-        <li *ngFor="let item of menu" [routerLink]="item.link" (click)="menuOpen = false">
-          {{ item.label }}
+      <a style="cursor: pointer;">
+        <li *ngFor="let item of menu" [routerLink]="['/about', item.slug]" (click)="menuOpen = false">
+          {{ item.title }}
         </li>
       </a>
     </ul>

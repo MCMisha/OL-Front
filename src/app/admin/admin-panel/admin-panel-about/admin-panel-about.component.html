@@ -1,1 +1,41 @@
-<p>admin-panel-about works!</p>
+<div class="header-row">
+  <h2>Rozdziały „O nas”</h2>
+</div>
+<button mat-raised-button routerLink="new" class="mb-2" color="primary">
+  <mat-icon>add</mat-icon>
+  Dodaj sekcję
+</button>
+<div
+  cdkDropList
+  class="card-list"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    class="card-item"
+    *ngFor="let s of sections"
+    cdkDrag
+  >
+    <div class="left">
+      <div class="drag" cdkDragHandle>
+        <mat-icon>drag_indicator</mat-icon>
+      </div>
+
+      <div class="text">
+        <div class="title">{{ s.title }}</div>
+        <div class="subtitle">Kolejność: {{ s.order }}</div>
+      </div>
+    </div>
+
+      <div class="item-actions">
+        <button mat-icon-button routerLink="{{s.id}}/edit" color="primary" >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="openDialog(s.id)" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+

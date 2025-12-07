@@ -18,8 +18,10 @@
       </div>
 
       <div class="info">
-        <div class="name">{{ artist.firstName }} {{ artist.lastName }}</div>
-        <div class="badge">{{ ArtistCategoryLabels[artist.category] }}</div>
+        <a routerLink="{{artist.id}}">
+          <div class="name">{{ artist.firstName }} {{ artist.lastName }}</div>
+        </a>
+        <div class="category-badge" [ngClass]="getCategoryClass(artist.category)">{{ ArtistCategoryLabels[artist.category] }}</div>
       </div>
     </div>
   </div>

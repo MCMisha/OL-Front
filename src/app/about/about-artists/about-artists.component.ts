@@ -4,6 +4,7 @@ import {ArtistCategory} from "../../models/enums/artist-category.enum";
 import {ArtistCategoryLabels} from "../../models/enums/artist-category-labels";
 import {ArtistService} from "../../services/artist.service";
 import {Subscription} from "rxjs";
+import {HelperService} from "../../shared/services/helper.service";
 
 
 @Component({
@@ -32,7 +33,8 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
       }))
   ];
 
-  constructor(private artistsService: ArtistService) {
+  constructor(private artistsService: ArtistService,
+              private helperService: HelperService) {
   }
 
   ngOnInit(): void {
@@ -67,6 +69,10 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
 
   getImage(photo: string | undefined): string {
     return `data:image/webp;base64,${photo}`;
+  }
+
+  protected getCategoryClass(category: ArtistCategory) {
+    return this.helperService.getCategoryNgClass(category);
   }
 }
 

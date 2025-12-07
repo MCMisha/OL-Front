@@ -2,3 +2,46 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.category-badge {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  display: inline-block;
+  color: white;
+}
+
+.cat-role {
+  background: #3f51b5; // indigo
+}
+
+/* Smyczki */
+.cat-smyczki {
+  background: #673ab7; // deep purple
+}
+
+/* Drewniane */
+.cat-drewniane {
+  background: #0097a7; // cyan-dark
+}
+
+/* Blaszane */
+.cat-blaszane {
+  background: #ff9800; // orange
+}
+
+/* Inne */
+.cat-inne {
+  background: #4caf50; // green
+}
+
+/* Zespoły */
+.cat-zespoly {
+  background: #e91e63; // pink
+}
+
+/* Default */
+.cat-default {
+  background: #9e9e9e; // gray
+}

@@ -1,0 +1,8 @@
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<div *ngIf="!isLoading && section !== null" class="ms-2">
+
+  <h1>{{ section.title }}</h1>
+
+  <div [innerHTML]="section.contentHtml"></div>
+</div>

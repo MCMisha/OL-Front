@@ -1,0 +1,42 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<div class="details-wrapper" *ngIf="artist">
+
+  <h2 class="title">
+    {{ artist.firstName }} {{ artist.lastName }}
+  </h2>
+
+  <div class="top-section">
+
+    <!-- PHOTO -->
+    <div class="photo-box">
+      <img
+        *ngIf="artist.photo"
+        [src]="'data:image/jpeg;base64,' + artist.photo"
+        alt="artist photo"
+      />
+    </div>
+
+    <div class="info-box">
+      <p><strong>Rola:</strong>
+        <span class="category-badge ms-2" [ngClass]="getCategoryClass(artist.category)">{{ getCategoryLabel(artist.category) }}</span>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="description-section">
+    <h3>Opis artysty</h3>
+
+    <div
+      class="description-html"
+      [innerHTML]="artist.description">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" routerLink="../">Powrót</button>
+  </div>
+
+</div>

@@ -86,8 +86,18 @@
     margin-bottom: 5px;
   }
 
-  .badge {
-    font-size: 14px;
-    color: #666;
-  }
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-badge {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  display: inline-block;
+  color: white;
 }

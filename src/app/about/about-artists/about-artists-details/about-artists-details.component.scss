@@ -1,0 +1,156 @@
+.details-wrapper {
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.top-section {
+  display: flex;
+  gap: 30px;
+}
+
+.photo-box img {
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.info-box p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.badge {
+  padding: 4px 10px;
+  background: #eee;
+  border-radius: 6px;
+}
+
+.description-section {
+  margin-top: 30px;
+}
+
+.description-html {
+  margin-top: 10px;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.details-wrapper {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 15px; // чтобы на мобильном не липло к краям
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: left;
+
+  @media (max-width: 600px) {
+    text-align: center;
+    font-size: 20px;
+  }
+}
+
+.top-section {
+  display: flex;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center; // фото по центру
+    gap: 20px;
+  }
+}
+
+.photo-box img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+
+  @media (max-width: 600px) {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.info-box {
+  font-size: 16px;
+
+  p {
+    margin: 6px 0;
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+}
+
+.category-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+
+  @media (max-width: 600px) {
+    display: inline-block;
+    margin-top: 6px;
+  }
+}
+
+/* описание */
+.description-section {
+  margin-top: 25px;
+
+  h3 {
+    margin-bottom: 10px;
+
+    @media (max-width: 600px) {
+      text-align: center;
+    }
+  }
+}
+
+.description-html {
+  padding: 12px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  min-height: 50px;
+}
+
+/* Buttons */
+.actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+}
