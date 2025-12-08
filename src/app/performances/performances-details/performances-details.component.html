@@ -1,0 +1,24 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<div class="details-wrapper" *ngIf="performance">
+  <div class="image-section">
+    <img [src]="'data:image/jpeg;base64,' + performance.mainImage"
+         [alt]="performance.title" />
+  </div>
+
+  <div class="info-section">
+    <h1 class="title">{{ performance.title }}</h1>
+
+    <div class="meta">
+      <span class="genre">{{ performance.genreNavigation?.name }}</span>
+      <span class="place">Miejsce: {{ performance.placeNavigation?.name }}</span>
+      <span class="director">Reżyseria: Waldemar Zawodziński</span>
+    </div>
+
+    <p class="description" [innerHTML]="performance.description"></p>
+
+    <button mat-stroked-button color="accent" (click)="goBack()">
+      Wróć
+    </button>
+  </div>
+</div>

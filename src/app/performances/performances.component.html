@@ -1,25 +1,35 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class="performances-wrapper">
+  <div class="performances-grid">
+    <div *ngFor="let performance of paginatedPerformances" class="performance-card">
 
-<div *ngFor="let performance of paginatedPerformances" class="performance-wrapper">
-  <div class="performance-card">
-    <img
-      [src]="'data:image/jpeg;base64,' + performance.mainImage"
-      alt="{{ performance.title }}"
-      class="performance-image"
-    />
-    <div class="performance-info">
-      <span class="performance-title">{{ performance.title }}</span>
-      <span class="text-muted">
-        {{ getGenreNameById(performance.genre) }} &mdash; Waldemar Zawodziński
-      </span>
+      <div class="image-wrapper">
+        <img
+          [src]="'data:image/jpeg;base64,' + performance.mainImage"
+          alt="{{ performance.title }}"
+        />
+      </div>
+
+      <div class="card-body">
+        <h2 class="title">{{ performance.title }}</h2>
+
+        <p class="genre">{{ getGenreNameById(performance.genre) }}</p>
+
+        <p class="director">Reżyseria: Waldemar Zawodziński</p>
+
+        <button mat-stroked-button color="primary"
+                [routerLink]="['details', performance.id]">
+          Szczegóły
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
-
 <mat-paginator
   [length]="performances.length"
   [pageSize]="pageSize"
   [pageIndex]="pageIndex"
-  [pageSizeOptions]="[2, 5, 10]"
+  [pageSizeOptions]="[6, 9, 12]"
   (page)="onPageChange($event)">
 </mat-paginator>
