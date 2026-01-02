@@ -17,6 +17,7 @@
         Nazwa spektaklu już istnieje
       </mat-error>
     </mat-form-field>
+    <button class="ms-2" mat-flat-button color="primary" (click)="router.navigate(['implementers'], { relativeTo: route })">Edytuj realizatorów</button>
   </div>
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
@@ -83,7 +84,7 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <div class=" ms-1 mb-1 d-flex align-items-center">
+  <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Główny obraz</mat-label>
       <input type="file" accept="image/*" (change)="onFileSelected($event, 'mainImage')" hidden #mainImageInput>

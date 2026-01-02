@@ -22,12 +22,14 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {MatIcon} from "@angular/material/icon";
+import { AdminPanelPerformanceEditImplementersComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-implementers/admin-panel-performance-edit-implementers.component';
 
 @NgModule({
   declarations: [
     AdminPanelPerformanceComponent,
     AdminPanelPerformanceNewComponent,
-    AdminPanelPerformanceEditComponent
+    AdminPanelPerformanceEditComponent,
+    AdminPanelPerformanceEditImplementersComponent
   ],
   imports: [
     CommonModule,

@@ -5,11 +5,15 @@ import {AdminPanelPerformanceNewComponent} from "./admin-panel-performance-new/a
 import {
   AdminPanelPerformanceEditComponent
 } from "./admin-panel-performance-edit/admin-panel-performance-edit.component";
+import {
+  AdminPanelPerformanceEditImplementersComponent
+} from "./admin-panel-performance-edit/admin-panel-performance-edit-implementers/admin-panel-performance-edit-implementers.component";
 
 const routes: Routes = [
   {path: '', component: AdminPanelPerformanceComponent},
   {path: 'new', component: AdminPanelPerformanceNewComponent},
-  {path: ':id/edit', component: AdminPanelPerformanceEditComponent}
+  {path: ':id/edit', component: AdminPanelPerformanceEditComponent},
+  {path: ':id/edit/implementers', component: AdminPanelPerformanceEditImplementersComponent}
 ];
 
 @NgModule({

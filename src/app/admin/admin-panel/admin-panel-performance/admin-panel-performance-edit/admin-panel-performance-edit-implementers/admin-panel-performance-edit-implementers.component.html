@@ -1,0 +1,67 @@
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class="impl-page">
+  <div class="impl-header">
+    <h2>Realizatorzy</h2>
+    <div class="impl-performance-name">
+      {{ performanceName }}
+    </div>
+    <div class="impl-actions">
+      <button mat-stroked-button (click)="back()">
+        Wróć
+      </button>
+
+      <button mat-flat-button color="primary" (click)="addRow()">
+        Dodaj
+      </button>
+
+      <button mat-flat-button color="primary" (click)="saveAllExisting()">
+        Zapisz zmiany
+      </button>
+
+      <button mat-flat-button color="accent" (click)="saveNewOnly()">
+        Zapisz nowe
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="impl-card" [formGroup]="form">
+    <mat-card-content formArrayName="implementers">
+
+      <div class="impl-row"
+           *ngFor="let row of implementersFA.controls; let i = index"
+           [formGroupName]="i">
+
+        <mat-form-field appearance="fill" class="impl-field">
+          <mat-label>Imię</mat-label>
+          <input matInput formControlName="firstName"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="impl-field">
+          <mat-label>Nazwisko</mat-label>
+          <input matInput formControlName="lastName"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="impl-field">
+          <mat-label>Rola</mat-label>
+          <input matInput formControlName="role"/>
+        </mat-form-field>
+        <div class="impl-row-actions">
+
+          <button mat-icon-button color="primary"
+                  [disabled]="!row.dirty || row.invalid || !row.get('id')?.value"
+                  (click)="saveRow(i)">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" class="impl-delete" (click)="removeRow(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="impl-empty" *ngIf="implementersFA.length === 0">
+        Brak realizatorów. Kliknij „Dodaj”, aby dodać pierwszego.
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

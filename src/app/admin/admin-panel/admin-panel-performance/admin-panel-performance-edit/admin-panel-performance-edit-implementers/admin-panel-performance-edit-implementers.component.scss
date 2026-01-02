@@ -1,0 +1,94 @@
+.impl-page {
+  max-width: 980px;
+  padding: 0 24px;
+}
+
+.impl-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.impl-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.impl-card {
+  border-radius: 12px;
+}
+
+.impl-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 96px;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.impl-field {
+  width: 100%;
+}
+
+.impl-row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+}
+
+.impl-delete {
+  margin-top: 2px;
+}
+
+.impl-empty {
+  padding: 18px 4px;
+  opacity: 0.75;
+}
+
+.impl-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.impl-performance-name {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 900px) {
+  .impl-row {
+    grid-template-columns: 1fr 1fr auto;
+    grid-template-areas:
+      "name surname del"
+      "role role del";
+  }
+
+  .impl-row mat-form-field:nth-child(1) { grid-area: name; }
+  .impl-row mat-form-field:nth-child(2) { grid-area: surname; }
+  .impl-row mat-form-field:nth-child(3) { grid-area: role; }
+  .impl-delete { grid-area: del; align-self: start; }
+}
+
+@media (max-width: 560px) {
+  .impl-page {
+    padding: 0 12px;
+  }
+
+  .impl-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name del"
+      "surname del"
+      "role del";
+  }
+}
