@@ -23,6 +23,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {MatIcon} from "@angular/material/icon";
 import { AdminPanelPerformanceEditImplementersComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-implementers/admin-panel-performance-edit-implementers.component';
+import {MatCard, MatCardContent} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,9 @@ import { AdminPanelPerformanceEditImplementersComponent } from './admin-panel-pe
     MatAutocompleteTrigger,
     MatIconButton,
     MatIcon,
-    MatSuffix
+    MatSuffix,
+    MatCardContent,
+    MatCard
   ]
 })
 export class AdminPanelPerformanceModule { }
