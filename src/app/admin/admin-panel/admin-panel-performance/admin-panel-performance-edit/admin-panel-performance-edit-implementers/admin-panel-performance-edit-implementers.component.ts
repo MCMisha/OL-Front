@@ -65,7 +65,8 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
       id: [i?.id ?? 0],
       firstName: [i?.firstName ?? '', Validators.required],
       lastName: [i?.lastName ?? '', Validators.required],
-      role: [i?.role ?? '', Validators.required]
+      role: [i?.role ?? '', Validators.required],
+      isDirector: [i?.isDirector ?? false, Validators.required]
     });
   }
 
@@ -138,6 +139,15 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
       })
     ).subscribe(_ => {
       this.isLoading = false;
+    });
+  }
+
+  onDirectorChange(changedIndex: number, checked: boolean) {
+    if (!checked) return;
+
+    this.implementersFA.controls.forEach((ctrl, idx) => {
+      if (idx === changedIndex) return;
+      ctrl.get('isDirector')?.setValue(false, { emitEvent: false });
     });
   }
 

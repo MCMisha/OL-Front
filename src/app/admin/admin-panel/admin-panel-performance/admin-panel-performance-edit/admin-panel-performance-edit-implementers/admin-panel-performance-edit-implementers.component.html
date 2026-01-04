@@ -27,36 +27,40 @@
   <mat-card class="impl-card" [formGroup]="form">
     <mat-card-content formArrayName="implementers">
 
-      <div class="impl-row"
-           *ngFor="let row of implementersFA.controls; let i = index"
-           [formGroupName]="i">
-
-        <mat-form-field appearance="fill" class="impl-field">
+      <div class="impl-row" *ngFor="let row of implementersFA.controls; let i = index" [formGroupName]="i">
+        <mat-form-field appearance="outline" class="impl-field">
           <mat-label>Imię</mat-label>
           <input matInput formControlName="firstName"/>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="impl-field">
+        <mat-form-field appearance="outline" class="impl-field">
           <mat-label>Nazwisko</mat-label>
           <input matInput formControlName="lastName"/>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="impl-field">
+        <mat-form-field appearance="outline" class="impl-field">
           <mat-label>Rola</mat-label>
           <input matInput formControlName="role"/>
         </mat-form-field>
+
         <div class="impl-row-actions">
+          <mat-checkbox formControlName="isDirector" (change)="onDirectorChange(i, $event.checked)">
+            Reżyser
+          </mat-checkbox>
 
           <button mat-icon-button color="primary"
                   [disabled]="!row.dirty || row.invalid || !row.get('id')?.value"
                   (click)="saveRow(i)">
             <mat-icon>save</mat-icon>
           </button>
-          <button mat-icon-button color="warn" class="impl-delete" (click)="removeRow(i)">
+
+          <button mat-icon-button color="warn"
+                  (click)="removeRow(i)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
       </div>
+
 
       <div class="impl-empty" *ngIf="implementersFA.length === 0">
         Brak realizatorów. Kliknij „Dodaj”, aby dodać pierwszego.

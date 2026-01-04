@@ -3,4 +3,5 @@ export interface Implementer {
   firstName: string;
   lastName: string;
   role: string;
+  isDirector: boolean;
 }
