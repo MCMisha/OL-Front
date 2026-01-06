@@ -1,0 +1,98 @@
+<div class="page">
+  <div class="header">
+    <h2>Ceny biletów</h2>
+    <div class="impl-performance-name">
+      {{ performanceName }}
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="back()">
+        Wróć
+      </button>
+
+      <button mat-stroked-button (click)="addGroup()" [disabled]="isLoading">
+        + Dodaj grupę
+      </button>
+
+      <button mat-flat-button color="primary" (click)="save()" [disabled]="isLoading">
+        Zapisz
+      </button>
+
+      <mat-spinner *ngIf="isLoading" diameter="22"></mat-spinner>
+    </div>
+  </div>
+
+  <div class="hint">
+    Grupa = sektor / strefa (np. „Sektor I”). Wewnątrz dodaj ceny: „Normalny” i opcjonalnie „Ulgowy”.
+  </div>
+
+  <div *ngIf="groupsFA.length === 0" class="empty">
+    Brak danych. Kliknij „Dodaj grupę”.
+  </div>
+
+  <div class="groups" [formGroup]="form">
+    <div formArrayName="groups">
+      <mat-card class="group-card" *ngFor="let g of groupsFA.controls; let gi = index" [formGroupName]="gi">
+        <div class="group-top">
+          <div class="group-fields">
+            <mat-form-field appearance="outline" class="field name">
+              <mat-label>Nazwa grupy</mat-label>
+              <input matInput formControlName="name" placeholder="np. Sektor I / I strefa">
+              <mat-error *ngIf="g.get('name')?.touched && g.get('name')?.invalid">
+                Podaj nazwę (max 120 znaków).
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field sort">
+              <mat-label>Kolejność</mat-label>
+              <input matInput type="number" formControlName="sortOrder">
+              <mat-error *ngIf="g.get('sortOrder')?.touched && g.get('sortOrder')?.invalid">
+                Min. 1
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="group-actions">
+            <button mat-stroked-button (click)="addPriceRow(gi)" [disabled]="isLoading">
+              + Dodaj cenę
+            </button>
+
+            <button mat-stroked-button color="warn" (click)="removeGroup(gi)" [disabled]="isLoading">
+              Usuń grupę
+            </button>
+          </div>
+        </div>
+
+        <div class="dup-warning" *ngIf="hasDuplicateTypes(gi)">
+          W tej grupie są powtórzone typy cen. Usuń duplikat (np. drugi raz „Normalny”).
+        </div>
+
+        <div class="prices" formArrayName="prices">
+          <div class="price-row" *ngFor="let p of pricesFA(gi).controls; let pi = index" [formGroupName]="pi">
+            <mat-form-field appearance="outline" class="field type">
+              <mat-label>Typ</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let opt of ticketTypeOptions" [value]="opt.value">
+                  {{ opt.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="field amount">
+              <mat-label>Cena</mat-label>
+              <input matInput type="number" formControlName="amount" placeholder="np. 70">
+              <mat-hint>zł</mat-hint>
+              <mat-error *ngIf="p.get('amount')?.touched && p.get('amount')?.invalid">
+                Cena musi być ≥ 0
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-icon-button color="warn" (click)="removePriceRow(gi, pi)" [disabled]="isLoading"
+                    aria-label="Usuń cenę">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="page">
+  <div class="header">
+    <h2>Obsada</h2>
+    <div class="impl-performance-name">
+      {{ performanceName }}
+    </div>
+    <div class="actions">
+      <button mat-stroked-button (click)="back()">
+        Wróć
+      </button>
+
+      <button mat-stroked-button (click)="addRow()" [disabled]="isLoading">
+        + Dodaj pozycję
+      </button>
+
+      <button mat-flat-button color="primary" (click)="saveNew()" [disabled]="isLoading">
+        Zapisz nowe
+      </button>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div class="table" [formGroup]="form">
+    <div formArrayName="cast">
+      <mat-card class="row" *ngFor="let r of castFA.controls; let i = index" [formGroupName]="i">
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Artysta</mat-label>
+          <mat-select
+            formControlName="artistId"
+            [disabled]="r.get('existing')?.value === true">
+
+            <mat-option *ngFor="let a of artists" [value]="a.id">
+              {{ a.fullName }}
+            </mat-option>
+
+          </mat-select>
+
+          <mat-error *ngIf="r.get('artistId')?.touched && r.get('artistId')?.invalid">
+            Wybierz artystę
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Rola</mat-label>
+          <input matInput formControlName="role" [readonly]="r.get('existing')?.value === true"
+                 placeholder="np. Don Giovanni">
+          <mat-error *ngIf="r.get('role')?.touched && r.get('role')?.invalid">
+            Podaj rolę (max 120)
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-icon-button color="warn" (click)="removeRow(i)" [disabled]="isLoading" aria-label="Usuń">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <div class="meta" *ngIf="r.get('existing')?.value === true">
+          Zapisane w bazie
+        </div>
+        <div class="meta new" *ngIf="r.get('existing')?.value === false">
+          Nowe (do zapisania)
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

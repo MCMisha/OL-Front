@@ -15,7 +15,7 @@ import {
 import {MatPaginator} from "@angular/material/paginator";
 import { AdminPanelPerformanceNewComponent } from './admin-panel-performance-new/admin-panel-performance-new.component';
 import { AdminPanelPerformanceEditComponent } from './admin-panel-performance-edit/admin-panel-performance-edit.component';
-import {MatError, MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -25,13 +25,18 @@ import {MatIcon} from "@angular/material/icon";
 import { AdminPanelPerformanceEditImplementersComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-implementers/admin-panel-performance-edit-implementers.component';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatCheckbox} from "@angular/material/checkbox";
+import { AdminPanelPerformanceEditTicketPriceComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-ticket-price/admin-panel-performance-edit-ticket-price.component';
+import { AdminPanelPerformanceEditArtistComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-artist/admin-panel-performance-edit-artist.component';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
     AdminPanelPerformanceComponent,
     AdminPanelPerformanceNewComponent,
     AdminPanelPerformanceEditComponent,
-    AdminPanelPerformanceEditImplementersComponent
+    AdminPanelPerformanceEditImplementersComponent,
+    AdminPanelPerformanceEditTicketPriceComponent,
+    AdminPanelPerformanceEditArtistComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +68,9 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatSuffix,
     MatCardContent,
     MatCard,
-    MatCheckbox
+    MatCheckbox,
+    MatProgressSpinner,
+    MatHint
   ]
 })
 export class AdminPanelPerformanceModule { }
