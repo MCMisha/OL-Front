@@ -14,9 +14,9 @@
       <span class="place">Miejsce: {{ performance.placeNavigation?.name }}</span>
     </div>
     <div class="details-block">
+      <ng-container *ngIf="implementers?.length">
       <h2 class="block-title">Realizacja</h2>
 
-      <ng-container *ngIf="implementers?.length">
         <div class="cast-list">
           <div class="cast-row" *ngFor="let i of implementers">
             <div class="cast-artist">{{ i.firstName}} {{i.lastName}}</div>
