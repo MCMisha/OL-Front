@@ -12,10 +12,63 @@
     <div class="meta">
       <span class="genre">{{ performance.genreNavigation?.name }}</span>
       <span class="place">Miejsce: {{ performance.placeNavigation?.name }}</span>
-      <span class="director">Reżyseria: Waldemar Zawodziński</span>
+    </div>
+    <div class="details-block">
+      <h2 class="block-title">Realizacja</h2>
+
+      <ng-container *ngIf="implementers?.length">
+        <div class="cast-list">
+          <div class="cast-row" *ngFor="let i of implementers">
+            <div class="cast-artist">{{ i.firstName}} {{i.lastName}}</div>
+            <div class="cast-role">{{ i.role }}</div>
+          </div>
+        </div>
+      </ng-container>
     </div>
 
     <p class="description" [innerHTML]="performance.description"></p>
+
+    <!-- ===================== -->
+    <!--        OBSADA         -->
+    <!-- ===================== -->
+    <div class="details-block">
+      <ng-container *ngIf="cast?.length">
+      <h2 class="block-title">Obsada</h2>
+
+
+        <div class="cast-list">
+          <div class="cast-row" *ngFor="let c of cast">
+            <div class="cast-artist">{{ c.artistName }}</div>
+            <div class="cast-role">{{ c.role }}</div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- ===================== -->
+    <!--     CENY BILETÓW      -->
+    <!-- ===================== -->
+    <div class="details-block">
+      <ng-container *ngIf="ticketPriceGroups?.length">
+      <h2 class="block-title">Ceny biletów</h2>
+
+
+        <div class="price-groups">
+          <div class="price-group" *ngFor="let group of ticketPriceGroups">
+            <div class="group-title">{{ group.name }}</div>
+
+            <div class="price-row" *ngFor="let price of group.prices">
+              <div class="price-type">
+                {{ price.type === TicketType.Normal ? 'Normalny' : 'Ulgowy' }}
+              </div>
+              <div class="price-amount">{{ price.amount }} zł</div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
 
     <button mat-stroked-button color="accent" (click)="goBack()">
       Wróć

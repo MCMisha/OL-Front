@@ -17,6 +17,70 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
 }
+.details-section {
+  margin-top: 32px;
+
+  h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+}
+
+.cast-list {
+  display: grid;
+  gap: 12px;
+}
+
+.cast-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.cast-artist {
+  font-weight: 600;
+}
+
+.cast-role {
+  opacity: .85;
+}
+
+.price-groups {
+  display: grid;
+  gap: 16px;
+}
+
+.price-group {
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.group-title {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+
+  &:first-of-type {
+    border-top: none;
+  }
+}
+
+.price-amount {
+  font-weight: 700;
+}
+
+.empty-info {
+  opacity: .6;
+  font-style: italic;
+}
 
 .info-section {
   flex: 1 1 50%;
@@ -55,12 +119,14 @@
   }
 }
 
-/* Мобильные */
 @media (max-width: 600px) {
   .details-wrapper {
     padding: 16px;
   }
-
+  .cast-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
   .title {
     font-size: 26px !important;
   }

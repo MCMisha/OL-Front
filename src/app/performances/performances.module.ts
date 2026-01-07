@@ -5,7 +5,9 @@ import { PerformancesRoutingModule } from './performances-routing.module';
 import { PerformancesComponent } from './performances.component';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {MatPaginator} from "@angular/material/paginator";
-import { PerformancesDetailsComponent } from './performances-details/performances-details.component';
+import {
+  PerformancesDetailsComponent
+} from './performances-details/performances-details.component';
 import {MatButton} from "@angular/material/button";
 
 
