@@ -136,7 +136,6 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
         return d.getFullYear() === y && d.getMonth() === m && d.getDate() === this.activeDay;
       })
       .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
-    console.log(this.selectedEvents)
   }
 
   onDateChange(date: Date | null): void {
