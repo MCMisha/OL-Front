@@ -1,34 +1,69 @@
-<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<section class="calendar">
+  <!-- background -->
+  <div class="calendar__bg" aria-hidden="true"></div>
+  <div class="calendar__vignette" aria-hidden="true"></div>
 
-<div style="width: 300px;">
-  <mat-calendar
-    [dateClass]="dateClass"
-    [(selected)]="selectedDate"
-    [minDate]="minDate"
-    [maxDate]="maxDate"
-    (selectedChange)="onDateChange($event)"
-    (monthSelected)="onMonthChange($event)"
-    class="disable-arrows"
-  >
-  </mat-calendar>
-</div>
+  <!-- content grid -->
+  <div class="calendar__inner">
+    <!-- LEFT: month + arrows -->
+    <div class="calendar__month">
+      <button class="calendar__arrow" aria-label="Poprzedni miesiąc" (click)="prevMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
 
-<p>Wybrana data: {{ selectedDate | date: 'dd/MM/yyyy' }}</p>
+      <div class="calendar__monthLabel">
+        <span class="calendar__monthName">_{{ monthLabel }}</span>
+      </div>
 
-<ul>
-  <li *ngFor="let event of paginatedEvents">
-    <a [href]="event.buyLink">
-      <strong>{{ event.title }}</strong>
-      — {{ event.dateTime | date:'HH:mm' }}
-      <span> <!--*ngIf="getGenreName(event.genre)"-->
-    ({{ 'Gatunek' }})</span>
-    </a>
-  </li>
-</ul>
+      <button class="calendar__arrow" aria-label="Następny miesiąc" (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
 
-<mat-paginator
-  [length]="eventsByDate.length"
-  [pageSize]="pageSize"
-  [pageIndex]="0"
-  [pageSizeOptions]="[1, 5, 10]">
-</mat-paginator>
+    <div class="calendar__days">
+      <div class="days" #daysWrap>
+        <ng-container *ngFor="let d of days">
+          <div
+            class="days__item"
+            #dayEl
+            [attr.data-day]="d"
+            [class.is-active]="d === activeDay"
+            [class.is-disabled]="!daysWithEvents.has(d)"
+            (click)="onDayClick(d)"
+            role="button"
+            [attr.tabindex]="daysWithEvents.has(d) ? 0 : -1"
+          >
+            <span class="days__num">{{ d }}</span>
+            <span class="days__dot" [class.is-visible]="daysWithEvents.has(d)"></span>
+          </div>
+        </ng-container>
+
+        <!-- FLOATING CARD under active day -->
+        <ng-container *ngIf="selectedEvents?.length > 0; else emptyState">
+          <div class="messageCard messageCard--floating" [style.left.px]="cardX">
+            <div class="messageCard__top">
+              <div class="messageCard__meta">{{ selectedEvents[0]?.genre ?? 'Spektakl' }}</div>
+              <a class="messageCard__btn messageCard__btn--primary" [href]="selectedEvents[0]?.buyLink">
+                KUP BILET
+              </a>
+            </div>
+
+            <div class="messageCard__title">{{ selectedEvents[0]?.title }}</div>
+
+            <div class="messageCard__bottom">
+              <button class="messageCard__btn">WIĘCEJ</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #emptyState>
+          <div class="messageCard messageCard--floating messageCard--empty" [style.left.px]="cardX">
+            <div class="messageCard__meta">Brak spektakli</div>
+            <div class="messageCard__title">W tym dniu nie ma wydarzeń</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+

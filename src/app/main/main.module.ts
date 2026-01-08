@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
+import {MatIcon} from "@angular/material/icon";
+import {CalendarModule} from "../calendar/calendar.module";
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { MainComponent } from './main.component';
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    MatIcon,
+    CalendarModule
   ]
 })
 export class MainModule { }

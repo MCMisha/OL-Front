@@ -1,10 +1,291 @@
 ::ng-deep mat-calendar .mat-calendar-body-cell.event-day {
-  background-color: #ffcc80; /* Цвет фона */
-  border-radius: 50%; /* Закругление */
-  color: #000; /* Цвет текста */
+  background-color: #ffcc80;
+  border-radius: 50%;
+  color: #000;
 }
 
 mat-paginator {
   display: flex;
   justify-content: start;
+}
+
+.calendar {
+  position: relative;
+  min-height: calc(100svh - 0px);
+  color: #fff;
+  overflow: hidden;
+}
+
+/* фон */
+.calendar__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/IMG_2341 1.png");
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+}
+
+.calendar__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.75) 70%,
+      rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+/* контейнер календаря */
+.calendar__inner {
+  position: relative;
+  z-index: 1;
+
+  max-width: 1440px;
+  margin: 0 auto;
+
+  /* аналог твоих 44px / 80px, но адаптивно */
+  padding-top: clamp(28px, 4vh, 44px);
+  padding-inline: clamp(16px, 5vw, 80px);
+
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  grid-template-rows: auto;
+  align-items: center; /* КЛЮЧ: месяц и дни на одной высоте */
+}
+
+.calendar__right {
+  grid-column: 3 / 4;
+}
+
+/* MONTH */
+.calendar__month {
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0; /* важно: не добавляем второй вертикальный отступ */
+}
+
+.calendar__arrow {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  opacity: 0.9;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.calendar__monthLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  color: #fff;
+}
+
+.calendar__monthName {
+  font-weight: 600;
+}
+
+/* DAYS LINE */
+.calendar__days {
+  grid-column: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0; /* важно: не добавляем второй вертикальный отступ */
+}
+
+.days {
+  display: flex;
+  flex-wrap: nowrap; /* ВАЖНО: всегда одна линия */
+  gap: clamp(10px, 1vw, 16px);
+  align-items: center;
+}
+
+.days__item {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  user-select: none;
+  cursor: pointer;
+
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* серый как в макете (а не через opacity всего элемента) */
+.days__num {
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.days__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.35);
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.days__dot.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.days__item.is-active .days__dot.is-visible {
+  background: #fff;
+}
+
+.days__item.is-active .days__num {
+  color: rgba(255, 255, 255, 1);
+  font-weight: 600;
+}
+
+.days__item.is-disabled {
+  cursor: default;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.days__item.is-active .days__dot {
+  background: #fff;
+}
+
+.messageCard {
+  width: min(420px, 92vw);
+  background: rgba(255, 255, 255, 0.94);
+  color: #000;
+  border-radius: 6px;
+  padding: 20px 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+
+  display: grid;
+  grid-template-columns: 1fr auto;      /* текст | кнопки */
+  grid-template-rows: auto auto;
+  column-gap: 18px;
+  row-gap: 10px;
+}
+
+.messageCard__top {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.messageCard__meta {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.messageCard__title {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.02;
+  text-transform: uppercase;
+
+  /* ключевое: чтобы не выезжало */
+  max-width: 300px;
+
+}
+
+.messageCard__bottom {
+  grid-column: 1 / 3;
+  grid-row: 3 / 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.messageCard__btn {
+  width: 120px;
+  text-align: center;
+
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  padding: 10px 14px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+.messageCard__btn--primary {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.messageCard--empty {
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.15);
+}
+.days {
+  position: relative;   /* важно: якорь для абсолютной карточки */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: clamp(10px, 1vw, 16px);
+  align-items: center;
+}
+
+/* Всплывающая карточка под линией дней */
+.messageCard--floating {
+  position: absolute;
+  top: calc(100% + 16px);
+  transform: translateX(-50%);
+  z-index: 20;
+
+  animation: popIn 120ms ease-out;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* маленький "носик" как в макете */
+.messageCard--floating::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(255, 255, 255, 0.94);
+}
+
+/* для empty state — носик темный */
+.messageCard--empty.messageCard--floating::before {
+  border-bottom-color: rgba(255,255,255,0.10);
+}
+
+/* MOBILE */
+@media (max-width: 980px) {
+  .calendar__inner {
+    display: none;
+  }
 }

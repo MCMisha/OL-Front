@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
-
+  days = Array.from({ length: 31 }, (_, i) => i + 1);
+  activeDay = 13;
 }

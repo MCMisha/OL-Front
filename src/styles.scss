@@ -1,7 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: "Neutral Face";
+  src:
+    url("/assets/fonts/NeutralFace/NeutralFace.woff2") format("woff2"),
+    url("/assets/fonts/NeutralFace/NeutralFace.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neutral Face Bold";
+  src:
+    url("/assets/fonts/NeutralFace/NeutralFaceBold.woff2") format("woff2"),
+    url("/assets/fonts/NeutralFace/NeutralFaceBold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; background-color: #000; font-family: "Neutral Face", Roboto, "Helvetica Neue", sans-serif !important;}
 
 .category-badge {
   padding: 6px 14px;

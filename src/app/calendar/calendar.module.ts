@@ -8,6 +8,7 @@ import {CustomDateAdapter} from "../adapters/custom-date-adapter";
 import {MatPaginator} from "@angular/material/paginator";
 import {CalendarRoutingModule} from "./calendar-routing.module";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {MatIcon} from "@angular/material/icon";
 
 
 registerLocaleData(localePl);
@@ -31,13 +32,14 @@ export const CUSTOM_DATE_FORMATS: MatDateFormats = {
   exports: [
     CalendarComponent
   ],
-  imports: [
-    CommonModule,
-    MatCalendar,
-    MatPaginator,
-    CalendarRoutingModule,
-    MatProgressBar
-  ],
+    imports: [
+        CommonModule,
+        MatCalendar,
+        MatPaginator,
+        CalendarRoutingModule,
+        MatProgressBar,
+        MatIcon
+    ],
   providers:[
     { provide: LOCALE_ID, useValue: 'pl' },
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
