@@ -24,21 +24,20 @@ import {GenreService} from '../services/genre.service';
 export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   days = Array.from({length: 31}, (_, i) => i + 1);
   activeDay = new Date().getUTCDate();
-  // польские названия месяцев (как в макете)
   private readonly monthNamesPL = [
     'STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC',
     'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ'
   ];
   cardX = 0;
+  caretLeft = 0;
 
   @ViewChild('daysWrap', { read: ElementRef }) daysWrap!: ElementRef<HTMLElement>;
   @ViewChildren('dayEl', { read: ElementRef }) dayEls!: QueryList<ElementRef<HTMLElement>>;
 
-  // месяцы без спектаклей (0=янв ... 6=июль, 7=август)
   private readonly noPerformMonths = new Set<number>([6, 7]);
   selectedEvents: any;
   currentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  monthLabel = ''; // например: "PAŹDZIERNIK"
+  monthLabel = '';
   selectedDate: Date | null = null;
   eventsByDate: EventInstanceInfo[] = [];
   minDate: Date | null = new Date(2021, 1, 1);
@@ -82,27 +81,37 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.updateCardPosition();
   }
+
   private updateCardPosition(): void {
-    // подождём рендер (важно после смены месяца/дня)
     requestAnimationFrame(() => {
       const wrap = this.daysWrap?.nativeElement;
       if (!wrap) return;
 
-      const active = this.dayEls?.toArray()
+      const activeEl = this.dayEls?.toArray()
         .find(x => Number(x.nativeElement.dataset['day']) === this.activeDay)?.nativeElement;
 
-      if (!active) return;
+      if (!activeEl) return;
+
+      const numEl = activeEl.querySelector('.days__num') as HTMLElement | null;
+      const targetRect = (numEl ?? activeEl).getBoundingClientRect();
 
       const wrapRect = wrap.getBoundingClientRect();
-      const aRect = active.getBoundingClientRect();
+      const targetCenterX = (targetRect.left - wrapRect.left) + targetRect.width / 2;
 
-      let x = (aRect.left - wrapRect.left) + aRect.width / 2;
+      const cardEl = wrap.querySelector('.messageCard--floating') as HTMLElement | null;
+      const cardWidth = cardEl?.getBoundingClientRect().width ?? 420;
+      const half = cardWidth / 2;
 
-      // чтобы карточка не вылезала за края (340px ≈ 170 half)
-      const half = 170;
-      x = Math.max(half, Math.min(wrapRect.width - half, x));
+      let cardX = targetCenterX;
+      cardX = Math.max(half, Math.min(wrapRect.width - half, cardX));
+      this.cardX = cardX;
 
-      this.cardX = x;
+      const cardLeft = cardX - half;
+      let caret = targetCenterX - cardLeft;
+
+      caret = Math.max(18, Math.min(cardWidth - 18, caret));
+
+      this.caretLeft = caret;
     });
   }
 
@@ -267,7 +276,6 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectDay(day: number): void {
     this.activeDay = day;
-    // позже тут можно будет триггерить загрузку спектаклей на выбранную дату
     this.rebuildSelectedEvents();
 
   }

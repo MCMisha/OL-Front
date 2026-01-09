@@ -271,7 +271,7 @@ mat-paginator {
   content: "";
   position: absolute;
   top: -8px;
-  left: 50%;
+  left: var(--caret-left, 50%);
   transform: translateX(-50%);
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
