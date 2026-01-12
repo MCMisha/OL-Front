@@ -104,6 +104,10 @@
     height: 72px;
   }
 
+  .topbar__center {
+    align-self: center;
+  }
+
   .nav--desktop,
   .partner--desktop,
   .brand--desktop {
@@ -116,6 +120,6 @@
   }
 
   .brand--mobile img {
-    height: 28px;
+    height: 38px;
   }
 }
