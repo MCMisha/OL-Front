@@ -11,9 +11,24 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'opera-front';
   showMenu: boolean = true;
   isLoading: boolean = true;
+  mobileMenuOpen = false;
   private subscription = new Subscription();
 
   constructor(private router: Router) {
+  }
+
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+  }
+
+  navigateFromMenu() {
+    // закрыть меню после перехода
+    this.closeMobileMenu();
   }
 
   ngOnInit(): void {

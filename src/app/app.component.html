@@ -1,22 +1,17 @@
 <div *ngIf="!isLoading">
   <header class="topbar" *ngIf="showMenu">
     <div class="topbar__inner">
-      <!-- LEFT: logo (desktop) / search (mobile) -->
       <div class="topbar__left">
-        <!-- Desktop logo -->
-        <a class="brand brand--desktop" routerLink="/" aria-label="Opera Lubelska - strona główna">
-          <img src="assets/logo/logo.png" alt="Opera Lubelska" />
-        </a>
-
-        <!-- Mobile search icon -->
         <button class="icon-btn icon-btn--mobile" type="button" aria-label="Szukaj">
           <mat-icon>search</mat-icon>
         </button>
+
+        <a class="brand brand--desktop" routerLink="/" aria-label="Opera Lubelska - strona główna">
+          <img src="assets/logo/logo.png" alt="Opera Lubelska" />
+        </a>
       </div>
 
-      <!-- CENTER: nav (desktop) / logo (mobile) -->
       <div class="topbar__center">
-        <!-- Desktop nav -->
         <nav class="nav nav--desktop" aria-label="Nawigacja">
           <a class="nav__link" routerLink="/performances">Repertuar</a>
           <a class="nav__link" routerLink="/about">O nas</a>
@@ -24,37 +19,38 @@
           <a class="nav__link" routerLink="/contact">Kontakt</a>
         </nav>
 
-        <!-- Mobile logo centered -->
         <a class="brand brand--mobile" routerLink="/" aria-label="Opera Lubelska - strona główna">
           <img src="assets/logo/logo.png" alt="Opera Lubelska" />
         </a>
       </div>
 
-      <!-- RIGHT: partner logo (desktop) / burger (mobile) -->
       <div class="topbar__right">
-        <!-- Desktop partner logo -->
         <a class="partner partner--desktop" href="https://www.lubelskie.pl/" aria-label="Lubelskie">
-          <img src="assets/logo/logo_urzad.png"
-               alt="Urząd Marszałkowski Województwa Lubelskiego w Lublinie" />
+          <img src="assets/logo/logo_urzad.png" alt="Lubelskie" />
         </a>
 
-        <!-- Mobile burger -->
+        <!-- burger / close (mobile only) -->
         <button class="icon-btn icon-btn--mobile" type="button"
-                [matMenuTriggerFor]="menu" aria-label="Menu">
-          <mat-icon>menu</mat-icon>
+                (click)="toggleMobileMenu()" aria-label="Menu">
+          <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
         </button>
-
-        <mat-menu #menu="matMenu">
-          <a mat-menu-item routerLink="/">Strona główna</a>
-          <a mat-menu-item routerLink="/performances">Repertuar</a>
-          <a mat-menu-item routerLink="/news">Aktualności</a>
-          <a mat-menu-item routerLink="/about">O nas</a>
-          <a mat-menu-item routerLink="/contact">Kontakt</a>
-          <a mat-menu-item href="#">Kup bilet</a>
-        </mat-menu>
       </div>
     </div>
+
+    <nav class="mobile-dropdown" [class.open]="mobileMenuOpen" aria-label="Menu mobilne">
+      <a routerLink="/performances" (click)="navigateFromMenu()">Repertuar</a>
+      <a routerLink="/about" (click)="navigateFromMenu()">O nas</a>
+      <a routerLink="/news" (click)="navigateFromMenu()">Aktualności</a>
+      <a routerLink="/contact" (click)="navigateFromMenu()">Kontakt</a>
+
+      <div class="dropdown-spacer"></div>
+
+      <a class="partner" href="https://www.lubelskie.pl/" aria-label="Lubelskie">
+        <img src="assets/logo/logo_urzad.png" alt="Lubelskie" />
+      </a>
+    </nav>
   </header>
+
 
   <router-outlet></router-outlet>
 </div>
