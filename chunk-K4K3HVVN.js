@@ -1,0 +1,1 @@
+import{Rc as o,ba as e,ma as n}from"./chunk-K2A4CEZH.js";var d=(()=>{class t{static{this.\u0275fac=function(i){return new(i||t)}}static{this.\u0275mod=n({type:t})}static{this.\u0275inj=e({imports:[o]})}}return t})();export{d as AdminPanelContactModule};
