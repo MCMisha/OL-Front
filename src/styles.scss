@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 @font-face {
   font-family: "Neutral Face";
@@ -22,6 +23,44 @@
 
 html, body { height: 100%; }
 body { margin: 0; background-color: #000; font-family: "Neutral Face", Roboto, "Helvetica Neue", sans-serif !important;}
+
+/* 1. Core */
+@include mat.core();
+
+/* ===== PUBLIC THEME ===== */
+$public-primary: mat.define-palette(mat.$purple-palette);
+$public-accent: mat.define-palette(mat.$green-palette);
+
+$public-theme: mat.define-light-theme((
+  color: (
+    primary: $public-primary,
+    accent: $public-accent,
+  )
+));
+
+/* ===== ADMIN THEME ===== */
+$admin-primary: mat.define-palette(mat.$indigo-palette);
+$admin-accent: mat.define-palette(mat.$pink-palette);
+
+$admin-theme: mat.define-light-theme((
+  color: (
+    primary: $admin-primary,
+    accent: $admin-accent,
+  )
+));
+
+/* 2. Typography + density — ОДИН раз */
+@include mat.all-component-typographies($public-theme);
+@include mat.all-component-densities($public-theme);
+
+/* 3. Colors — по классам */
+.public-theme {
+  @include mat.all-component-colors($public-theme);
+}
+
+.admin-theme {
+  @include mat.all-component-colors($admin-theme);
+}
 
 .category-badge {
   padding: 6px 14px;

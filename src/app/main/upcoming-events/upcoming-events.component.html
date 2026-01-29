@@ -1,0 +1,51 @@
+<section class="upcoming">
+  <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
+
+  <div class="upcoming__wrap">
+    <div class="viewport">
+      <div #track class="track">
+        <article
+          class="card text-white"
+          *ngFor="let e of events"
+          [style.--bg]="e.imageUrl ? 'url(' + e.imageUrl + ')' : 'none'"
+        >
+          <div class="card__content">
+            <div class="card__top">
+              <div class="date">
+                <div class="date__day">{{ e.startAt | date:'d' }}</div>
+
+                <div class="date__meta">
+                  <!-- если хочешь НОМИНАТИВ: STYCZEŃ/LUTY -> ставь LLLL -->
+                  <div class="date__month">{{ e.startAt | date:'LLLL':'':'pl' | uppercase }}</div>
+
+                  <div class="date__weekday">{{ e.startAt | date:'EEEE':'':'pl' }}</div>
+                </div>
+              </div>
+
+              <div class="meta">
+                <div class="meta__time">{{ e.startAt | date:'HH:mm' }}</div>
+                <div class="meta__place">{{ e.place }}</div>
+              </div>
+            </div>
+
+            <div class="card__mid">
+              <div class="tag">{{ e.genre }}</div>
+              <div class="name">{{ e.title }}</div>
+            </div>
+
+            <div class="card__bottom">
+              <a class="btn btn--solid" [href]="'#'" target="_blank" rel="noreferrer">KUP BILET</a>
+              <a class="btn btn--link"  [href]="'#'" target="_blank" rel="noreferrer">CZYTAJ WIĘCEJ</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
+      <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+    </div>
+  </div>
+</section>

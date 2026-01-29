@@ -12,11 +12,11 @@ export class EventService {
   constructor(private http: HttpClient) { }
 
   getEventDates(yearMonth: string): Observable<EventInstanceInfo[]> {
-    return this.http.get<EventInstanceInfo[]>(`${environment.baseApiUri}/event/${yearMonth}`);
+    return this.http.get<EventInstanceInfo[]>(`${environment.baseApiUri}/PerformanceEvent/by-month/${yearMonth}`);
   }
 
   getMinMaxDates(): Observable<MinMaxDate> {
-    return this.http.get<MinMaxDate>(`${environment.baseApiUri}/event/minmaxdates`);
+    return this.http.get<MinMaxDate>(`${environment.baseApiUri}/PerformanceEvent/min-max-date`);
   }
 
 }

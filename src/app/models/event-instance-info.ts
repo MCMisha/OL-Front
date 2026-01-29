@@ -1,5 +1,5 @@
 export interface EventInstanceInfo {
   title: string;
-  dateTime: string;
+  startAt: string;
   buyLink: string;
 }

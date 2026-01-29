@@ -24,10 +24,6 @@ import {GenreService} from '../services/genre.service';
 export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   days = Array.from({length: 31}, (_, i) => i + 1);
   activeDay = new Date().getUTCDate();
-  private readonly monthNamesPL = [
-    'STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC',
-    'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ'
-  ];
   cardX = 0;
   caretLeft = 0;
 
@@ -68,9 +64,9 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.eventService.getMinMaxDates()
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
-        //this.minDate = new Date(res.minDate);
+        this.minDate = new Date(res.minDate);
         this.maxDate = new Date(res.maxDate);
-        this.selectedDate = new Date(res.minDate);
+        this.selectedDate = new Date();
         this.cdr.detectChanges();
         this.currentLoadedMonth = '';
 
@@ -115,6 +111,12 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  private getMonthLabelPl(date: Date): string {
+    const m = date.toLocaleDateString('pl-PL', { month: 'long' });
+
+    return m.toUpperCase();
+  }
+
   onDayClick(day: number): void {
     if (!this.daysWithEvents.has(day)) return;
     this.selectDay(day);
@@ -141,10 +143,10 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.selectedEvents = this.performanceDatesTickets
       .filter(ev => {
-        const d = new Date(ev.dateTime);
+        const d = new Date(ev.startAt);
         return d.getFullYear() === y && d.getMonth() === m && d.getDate() === this.activeDay;
       })
-      .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+      .sort((a, b) => new Date(a.startAt).getTime() - new Date(b.startAt).getTime());
   }
 
   onDateChange(date: Date | null): void {
@@ -155,7 +157,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       const selected = this.selectedDate;
       this.eventsByDate = this.performanceDatesTickets.filter(p =>
-        isSameDay(new Date(p.dateTime), selected!)
+        isSameDay(new Date(p.startAt), selected!)
       );
     }
 
@@ -224,10 +226,8 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     const m = this.currentMonth.getMonth();
 
     this.daysWithEvents.clear();
-
     for (const ev of this.performanceDatesTickets) {
-      const d = new Date(ev.dateTime);
-
+      const d = new Date(ev.startAt);
       if (d.getFullYear() === y && d.getMonth() === m) {
         this.daysWithEvents.add(d.getDate()); // 1..31
       }
@@ -246,8 +246,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     const daysInMonth = new Date(y, m + 1, 0).getDate();
 
     this.days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    this.monthLabel = this.monthNamesPL[m];
-
+    this.monthLabel = this.getMonthLabelPl(this.currentMonth);
     if (this.activeDay > daysInMonth) this.activeDay = daysInMonth;
   }
 
@@ -277,7 +276,6 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   selectDay(day: number): void {
     this.activeDay = day;
     this.rebuildSelectedEvents();
-
   }
 
   ngOnDestroy(): void {

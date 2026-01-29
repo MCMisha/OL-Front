@@ -1,0 +1,273 @@
+.upcoming {
+  color: #fff;
+  padding-top: 10px;
+}
+
+.upcoming__title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+
+  /* заголовок слева, как в макете */
+  margin-left: clamp(24px, 5vw, 80px);
+  margin-bottom: 14px;
+}
+
+.upcoming__wrap {
+  /* вся зона блока — как в макете */
+  padding-left: clamp(24px, 5vw, 80px);
+}
+
+/* ВАЖНО: viewport задаёт ширину "4 карточки + хвост" */
+.viewport {
+  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
+  overflow: hidden; /* обрезает 5-ю карточку справа */
+  padding-bottom: 12px;
+}
+
+/* дорожка со скроллом */
+.track {
+  display: flex;
+  gap: 24px; /* ближе к макету */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-right: 20px;
+  padding-bottom: 8px;
+
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* карточка */
+.card {
+  position: relative;
+  flex: 0 0 300px;          /* ширина карточки */
+  height: 390px;            /* высота как в макете */
+  overflow: hidden;
+
+  background: #3a3a3a;
+  padding: 22px 22px 18px;  /* аккуратные отступы */
+}
+
+/* Картинка появляется ТОЛЬКО при hover и не ломает layout */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .25s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* затемнение поверх картинки, чтобы текст читался */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0;
+  transition: opacity .25s ease;
+  z-index: 1;
+}
+
+.card:hover::before,
+.card:hover::after {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* контент всегда сверху */
+.card__content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* IMPORTANT: если --bg пустой — фон не должен “мигать” */
+.card[style*="--bg:"]::before {
+  background-image: var(--bg);
+}
+
+.card__top {
+  display: grid;
+  gap: 14px;
+}
+
+/* дата */
+.date {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.date__day {
+  font-size: 64px; /* сильнее якорь */
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.date__month {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+.date__weekday {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+  text-transform: none;
+}
+
+/* время / место */
+.meta__time,
+.meta__place {
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+/* тип и название */
+.tag {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.name {
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  /* чтобы длинные названия красиво ломались */
+  word-break: break-word;
+}
+
+/* низ карточки */
+.card__bottom {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.btn {
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.btn--solid {
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.btn--solid:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.btn--link {
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.btn--link:hover {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: underline;
+}
+
+/* стрелки снизу по центру */
+.nav {
+  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.nav__btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.nav__btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .card:hover .card__overlay {
+    opacity: 1;
+  }
+}
+
+/* адаптив */
+@media (max-width: 900px) {
+  .card {
+    flex-basis: 270px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 520px) {
+  .upcoming__title {
+    margin-left: 16px;
+  }
+  .upcoming__wrap {
+    padding-left: 16px;
+  }
+  .viewport, .nav {
+    width: calc(100vw - 16px);
+  }
+  .card {
+    flex-basis: 250px;
+    height: 340px;
+  }
+  .date__day {
+    font-size: 56px;
+  }
+  .name {
+    font-size: 28px;
+  }
+}

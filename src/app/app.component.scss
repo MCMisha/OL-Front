@@ -1,11 +1,17 @@
 .topbar {
-  position: relative;
+  position: absolute;   /* ВАЖНО */
+  top: 0;
+  left: 0;
+  right: 0;
+
   z-index: 2000;
   color: #fff;
 
-  padding-top: 44px;
+  padding-top: 44px; /* оставляем, если это часть дизайна */
   padding-left: clamp(24px, 5vw, 80px);
   padding-right: clamp(24px, 5vw, 80px);
+
+  background: transparent;
 }
 
 .topbar__inner {

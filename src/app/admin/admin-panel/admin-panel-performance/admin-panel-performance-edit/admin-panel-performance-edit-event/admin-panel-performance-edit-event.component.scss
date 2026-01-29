@@ -1,0 +1,17 @@
+.page { padding: 16px; }
+.header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.impl-performance-name { opacity: .85; }
+.header-actions { display:flex; align-items:center; gap:10px; }
+
+.hint { margin: 12px 0; opacity: .85; }
+.empty { margin-top: 16px; opacity: .8; }
+
+.dup-warning { margin: 10px 0; padding: 10px 12px; border-radius: 8px; background: rgba(255, 193, 7, .15); }
+
+.event-card { margin-bottom: 12px; }
+.event-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding-top: 10px; padding-left: 10px;}
+
+.field.date { width: 180px; }
+.field.time { width: 140px; }
+.field.link { width: 420px; flex: 1 1 320px; }
+.field.active { margin-left: 6px; }

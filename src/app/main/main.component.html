@@ -1,1 +1,69 @@
-<app-calendar></app-calendar>
+<section
+  class="hero"
+  [class.is-fading]="isAnimating"
+  [ngStyle]="{ 'background-image': 'url(' + activeSlide.backgroundUrl + ')' }"
+  (mouseleave)="startAutoplay()"
+>
+  <!-- затемнение поверх фона -->
+  <div class="hero__overlay"></div>
+
+  <!-- КАЛЕНДАРЬ ПОВЕРХ ФОНА -->
+  <app-calendar class="hero__calendar"></app-calendar>
+
+  <!-- контент справа -->
+<!--  <div class="hero__content">-->
+<!--    <div class="hero__badge">-->
+<!--      <div class="hero__badgeLeft">-->
+<!--        <div class="hero__type">{{ activeSlide.subtitle }}</div>-->
+<!--        <div class="hero__miniTitle">{{ activeSlide.title }}</div>-->
+<!--      </div>-->
+
+<!--      <div class="hero__badgeActions">-->
+<!--        <a-->
+<!--          class="btn btn&#45;&#45;primary"-->
+<!--          *ngIf="activeSlide.buyUrl"-->
+<!--          [href]="activeSlide.buyUrl"-->
+<!--          target="_blank"-->
+<!--          rel="noopener"-->
+<!--        >-->
+<!--          KUP BILET-->
+<!--        </a>-->
+
+<!--        <a class="btn btn&#45;&#45;ghost" *ngIf="activeSlide.detailsLink" [routerLink]="activeSlide.detailsLink">-->
+<!--          WIĘCEJ-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="hero__meta">-->
+<!--      <div class="hero__subtitle">{{ activeSlide.subtitle }}</div>-->
+<!--      <h1 class="hero__title">{{ activeSlide.title }}</h1>-->
+
+<!--      <div class="hero__dates" *ngIf="activeSlide.dateRange">{{ activeSlide.dateRange }}</div>-->
+
+<!--      <a-->
+<!--        class="btn btn&#45;&#45;primary hero__buyBottom"-->
+<!--        *ngIf="activeSlide.buyUrl"-->
+<!--        [href]="activeSlide.buyUrl"-->
+<!--        target="_blank"-->
+<!--        rel="noopener"-->
+<!--      >-->
+<!--        KUP BILET-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+  <!-- точки снизу -->
+  <div class="hero__dots" *ngIf="slides.length > 1">
+    <button
+      class="dot"
+      *ngFor="let i of dots; trackBy: trackByIndex"
+      type="button"
+      [class.is-active]="i === active"
+      (click)="goTo(i)"
+      [attr.aria-label]="'Slide ' + (i + 1)"
+    ></button>
+  </div>
+</section>
+<app-upcoming-events></app-upcoming-events>

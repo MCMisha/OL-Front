@@ -15,6 +15,8 @@ import {AdminPanelGenreModule} from "./admin/admin-panel/admin-panel-genre/admin
 import {MatMenuModule} from "@angular/material/menu";
 import {FormsModule} from "@angular/forms";
 import {RichTextEditorModule} from "./shared/rich-text-editor/rich-text-editor.module";
+import {OverlayModule} from '@angular/cdk/overlay';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {RichTextEditorModule} from "./shared/rich-text-editor/rich-text-editor.m
     AdminPanelModule,
     AdminPanelGenreModule,
     RichTextEditorModule,
-    FormsModule
+    FormsModule,
+    OverlayModule
   ],
   providers: [
     provideAnimationsAsync(),

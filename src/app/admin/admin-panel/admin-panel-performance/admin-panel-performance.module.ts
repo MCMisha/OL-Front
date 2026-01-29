@@ -28,6 +28,14 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import { AdminPanelPerformanceEditTicketPriceComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-ticket-price/admin-panel-performance-edit-ticket-price.component';
 import { AdminPanelPerformanceEditArtistComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-artist/admin-panel-performance-edit-artist.component';
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import { AdminPanelPerformanceEditEventComponent } from './admin-panel-performance-edit/admin-panel-performance-edit-event/admin-panel-performance-edit-event.component';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -36,7 +44,8 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     AdminPanelPerformanceEditComponent,
     AdminPanelPerformanceEditImplementersComponent,
     AdminPanelPerformanceEditTicketPriceComponent,
-    AdminPanelPerformanceEditArtistComponent
+    AdminPanelPerformanceEditArtistComponent,
+    AdminPanelPerformanceEditEventComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +79,16 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     MatCard,
     MatCheckbox,
     MatProgressSpinner,
-    MatHint
+    MatHint,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AdminPanelPerformanceModule { }

@@ -14,6 +14,9 @@ import {
 import {
   AdminPanelPerformanceEditArtistComponent
 } from "./admin-panel-performance-edit/admin-panel-performance-edit-artist/admin-panel-performance-edit-artist.component";
+import {
+  AdminPanelPerformanceEditEventComponent
+} from "./admin-panel-performance-edit/admin-panel-performance-edit-event/admin-panel-performance-edit-event.component";
 
 const routes: Routes = [
   {path: '', component: AdminPanelPerformanceComponent},
@@ -21,7 +24,8 @@ const routes: Routes = [
   {path: ':id/edit', component: AdminPanelPerformanceEditComponent},
   {path: ':id/edit/implementers', component: AdminPanelPerformanceEditImplementersComponent},
   {path: ':id/edit/ticket-price', component: AdminPanelPerformanceEditTicketPriceComponent},
-  {path: ':id/edit/artist', component: AdminPanelPerformanceEditArtistComponent}
+  {path: ':id/edit/artist', component: AdminPanelPerformanceEditArtistComponent},
+  {path: ':id/edit/event', component: AdminPanelPerformanceEditEventComponent}
 ];
 
 @NgModule({

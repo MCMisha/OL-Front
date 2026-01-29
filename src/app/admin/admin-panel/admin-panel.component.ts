@@ -3,6 +3,7 @@ import { MatSidenav } from "@angular/material/sidenav";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Subscription } from "rxjs";
 import { NavigationEnd, Router } from "@angular/router";
+import {OverlayContainer} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,7 +14,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   isMobile = false;
-
   private basePath = '/admin/panel';
   protected menuItems = [
     { icon: 'home', title: 'Strona głowna', link: `${this.basePath}/main` },
@@ -32,6 +32,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   protected isCollapsed = true;
 
   constructor(
+    private overlay: OverlayContainer,
     private observer: BreakpointObserver,
     private router: Router,
   ) {}
@@ -42,7 +43,12 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     });
 
     this.setCurrentTitle(this.router.url);
+    document.body.classList.add('admin-theme');
+    document.body.classList.remove('public-theme');
 
+    const oc = this.overlay.getContainerElement();
+    oc.classList.add('admin-theme');
+    oc.classList.remove('public-theme');
     this.subscription.add(
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -56,6 +62,9 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    document.body.classList.remove('admin-theme');
+    this.overlay.getContainerElement().classList.remove('admin-theme');
+
   }
 
   toggleMenu() {

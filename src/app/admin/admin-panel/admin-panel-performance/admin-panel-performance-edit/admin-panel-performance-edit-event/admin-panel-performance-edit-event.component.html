@@ -1,0 +1,76 @@
+<div class="page">
+  <div class="header">
+    <h2>Terminy spektaklu</h2>
+
+    <div class="impl-performance-name">
+      {{ performanceName }}
+    </div>
+
+    <div class="header-actions">
+      <button mat-stroked-button (click)="back()">
+        Wróć
+      </button>
+
+      <button mat-stroked-button (click)="addRow()" [disabled]="isLoading">
+        + Dodaj termin
+      </button>
+
+      <button mat-flat-button color="primary" (click)="save()" [disabled]="isLoading">
+        Zapisz
+      </button>
+
+      <mat-spinner *ngIf="isLoading" diameter="22"></mat-spinner>
+    </div>
+  </div>
+
+  <div class="hint">
+    Dodaj datę i godzinę rozpoczęcia. System zapisuje czas w UTC (wyświetlanie w czasie lokalnym).
+  </div>
+
+  <div class="dup-warning" *ngIf="hasDuplicateDateTimes()">
+    Masz powtórzone daty/godziny. Usuń duplikat.
+  </div>
+
+  <div *ngIf="eventsFA.length === 0" class="empty">
+    Brak danych. Kliknij „Dodaj termin”.
+  </div>
+
+  <div class="events" [formGroup]="form">
+    <div formArrayName="events">
+      <mat-card class="event-card" *ngFor="let e of eventsFA.controls; let i = index" [formGroupName]="i">
+        <div class="event-row">
+          <mat-form-field appearance="outline" class="field date">
+            <mat-label>Data</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="e.get('date')?.touched && e.get('date')?.invalid">
+              Wybierz datę
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field time">
+            <mat-label>Godzina</mat-label>
+            <input matInput type="time" formControlName="time">
+            <mat-error *ngIf="e.get('time')?.touched && e.get('time')?.invalid">
+              Podaj godzinę (HH:mm)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field link">
+            <mat-label>BuyLink</mat-label>
+            <input matInput formControlName="buyLink" placeholder="https://... (opcjonalnie)">
+          </mat-form-field>
+
+          <mat-checkbox formControlName="isActive" class="field">
+            Aktywny
+          </mat-checkbox>
+
+          <button mat-icon-button color="warn" (click)="removeRow(i)" [disabled]="isLoading" aria-label="Usuń termin">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
