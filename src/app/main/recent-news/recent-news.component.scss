@@ -2,7 +2,7 @@
   background: #000;
   color: #fff;
 
-  padding: 80px 0;
+  padding: 80px;
 }
 
 .newsStrip__header {
@@ -21,6 +21,11 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   opacity: 0.9;
+}
+
+.newsStrip__footer {
+  display: flex;
+  justify-content: center;
 }
 
 .newsStrip__more {
@@ -42,17 +47,20 @@
 
 .newsStrip__grid {
   width: clamp(320px, 85vw, 1100px);
-  margin-left: clamp(24px, 6vw, 80px);
+  //margin-left: clamp(24px, 6vw, 80px);
 
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
-/* Card */
-/* Найди класс .newsCard и добавь туда эти две строчки: */
 .newsCard {
-  /* ... твои старые стили ... */
+  position: relative;
+  padding: 22px 22px 18px;
+  min-height: 220px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.02);
   box-sizing: border-box;
   overflow: hidden;
 }

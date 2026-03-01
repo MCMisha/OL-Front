@@ -202,12 +202,24 @@
   text-decoration: underline;
 }
 
-/* стрелки снизу по центру */
 .nav {
-  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 14px;
+  margin-top: 10px;
+}
+
+.navBlock {
+  width: 100%;
+  max-width: 1280px;
+  padding-right: clamp(24px, 5vw, 80px);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin-top: 10px;
 }
 
@@ -229,21 +241,6 @@
 .nav__btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
-}
-
-.navBlock {
-  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
 }
 
 .navLink {
