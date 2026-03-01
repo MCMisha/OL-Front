@@ -1,0 +1,137 @@
+.footer {
+  background: #ececec;          // как на второй: светло-серый
+  color: #111;
+  border-top: 1px solid #d9d9d9;
+}
+
+.footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px clamp(16px, 5vw, 64px) 18px;
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1.2fr 1.25fr; /* Колонки идентичны .footer__grid */
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 24px; /* Чуть увеличил отступ для красоты, подправь при желании */
+}
+
+.footer__brand img {
+  height: 44px;                 // компактнее чем у тебя сейчас
+  width: auto;
+  display: block;
+}
+
+.footer__crest {
+  grid-column: 4; /* Принудительно отправляем в колонку "Informacje prawne" */
+  height: 34px;
+  width: auto;
+  display: block;
+  opacity: 0.95;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1.2fr 1.25fr;
+  gap: 28px;
+}
+
+.footer__title {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 12px;              // маленький, как в макете
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.footer__text,
+.footer__links a {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.footer__links {
+  display: grid;
+  gap: 6px;
+}
+
+.footer__links a {
+  color: #111;
+  text-decoration: none;
+  opacity: 0.85;
+  width: fit-content;
+}
+
+.footer__links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer__muted {
+  margin-top: 10px;
+  opacity: 0.75;
+}
+
+.footer__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+
+  color: #111;
+  text-decoration: none;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.footer__contact:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer__icon {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.footer__divider {
+  margin: 18px 0 14px;
+  height: 1px;
+  background: #d3d3d3;
+}
+
+.footer__bottom {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.footer__bottomStrong {
+  font-weight: 700; // жирная строка как на второй картинке
+}
+
+/* --- responsive --- */
+@media (max-width: 1100px) {
+  .footer__top {
+    grid-template-columns: 1fr 1fr; /* Синхронизируем с нижней сеткой */
+  }
+
+  .footer__crest {
+    grid-column: 2; /* Теперь герб должен висеть над правой колонкой */
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 28px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .footer {
+    display: none;
+  }
+}

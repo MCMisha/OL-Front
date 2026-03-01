@@ -1,5 +1,5 @@
 .topbar {
-  position: absolute;   /* ВАЖНО */
+  position: absolute; /* ВАЖНО */
   top: 0;
   left: 0;
   right: 0;
@@ -46,7 +46,9 @@
 .nav {
   display: flex;
   gap: 24px;
+  font-family: var(--font-heading);
 }
+
 .nav__link {
   color: #fff;
   text-decoration: none;
@@ -57,7 +59,10 @@
   opacity: .92;
   white-space: nowrap;
 }
-.nav__link:hover { opacity: 1; }
+
+.nav__link:hover {
+  opacity: 1;
+}
 
 .icon-btn {
   background: transparent;
@@ -67,6 +72,7 @@
   padding: 8px;
   border-radius: 8px;
 }
+
 .icon-btn mat-icon {
   font-size: 24px;
   height: 24px;
@@ -77,8 +83,15 @@
 .brand--mobile {
   display: none;
 }
+
 .mobile-dropdown {
   display: none;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 80px);
 }
 
 /* ================= MOBILE ================= */

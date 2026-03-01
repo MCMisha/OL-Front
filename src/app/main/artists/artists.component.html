@@ -1,0 +1,40 @@
+<section class="artists">
+  <div class="artists__head">
+    <div class="artists__title">_ARTYŚCI</div>
+
+    <a class="artists__all" routerLink="/artists">
+      WSZYSCY ARTYŚCI
+    </a>
+  </div>
+
+  <div class="artists__wrap">
+    <div class="viewport">
+      <div
+        #track
+        class="track"
+        (wheel)="onWheel($event)"
+      >
+        <a
+          class="card"
+          *ngFor="let a of artists"
+          [routerLink]="['/artists', a.id]"
+          [attr.aria-label]="a.name"
+        >
+          <div class="card__photo" [style.backgroundImage]="'url(' + a.photoUrl + ')'"></div>
+
+          <!-- Подпись можно включить позже (на скрине её нет) -->
+          <!--
+          <div class="card__meta">
+            <div class="card__name">{{ a.name }}</div>
+            <div class="card__role" *ngIf="a.role">{{ a.role }}</div>
+          </div>
+          -->
+        </a>
+      </div>
+
+      <!-- лёгкие затемнения по краям как в рефе -->
+      <div class="fade fade--left"></div>
+      <div class="fade fade--right"></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+<section class="reviews">
+  <div class="reviews__track">
+    <article class="rCard" *ngFor="let r of reviews">
+      <div class="rCard__head">
+        <img class="rCard__avatar" [src]="r.avatarUrl" [alt]="r.name" />
+        <div class="rCard__who">
+          <div class="rCard__name">{{ r.name }}</div>
+          <div class="rCard__title">{{ r.title }}</div>
+        </div>
+
+        <div class="rCard__stars" aria-label="Ocena">
+          <span class="star" *ngFor="let s of stars(r.rating)" [class.star--on]="s">★</span>
+        </div>
+      </div>
+
+      <div class="rCard__text">{{ r.text }}</div>
+
+      <div class="rCard__foot">
+        <div class="rCard__date">{{ r.date }}</div>
+        <a class="rCard__more" href="#">więcej…</a>
+      </div>
+    </article>
+  </div>
+</section>

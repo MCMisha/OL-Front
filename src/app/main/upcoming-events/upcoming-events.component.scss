@@ -1,10 +1,10 @@
 .upcoming {
   color: #fff;
-  padding-top: 10px;
+  padding: 80px;
 }
 
 .upcoming__title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.08em;
   opacity: 0.9;
@@ -231,6 +231,33 @@
   color: #fff;
 }
 
+.navBlock {
+  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.navLink {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+}
+
+.navLink:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .card:hover::before {
     opacity: 1;
@@ -251,23 +278,35 @@
 }
 
 @media (max-width: 520px) {
+  .viewport {
+    overflow: visible;
+    width: 100%;
+    padding-right: 16px;
+  }
+
+  .track {
+    padding-right: 16px;
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .card {
+    flex: 0 0 calc(100vw - 48px);
+    height: 360px;
+    scroll-snap-align: start;
+  }
+
+  .upcoming {
+    padding: 56px 0;
+  }
+
+  .upcoming__wrap,
   .upcoming__title {
     margin-left: 16px;
+    padding-left: 0;
   }
-  .upcoming__wrap {
-    padding-left: 16px;
-  }
-  .viewport, .nav {
-    width: calc(100vw - 16px);
-  }
-  .card {
-    flex-basis: 250px;
-    height: 340px;
-  }
-  .date__day {
-    font-size: 56px;
-  }
-  .name {
-    font-size: 28px;
+
+  .nav {
+    display: none;
   }
 }

@@ -1,0 +1,171 @@
+.newsStrip {
+  background: #000;
+  color: #fff;
+
+  padding: 80px 0;
+}
+
+.newsStrip__header {
+  width: clamp(320px, 85vw, 1100px);
+  margin-left: clamp(24px, 6vw, 80px);
+
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+}
+
+.newsStrip__title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+.newsStrip__more {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.newsStrip__more:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+
+.newsStrip__grid {
+  width: clamp(320px, 85vw, 1100px);
+  margin-left: clamp(24px, 6vw, 80px);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* Card */
+/* Найди класс .newsCard и добавь туда эти две строчки: */
+.newsCard {
+  /* ... твои старые стили ... */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Найди .newsCard__text и .newsCard__headline и добавь перенос слов: *
+
+/* В медиа-запрос @media (max-width: 520px) добавь: */
+@media (max-width: 520px) {
+  /* ... твои старые стили адаптива ... */
+
+  .newsStrip__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+}
+
+.newsCard__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.newsCard__date {
+  font-size: 12px;
+  opacity: 0.7;
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+.newsCard__heading {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 12px 0;
+}
+.newsCard__text, .newsCard__headline {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 14px;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.newsCard__cta {
+  align-self: flex-end;
+
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  padding-bottom: 2px;
+}
+
+.newsCard__cta:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .newsStrip__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsStrip__title {
+    font-size: 16px;
+  }
+
+  .newsCard {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 520px) {
+  .newsStrip {
+    padding: 56px 0;
+  }
+
+  .newsStrip__header,
+  .newsStrip__grid {
+    margin-left: 16px;
+  }
+
+  .newsStrip__grid {
+    gap: 14px;
+  }
+
+  .newsStrip__title {
+    font-size: 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .newsCard {
+    padding: 18px 16px 24px;
+    min-height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .newsCard__heading {
+    font-size: 16px;
+  }
+
+  .newsCard__text {
+    font-size: 13px;
+  }
+  .newsStrip__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+}

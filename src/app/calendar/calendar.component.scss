@@ -187,8 +187,8 @@ mat-paginator {
   font-weight: 800;
   line-height: 1.02;
   text-transform: uppercase;
+  font-family: var(--font-heading);
 
-  /* ключевое: чтобы не выезжало */
   max-width: 300px;
 
 }

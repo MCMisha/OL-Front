@@ -35,17 +35,21 @@
 
             <div class="card__bottom">
               <a class="btn btn--solid" [href]="'#'" target="_blank" rel="noreferrer">KUP BILET</a>
-              <a class="btn btn--link"  [href]="'#'" target="_blank" rel="noreferrer">CZYTAJ WIĘCEJ</a>
+              <a class="btn btn--link" [href]="'#'" target="_blank" rel="noreferrer">CZYTAJ WIĘCEJ</a>
             </div>
           </div>
         </article>
 
       </div>
     </div>
-
-    <div class="nav">
-      <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
-      <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+    <div class="navBlock">
+      <div class="nav">
+        <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
+        <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+      </div>
+      <a class="navLink" routerLink="/performances">
+        PRZEJŚĆ DO REPERTUARU
+      </a>
     </div>
   </div>
 </section>

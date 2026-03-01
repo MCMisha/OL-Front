@@ -1,0 +1,20 @@
+<section class="newsStrip">
+  <header class="newsStrip__header">
+    <h2 class="newsStrip__title">{{ headerTitle }}</h2>
+  </header>
+
+  <div class="newsStrip__grid">
+    <article class="newsCard" *ngFor="let n of items; let i = index">
+      <div class="newsCard__date">{{ formatDatePl(n.date) }}</div>
+      <div class="newsCard__content">
+        <div class="newsCard__headline">{{ n.title }}</div>
+        <p class="newsCard__text">{{ n.excerpt }}</p>
+        <a class="newsCard__cta" [routerLink]="n.link">Więcej</a>
+      </div>
+    </article>
+  </div>
+
+  <div class="newsStrip__footer">
+    <a class="newsStrip__more" [routerLink]="moreLink">Aktualności</a>
+  </div>
+</section>

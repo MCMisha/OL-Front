@@ -53,7 +53,6 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
       poster: [null],
-      externalId: ['', [Validators.required]]
     });
   }
 
