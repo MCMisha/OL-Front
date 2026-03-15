@@ -224,20 +224,14 @@ mat-paginator {
   border-color: #000;
 }
 
-.messageCard--empty {
-  background: rgba(255,255,255,0.10);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.15);
-}
 .days {
-  position: relative;   /* важно: якорь для абсолютной карточки */
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
   gap: clamp(10px, 1vw, 16px);
   align-items: center;
 }
 
-/* Всплывающая карточка под линией дней */
 .messageCard--floating {
   position: absolute;
   top: calc(100% + 16px);
@@ -252,7 +246,6 @@ mat-paginator {
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* маленький "носик" как в макете */
 .messageCard--floating::before {
   content: "";
   position: absolute;
@@ -264,10 +257,6 @@ mat-paginator {
   border-bottom: 8px solid rgba(255, 255, 255, 0.94);
 }
 
-/* для empty state — носик темный */
-.messageCard--empty.messageCard--floating::before {
-  border-bottom-color: rgba(255,255,255,0.10);
-}
 
 /* MOBILE */
 @media (max-width: 980px) {

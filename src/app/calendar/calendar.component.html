@@ -39,7 +39,7 @@
         </ng-container>
 
         <!-- FLOATING CARD under active day -->
-        <ng-container *ngIf="selectedEvents?.length > 0; else emptyState">
+        <ng-container *ngIf="selectedEvents?.length > 0;">
           <div class="messageCard messageCard--floating" [style.left.px]="cardX"
                [style.--caret-left.px]="caretLeft">
             <div class="messageCard__top">
@@ -56,14 +56,6 @@
             </div>
           </div>
         </ng-container>
-
-        <ng-template #emptyState>
-          <div class="messageCard messageCard--floating messageCard--empty" [style.left.px]="cardX"
-               [style.--caret-left.px]="caretLeft">
-            <div class="messageCard__meta text-white">Brak spektakli</div>
-            <div class="messageCard__title">W tym dniu nie ma wydarzeń</div>
-          </div>
-        </ng-template>
       </div>
     </div>
   </div>

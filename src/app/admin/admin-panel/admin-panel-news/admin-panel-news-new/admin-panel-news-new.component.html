@@ -3,7 +3,7 @@
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Tytuł aktualności</mat-label>
-      <input matInput formControlName="title" placeholder="Wprowadź nazwę miejsca">
+      <input matInput formControlName="title" placeholder="Wprowadź tytuł aktualności">
       <mat-error *ngIf="newNewsForm.get('title')!.hasError('required')">
         Tytuł jest wymagany
       </mat-error>
@@ -18,7 +18,7 @@
   <div class="ms-1 mb-1 d-flex align-items-center">
     <mat-form-field appearance="fill" style="width: 500px;">
       <mat-label>Podtytuł aktualności</mat-label>
-      <input matInput formControlName="subTitle" placeholder="Wprowadź nazwę miejsca">
+      <input matInput formControlName="subTitle" placeholder="Wprowadź podtytuł aktualności">
       <mat-error *ngIf="newNewsForm.get('subTitle')!.hasError('required')">
         Podtytuł jest wymagany
       </mat-error>

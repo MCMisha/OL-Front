@@ -1,35 +1,39 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NewsStripItem} from "../../models/news-strip-item";
+import {NewsService} from "../../services/news.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-recent-news',
   templateUrl: './recent-news.component.html',
   styleUrl: './recent-news.component.scss'
 })
-export class RecentNewsComponent {
+export class RecentNewsComponent implements OnInit, OnDestroy {
   headerTitle = '_AKTUALNOŚCI';
   moreLink = '/news';
 
-  items: NewsStripItem[] = [
-    {
-      title: 'OFERTA PRACY',
-      date: new Date('2025-11-31'),
-      excerpt:
-        'Dyrekcja Opery Lubelskiej ogłasza przesłuchania do zespołu orkiestry na stanowisko muzyk instrumentalista – specjalność – trąbka...',
-      link: '/news/oferta-pracy'
-    },
-    {
-      title: 'ZDROWYCH, POGODNYCH ŚWIĄT!',
-      date: new Date('2025-11-31'),
-      excerpt:
-        'Drodzy Państwo, niech Święta Wielkanocne napełnią Wszystkich siłą oraz radością, a serca przepełni Wiara, Nadzieja i Miłość...',
-      link: '/news/zyczenia'
-    }
-  ];
+  items: NewsStripItem[] = [];
+  subscription = new Subscription();
+  constructor(private newsService: NewsService) {
+  }
 
-  // dd miesiąca yyyy по-польски, как на макете
+  ngOnInit() {
+    this.subscription.add(
+      this.newsService.getTwoRecent().subscribe(res => this.items = res)
+    )
+  }
+
+  truncate(text: string, limit = 140) {
+    return text.length > limit ? text.slice(0, limit) + '...' : text;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   formatDatePl(d: Date): string {
-    return d.toLocaleDateString('pl-PL', {
+    const date = new Date(d);
+    return date.toLocaleDateString('pl-PL', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'

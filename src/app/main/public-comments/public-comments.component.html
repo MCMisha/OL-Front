@@ -1,23 +1,41 @@
 <section class="reviews">
   <div class="reviews__track">
-    <article class="rCard" *ngFor="let r of reviews">
+    <article class="rCard" *ngFor="let comment of comments">
       <div class="rCard__head">
-        <img class="rCard__avatar" [src]="r.avatarUrl" [alt]="r.name" />
+        <img
+          class="rCard__avatar"
+          [src]="'data:image/jpeg;base64,' + comment.photo"
+          [alt]="comment.firstName"
+        />
+
         <div class="rCard__who">
-          <div class="rCard__name">{{ r.name }}</div>
-          <div class="rCard__title">{{ r.title }}</div>
+          <div class="rCard__name">{{ comment.firstName }}</div>
+          <div class="rCard__title">{{ comment.performanceTitle }}</div>
         </div>
 
         <div class="rCard__stars" aria-label="Ocena">
-          <span class="star" *ngFor="let s of stars(r.rating)" [class.star--on]="s">★</span>
+          <span
+            class="star"
+            *ngFor="let s of stars(comment.stars)"
+            [class.star--on]="s"
+          >
+            ★
+          </span>
         </div>
       </div>
 
-      <div class="rCard__text">{{ r.text }}</div>
+      <div class="rCard__text">
+        „{{ comment.comment }}”
+      </div>
 
       <div class="rCard__foot">
-        <div class="rCard__date">{{ r.date }}</div>
-        <a class="rCard__more" href="#">więcej…</a>
+        <div class="rCard__date">
+          {{ comment.datePublished | date:'d MMMM y':'':'pl' }}
+        </div>
+
+        <a class="rCard__more" href="javascript:void(0)">
+          więcej...
+        </a>
       </div>
     </article>
   </div>

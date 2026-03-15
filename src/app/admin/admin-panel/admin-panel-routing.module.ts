@@ -46,6 +46,12 @@ const routes: Routes = [
       import('./admin-panel-artists/admin-panel-artists.module').then(
         (m) => m.AdminPanelArtistsModule
       )
+  },
+  {
+    path: 'comment', loadChildren: () =>
+      import('./admin-panel-comment/admin-panel-comment.module').then(
+        (m) => m.AdminPanelCommentModule
+      )
   }
 ]
 
