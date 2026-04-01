@@ -1,36 +1,33 @@
-import { Component } from '@angular/core';
-import {PremiereVm} from "../../models/premiere-vm";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {mapPremiereToVm, PremiereVm} from "../../models/premiere-vm";
+import {PerformancesService} from "../../services/performances.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-newest-premiers',
   templateUrl: './newest-premiers.component.html',
   styleUrl: './newest-premiers.component.scss'
 })
-export class NewestPremiersComponent {
-  items: PremiereVm[] = [
-    {
-      category: 'KONCERT',
-      title: 'SYLWESTROWY',
-      labelLeft: 'Premiera',
-      date: '31.12.2025',
-      imageUrl: 'assets/mock/premiere-1.jpg',
-      moreUrl: '#'
-    },
-    {
-      category: 'OPERA',
-      title: 'HALKA',
-      labelLeft: 'Premiera',
-      date: '24.09.2025',
-      imageUrl: 'assets/mock/premiere-2.jpg',
-      moreUrl: '#'
-    },
-    {
-      category: 'OPERA',
-      title: 'TOSCA',
-      labelLeft: 'Premiera',
-      date: '21.01.2024',
-      imageUrl: 'assets/mock/premiere-3.jpg',
-      moreUrl: '#'
-    }
-  ];
+export class NewestPremiersComponent implements OnInit, OnDestroy {
+  items: PremiereVm[] = [];
+  subscription = new Subscription();
+  constructor(private premiereService: PerformancesService) {
+  }
+
+  ngOnInit(): void {
+    this.subscription.add(
+      this.premiereService.getNewestPremieres().subscribe(
+        (data) => {
+          this.items = data.map(mapPremiereToVm);
+        },
+        (err) => {
+          console.error('Błąd podczas pobierania premier', err);
+        }
+      )
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

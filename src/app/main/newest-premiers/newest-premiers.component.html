@@ -1,28 +1,58 @@
 <section class="premieres">
   <div class="premieres__head">
-    <div class="premieres__title">_NASZE NAJNOWSZE PREMIERY</div>
-    <a class="premieres__link" href="#" aria-label="Przejdź do spektakli">SPEKTAKLE</a>
+    <h2 class="premieres__title">_NASZE NAJNOWSZE PREMIERY</h2>
+
+    <a
+      class="premieres__link"
+      routerLink="/repertuar"
+      aria-label="Przejdź do spektakli"
+    >
+      SPEKTAKLE
+    </a>
   </div>
 
   <div class="premieres__grid">
     <article class="pCard" *ngFor="let p of items">
-      <div class="pCard__media" [style.backgroundImage]="'url(' + p.imageUrl + ')'"></div>
+      <!-- IMAGE -->
+      <div class="pCard__media">
+        <img
+          [src]="p.imageUrl || 'assets/images/placeholder.jpg'"
+          [alt]="p.title"
+          loading="lazy"
+        />
+      </div>
 
+      <!-- BODY -->
       <div class="pCard__body">
+
+        <!-- CATEGORY -->
         <div class="pCard__meta">
-          <span class="pCard__cat">{{ p.category }}</span>
+          <span class="pCard__cat">
+            {{ p.category || 'WYDARZENIE' }}
+          </span>
         </div>
 
+        <!-- TITLE + DATE -->
         <div class="pCard__row">
-          <div class="pCard__name">{{ p.title }}</div>
+          <div class="pCard__name">
+            {{ p.title || 'Brak tytułu' }}
+          </div>
 
           <div class="pCard__prem">
-            <div class="pCard__premLabel">{{ p.labelLeft }}</div>
-            <div class="pCard__premDate">{{ p.date }}</div>
+            <div class="pCard__premLabel">
+              {{ p.labelLeft || 'Premiera' }}
+            </div>
+            <div class="pCard__premDate">
+              {{ p.date }}
+            </div>
           </div>
         </div>
 
-        <a class="pCard__btn" [href]="p.moreUrl || '#'" target="_blank" rel="noreferrer">
+        <!-- BUTTON -->
+        <a
+          class="pCard__btn"
+          [routerLink]="p.moreUrl || '/repertuar'"
+        >
           CZYTAJ WIĘCEJ
         </a>
       </div>

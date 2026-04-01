@@ -4,6 +4,6 @@ import { NativeDateAdapter } from '@angular/material/core';
 @Injectable()
 export class CustomDateAdapter extends NativeDateAdapter {
   override getFirstDayOfWeek = (): number => {
-    return 1; // Устанавливаем понедельник как первый день недели
+    return 1;
   };
 }

@@ -18,6 +18,10 @@ export class PerformancesService {
     return this.http.get<Performance>(`${environment.baseApiUri}/Performance/by-id/${id}`).pipe(catchError(this.handleError<Performance>('getPerformanceById')))
   }
 
+  getNewestPremieres(): Observable<Performance[]> {
+    return this.http.get<Performance[]>(`${environment.baseApiUri}/Performance/newest-premieres`).pipe(catchError(this.handleError<Performance[]>('getPremieres')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -8,6 +8,7 @@ import {AdminGenreService} from "../../../../services/admin/admin-genre.service"
 import {Performance} from "../../../../models/performance";
 import {Place} from "../../../../models/place";
 import {Genre} from "../../../../models/genre";
+import moment from "moment";
 
 @Component({
   selector: 'app-admin-panel-performance-edit',
@@ -54,6 +55,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       description: ['', [Validators.required, Validators.maxLength(5000)]],
       mainImage: [null, [Validators.required]],
       poster: [null],
+      premiereDate: ['']
     }, {updateOn: 'blur'});
 
     const performanceId = +this.route.snapshot.paramMap.get('id')!;
@@ -79,7 +81,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
               ? Number(performance.breaksCount)
               : '',
             description: performance.description,
-            externalId: performance.externalId
+            externalId: performance.externalId,
+            premiereDate: performance.premiereDate,
           });
 
           Object.keys(this.editPerformanceForm.controls).forEach(field => {
@@ -153,7 +156,8 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
       description: this.editPerformanceForm.value.description,
       mainImage: this.selectedFiles.mainImage,
       poster: this.selectedFiles.poster,
-      externalId: +this.editPerformanceForm.value.externalId
+      externalId: +this.editPerformanceForm.value.externalId,
+      premiereDate: this.editPerformanceForm.value.premiereDate
     };
 
     this.performanceService.updatePerformance(performanceData).subscribe(() => {
@@ -169,4 +173,6 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
     this.editPerformanceForm.get(field)?.updateValueAndValidity();
     this[field] = '';
   }
+
+  protected readonly moment = moment;
 }

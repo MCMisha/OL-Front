@@ -1,0 +1,124 @@
+<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class="comment-form-page">
+  <div class="comment-form-card">
+    <h1>
+      {{ isEditMode ? 'Edycja opinii' : 'Dodawanie opinii' }}
+    </h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+
+        <!-- First Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Imię</mat-label>
+          <input matInput formControlName="firstName" />
+          <mat-error *ngIf="form.controls.firstName.hasError('required')">
+            Imię jest wymagane
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Stars -->
+        <mat-form-field appearance="outline">
+          <mat-label>Ocena</mat-label>
+          <input matInput type="number" formControlName="stars" min="1" max="5" />
+          <mat-error *ngIf="form.controls.stars.hasError('required')">
+            Ocena jest wymagana
+          </mat-error>
+          <mat-error *ngIf="form.controls.stars.hasError('min') || form.controls.stars.hasError('max')">
+            Ocena musi być od 1 do 5
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Performance -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Spektakl</mat-label>
+          <mat-select formControlName="performanceId">
+            <mat-option *ngFor="let performance of performances" [value]="performance.id">
+              {{ performance.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls.performanceId.hasError('required')">
+            Wybierz spektakl
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Photo -->
+<!--        <mat-form-field appearance="outline" class="full-width">-->
+<!--          <mat-label>Zdjęcie (URL lub base64)</mat-label>-->
+<!--          <textarea matInput rows="4" formControlName="photo"></textarea>-->
+<!--          <mat-error *ngIf="form.controls.photo.hasError('required')">-->
+<!--            Zdjęcie jest wymagane-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+        <mat-form-field appearance="fill" style="width: 500px;">
+          <mat-label>Zdjęcie</mat-label>
+          <input type="file" accept="image/*" (change)="onFileSelected($event, 'photo')" hidden #photoInput>
+          <input matInput [value]="selectedFileNames.photo || 'Nie wybrano pliku'" readonly required
+                 (click)="photoInput.click()">
+          <button mat-icon-button type="button" matSuffix *ngIf="!selectedFiles.photo" (click)="photoInput.click()">
+            <mat-icon matSuffix>image</mat-icon>
+          </button>
+          <button mat-icon-button type="button" matSuffix *ngIf="selectedFiles.photo" (click)="onDeleteImage('photo')">
+            <mat-icon matSuffix>delete</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="form.controls.photo?.hasError('required') && form.controls.photo?.dirty">
+            Zdjęcie jest wymagane
+          </mat-error>
+        </mat-form-field>
+        <div *ngIf="isFileLoaded['photo']" class="ms-1 mb-1 d-flex align-items-center">
+          <img [src]="photo" width="25%" height="25%" alt="Zdjęcie"/>
+        </div>
+        <!-- Comment -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Treść opinii</mat-label>
+          <textarea matInput rows="6" formControlName="comment"></textarea>
+          <mat-error *ngIf="form.controls.comment.hasError('required')">
+            Treść opinii jest wymagana
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Date -->
+        <mat-form-field appearance="outline" class="field date">
+          <mat-label>Data</mat-label>
+          <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="datePublished">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('datePublished')?.touched && form.get('datePublished')?.invalid">
+            Wybierz datę
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Is Showing -->
+        <mat-checkbox formControlName="isShowing">
+          Widoczne na stronie
+        </mat-checkbox>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button
+          mat-stroked-button
+          type="button"
+          [routerLink]="['/admin/panel/comment']">
+          Anuluj
+        </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="isLoading">
+          {{ isEditMode ? 'Zapisz zmiany' : 'Dodaj opinię' }}
+        </button>
+      </div>
+
+      <!-- Loader -->
+      <div class="spinner-wrap" *ngIf="isLoading">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+
+    </form>
+  </div>
+</div>

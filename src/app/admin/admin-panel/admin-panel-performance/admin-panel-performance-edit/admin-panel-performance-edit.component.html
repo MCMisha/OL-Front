@@ -124,6 +124,17 @@
   <div *ngIf="isFileLoaded['poster']" class="ms-1 mb-1 d-flex align-items-center">
     <img [src]="poster" width="25%" height="25%" alt="plakat"/>
   </div>
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Data premiery</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="premiereDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="editPerformanceForm.get('premiereDate')?.touched && editPerformanceForm.get('premiereDate')?.invalid">
+        Wybierz datę premiery
+      </mat-error>
+    </mat-form-field>
+  </div>
 </form>
 <div class="ms-1 mb-1 d-flex align-items-center">
   <div class="me-4">
