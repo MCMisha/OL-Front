@@ -47,13 +47,13 @@
 }
 
 .month-header.active::before {
-  content: "<  ";
+  content: "❮  ";
   margin-right: 10px;
   color: #fff;
 }
 
 .month-header.active::after {
-  content: "  >";
+  content: "  ❯";
   margin-left: 10px;
   color: #fff;
 }
@@ -249,32 +249,37 @@
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  .performances {
-    padding: 90px 16px 24px;
-  }
-
-  .months-nav {
-    gap: 12px 18px;
-    margin-bottom: 24px;
-  }
-
   .month-header {
+    display: none;
+  }
+
+  .month-header.active,
+  .month-header:has(+ .month-header.active) {
+    display: block;
     font-size: 14px;
   }
 
   .month-header.active {
     font-size: 18px;
   }
-
   .performance-card,
   .performance-card--featured {
     grid-template-columns: 1fr;
     row-gap: 22px;
     min-height: auto;
     padding: 20px 0 24px;
+    opacity: 1;
   }
 
-  .performance-card--featured, .performance-card__bg {
+  .performance-card__bg {
+    opacity: 1;
+  }
+
+  .performance-card--featured .performance-card__bg {
+    opacity: 1;
+  }
+
+  .performance-card:hover .performance-card__bg {
     opacity: 1;
   }
 
