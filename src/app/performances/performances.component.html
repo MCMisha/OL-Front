@@ -1,80 +1,37 @@
 <div class="performances">
-  <div class="months-nav">
-    <div class="month-header">
-      <a routerLink="./">_Wrzesień</a>
+  <nav class="months-nav" aria-label="Miesiące repertuaru">
+    <a class="month-link" routerLink="./">_WRZESIEŃ</a>
+    <a class="month-link month-link--active" routerLink="./" aria-current="page">_PAŹDZIERNIK</a>
+    <a class="month-link" routerLink="./">_LISTOPAD</a>
+    <a class="month-link" routerLink="./">_GRUDZIEŃ</a>
+    <a class="month-link" routerLink="./">_STYCZEŃ</a>
+    <a class="month-link" routerLink="./">_LUTY</a>
+    <a class="month-link" routerLink="./">_MARZEC</a>
+  </nav>
+
+  <section
+    class="performance-card"
+    *ngFor="let performance of paginatedPerformances; trackBy: trackByPerformanceId"
+    [class.performance-card--with-image]="hasMainImage(performance)"
+    [style.--card-bg-image]="getMainImageCss(performance)"
+  >
+    <div class="performance-date">
+      <div class="performance-day">{{ getDay(performance) }}</div>
+      <div class="performance-month">{{ getMonth(performance) }}</div>
+      <div class="performance-weekday">{{ getWeekday(performance) }}</div>
+
+      <div class="performance-time">{{ getTime(performance) }}</div>
+      <div class="performance-place">Sala operowa CSK</div>
     </div>
 
-    <div class="month-header active">
-      <a routerLink="./">_Październik</a>
+    <div class="performance-content">
+      <div class="performance-genre">{{ getGenreNameById(performance.genre) || 'OFERTKA' }}</div>
+      <div class="performance-title">{{ performance.title || 'BEZ TYTUŁU' }}</div>
     </div>
 
-    <div class="month-header">
-      <a routerLink="./">_Listopad</a>
+    <div class="performance-actions">
+      <button type="button">KUP BILET</button>
+      <a href="#">ZAREZERWUJ MIEJSCE</a>
     </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Grudzień</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Styczeń</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Luty</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Marzec</a>
-    </div>
-  </div>
-
-  <div class="performance-card performance-card--featured">
-    <div class="performance-card__bg"></div>
-
-    <div class="date">
-      <div class="day">12</div>
-      <div class="month">Października</div>
-      <div class="weekday">Piątek</div>
-
-      <div class="time">18:00</div>
-      <div class="place">Sala operowa CSK</div>
-    </div>
-
-    <div class="performance-info">
-      <div class="genre">OPERETKA</div>
-      <div class="title">ZEMSTA NIETOPERZA</div>
-    </div>
-
-    <div class="performances-buy-info">
-      <button>KUP BILET</button>
-      <div>
-        <a href="#">ZAREZERWUJ MIEJSCE</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="performance-card performance-card--featured">
-    <div class="performance-card__bg"></div>
-    <div class="date">
-      <div class="day">13</div>
-      <div class="month">Października</div>
-      <div class="weekday">Piątek</div>
-
-      <div class="time">18:00</div>
-      <div class="place">Sala operowa CSK</div>
-    </div>
-
-    <div class="performance-info">
-      <div class="genre">OPERETKA</div>
-      <div class="title">ZEMSTA NIETOPERZA</div>
-    </div>
-
-    <div class="performances-buy-info">
-      <button>KUP BILET</button>
-      <div>
-        <a href="#">ZAREZERWUJ MIEJSCE</a>
-      </div>
-    </div>
-  </div>
+  </section>
 </div>

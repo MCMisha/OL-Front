@@ -58,7 +58,56 @@ export class PerformancesComponent implements OnInit, OnDestroy {
     this.updatePaginatedPerformances();
   }
 
+  trackByPerformanceId(index: number, performance: Performance): number | string {
+    return performance.id ?? index;
+  }
+
+  hasMainImage(performance: Performance): boolean {
+    return !!performance.mainImage;
+  }
+
+  getMainImageCss(performance: Performance): string {
+    return performance.mainImage
+      ? `url("data:image/jpeg;base64,${performance.mainImage}")`
+      : 'none';
+  }
+
+  getDay(performance: Performance): string {
+    const date = this.getPerformanceDate(performance);
+    return date ? String(date.getDate()).padStart(2, '0') : '--';
+  }
+
+  getMonth(performance: Performance): string {
+    const date = this.getPerformanceDate(performance);
+    return date
+      ? date.toLocaleDateString('pl-PL', {month: 'long'}).toUpperCase()
+      : 'BRAK DATY';
+  }
+
+  getWeekday(performance: Performance): string {
+    const date = this.getPerformanceDate(performance);
+    return date ? date.toLocaleDateString('pl-PL', {weekday: 'long'}) : '';
+  }
+
+  getTime(performance: Performance): string {
+    const date = this.getPerformanceDate(performance);
+    return date
+      ? date.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'})
+      : '--:--';
+  }
+
+  private getPerformanceDate(performance: Performance): Date | null {
+    if (!performance.premiereDate) {
+      return null;
+    }
+
+    const date = new Date(performance.premiereDate);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
   ngOnDestroy(): void {
+    this.$destroy.next(null);
+    this.$destroy.complete();
     this.subscription.unsubscribe();
   }
 
