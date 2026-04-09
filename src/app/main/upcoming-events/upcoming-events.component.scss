@@ -1,6 +1,7 @@
 .upcoming {
   color: #fff;
   padding: 80px;
+  overflow: hidden;
 }
 
 .upcoming__title {
@@ -34,7 +35,7 @@
   scroll-behavior: smooth;
   padding-right: 20px;
   padding-bottom: 8px;
-
+  width: max-content;
   scrollbar-width: none;
 }
 

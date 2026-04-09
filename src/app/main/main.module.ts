@@ -22,9 +22,10 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
     ArtistsComponent,
     MainFooterComponent
   ],
-  exports: [
-    MainComponent
-  ],
+    exports: [
+        MainComponent,
+        MainFooterComponent
+    ],
   imports: [
     CommonModule,
     MainRoutingModule,

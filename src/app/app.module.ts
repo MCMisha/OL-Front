@@ -20,6 +20,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats} from "@angular/material/core";
 import {registerLocaleData} from "@angular/common";
 import {CustomDateAdapter} from "./adapters/custom-date-adapter";
+import {MainModule} from "./main/main.module";
 
 registerLocaleData(localePl)
 
@@ -52,7 +53,8 @@ export const CUSTOM_DATE_FORMATS: MatDateFormats = {
     AdminPanelGenreModule,
     RichTextEditorModule,
     FormsModule,
-    OverlayModule
+    OverlayModule,
+    MainModule
   ],
   providers: [
     provideAnimationsAsync(),

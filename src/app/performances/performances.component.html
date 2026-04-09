@@ -1,35 +1,80 @@
-<mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<div class="performances-wrapper">
-  <div class="performances-grid">
-    <div *ngFor="let performance of paginatedPerformances" class="performance-card">
+<div class="performances">
+  <div class="months-nav">
+    <div class="month-header">
+      <a routerLink="./">_Wrzesień</a>
+    </div>
 
-      <div class="image-wrapper">
-        <img
-          [src]="'data:image/jpeg;base64,' + performance.mainImage"
-          alt="{{ performance.title }}"
-        />
+    <div class="month-header active">
+      <a routerLink="./">_Październik</a>
+    </div>
+
+    <div class="month-header">
+      <a routerLink="./">_Listopad</a>
+    </div>
+
+    <div class="month-header">
+      <a routerLink="./">_Grudzień</a>
+    </div>
+
+    <div class="month-header">
+      <a routerLink="./">_Styczeń</a>
+    </div>
+
+    <div class="month-header">
+      <a routerLink="./">_Luty</a>
+    </div>
+
+    <div class="month-header">
+      <a routerLink="./">_Marzec</a>
+    </div>
+  </div>
+
+  <div class="performance-card performance-card--featured">
+    <div class="performance-card__bg"></div>
+
+    <div class="date">
+      <div class="day">12</div>
+      <div class="month">Października</div>
+      <div class="weekday">Piątek</div>
+
+      <div class="time">18:00</div>
+      <div class="place">Sala operowa CSK</div>
+    </div>
+
+    <div class="performance-info">
+      <div class="genre">OPERETKA</div>
+      <div class="title">ZEMSTA NIETOPERZA</div>
+    </div>
+
+    <div class="performances-buy-info">
+      <button>KUP BILET</button>
+      <div>
+        <a href="#">ZAREZERWUJ MIEJSCE</a>
       </div>
+    </div>
+  </div>
 
-      <div class="card-body">
-        <h2 class="title">{{ performance.title }}</h2>
+  <div class="performance-card performance-card--featured">
+    <div class="performance-card__bg"></div>
+    <div class="date">
+      <div class="day">13</div>
+      <div class="month">Października</div>
+      <div class="weekday">Piątek</div>
 
-        <p class="genre">{{ getGenreNameById(performance.genre) }}</p>
+      <div class="time">18:00</div>
+      <div class="place">Sala operowa CSK</div>
+    </div>
 
-        <p class="director">Reżyseria: Waldemar Zawodziński</p>
+    <div class="performance-info">
+      <div class="genre">OPERETKA</div>
+      <div class="title">ZEMSTA NIETOPERZA</div>
+    </div>
 
-        <button mat-stroked-button color="primary"
-                [routerLink]="['details', performance.id]">
-          Szczegóły
-        </button>
+    <div class="performances-buy-info">
+      <button>KUP BILET</button>
+      <div>
+        <a href="#">ZAREZERWUJ MIEJSCE</a>
       </div>
-
     </div>
   </div>
 </div>
-<mat-paginator
-  [length]="performances.length"
-  [pageSize]="pageSize"
-  [pageIndex]="pageIndex"
-  [pageSizeOptions]="[6, 9, 12]"
-  (page)="onPageChange($event)">
-</mat-paginator>
