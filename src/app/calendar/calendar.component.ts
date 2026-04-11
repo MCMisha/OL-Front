@@ -12,9 +12,10 @@ import {Subject, takeUntil} from 'rxjs';
 import {Performance} from '../models/performance';
 import {Genre} from '../models/genre';
 import {EventInstanceInfo} from "../models/event-instance-info";
-import {EventService} from '../services/event.service';
+import {PerformanceEventService} from '../services/performance-event.service';
 import {PerformancesService} from '../services/performances.service';
 import {GenreService} from '../services/genre.service';
+import {DateFormatterUtil} from "../shared/utils/date-formatter.util";
 
 @Component({
   selector: 'app-calendar',
@@ -51,17 +52,18 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private eventService: EventService,
+    private performanceEventService: PerformanceEventService,
     private performancesService: PerformancesService,
     private genreService: GenreService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dateFormatter: DateFormatterUtil
   ) {
   }
 
   ngOnInit(): void {
     this.ensureAllowedMonth();
     this.rebuildMonth();
-    this.eventService.getMinMaxDates()
+    this.performanceEventService.getMinMaxDates()
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.minDate = new Date(res.minDate);
@@ -109,12 +111,6 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.caretLeft = caret;
     });
-  }
-
-  private getMonthLabelPl(date: Date): string {
-    const m = date.toLocaleDateString('pl-PL', { month: 'long' });
-
-    return m.toUpperCase();
   }
 
   onDayClick(day: number): void {
@@ -180,7 +176,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isLoading = true;
 
-    this.eventService.getEventDates(yearMonth)
+    this.performanceEventService.getEventDates(yearMonth)
       .pipe(takeUntil(this.destroy$))
       .subscribe((dates: EventInstanceInfo[]) => {
         this.performanceDatesTickets = dates;
@@ -246,7 +242,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     const daysInMonth = new Date(y, m + 1, 0).getDate();
 
     this.days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    this.monthLabel = this.getMonthLabelPl(this.currentMonth);
+    this.monthLabel = this.dateFormatter.getMonthLabelPl(this.currentMonth);
     if (this.activeDay > daysInMonth) this.activeDay = daysInMonth;
   }
 

@@ -1,79 +1,79 @@
 <div class="performances">
   <div class="months-nav">
-    <div class="month-header">
-      <a routerLink="./">_Wrzesień</a>
-    </div>
+    <div
+      class="month-header"
+      *ngFor="let month of visibleMonths; trackBy: trackByMonth"
+      [class.active]="month.value === activeMonth"
+      (click)="loadPerformancesByMonth(month.value)"
+    >
+      <ng-container *ngIf="month.value === activeMonth; else defaultMonth">
+        <div class="month-header__active-wrap">
+          <button
+            type="button"
+            class="month-arrow"
+            (click)="showPreviousMonth(); $event.stopPropagation()"
+            [disabled]="!canGoPrevious"
+            aria-label="Poprzedni miesiąc"
+          >
+            ‹
+          </button>
 
-    <div class="month-header active">
-      <a routerLink="./">_Październik</a>
-    </div>
+          <a>_{{ month.label }}</a>
 
-    <div class="month-header">
-      <a routerLink="./">_Listopad</a>
-    </div>
+          <button
+            type="button"
+            class="month-arrow"
+            (click)="showNextMonth(); $event.stopPropagation()"
+            [disabled]="!canGoNext"
+            aria-label="Następny miesiąc"
+          >
+            ›
+          </button>
+        </div>
+      </ng-container>
 
-    <div class="month-header">
-      <a routerLink="./">_Grudzień</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Styczeń</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Luty</a>
-    </div>
-
-    <div class="month-header">
-      <a routerLink="./">_Marzec</a>
+      <ng-template #defaultMonth>
+        <a>_{{ month.label }}</a>
+      </ng-template>
     </div>
   </div>
 
-  <div class="performance-card performance-card--featured">
-    <div class="performance-card__bg"></div>
+  <div *ngFor="let performance of performances">
+    <div class="performance-card">
+      <div
+        class="performance-card__bg"
+        [style.background]="getPerformanceBackground(performance.mainImage)"
+      ></div>
 
-    <div class="date">
-      <div class="day">12</div>
-      <div class="month">Października</div>
-      <div class="weekday">Piątek</div>
+      <div class="date">
+        <div class="day">{{ performance.startAt | date:'dd' }}</div>
+        <div class="month">{{ performance.startAt | date:'MMMM':'':'pl-PL' | uppercase }}</div>
+        <div class="weekday">{{ performance.startAt | date:'EEEE':'':'pl-PL' }}</div>
 
-      <div class="time">18:00</div>
-      <div class="place">Sala operowa CSK</div>
-    </div>
-
-    <div class="performance-info">
-      <div class="genre">OPERETKA</div>
-      <div class="title">ZEMSTA NIETOPERZA</div>
-    </div>
-
-    <div class="performances-buy-info">
-      <button>KUP BILET</button>
-      <div>
-        <a href="#">ZAREZERWUJ MIEJSCE</a>
+        <div class="time-place">
+          <div class="time">{{ performance.startAt | date:'HH:mm':'Europe/Warsaw' }}</div>
+          <div class="place">{{ performance.place }}</div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="performance-card performance-card--featured">
-    <div class="performance-card__bg"></div>
-    <div class="date">
-      <div class="day">13</div>
-      <div class="month">Października</div>
-      <div class="weekday">Piątek</div>
+      <div class="performance-info">
+        <div class="genre">{{ performance.genre }}</div>
+        <div class="title">{{ performance.title }}</div>
+      </div>
 
-      <div class="time">18:00</div>
-      <div class="place">Sala operowa CSK</div>
-    </div>
+      <div class="performances-buy-info">
+        <a
+          class="buy-button"
+          [href]="performance.buyLink"
+          target="_blank"
+          rel="noopener"
+        >
+          KUP BILET
+        </a>
 
-    <div class="performance-info">
-      <div class="genre">OPERETKA</div>
-      <div class="title">ZEMSTA NIETOPERZA</div>
-    </div>
-
-    <div class="performances-buy-info">
-      <button>KUP BILET</button>
-      <div>
-        <a href="#">ZAREZERWUJ MIEJSCE</a>
+        <div>
+          <a>ZAREZERWUJ MIEJSCE</a>
+        </div>
       </div>
     </div>
   </div>

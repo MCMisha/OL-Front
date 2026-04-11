@@ -5,6 +5,9 @@ import {UpcomingEventVm} from "../models/upcoming-event-vm";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
 import { UpcomingEvent } from "../models/upcoming-event";
+import {PerformanceEvent} from "../models/performance-event";
+import {EventInstanceInfo} from "../models/event-instance-info";
+import {MinMaxDate} from "../models/min-max-date";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +31,18 @@ export class PerformanceEventService {
         }))),
         catchError(this.handleError<UpcomingEventVm[]>('getNearestSixEvents'))
       );
+  }
+
+  getMinMaxDates(): Observable<MinMaxDate> {
+    return this.http.get<MinMaxDate>(`${environment.baseApiUri}/PerformanceEvent/min-max-date`);
+  }
+
+  getByMonth(monthYear: string): Observable<PerformanceEvent[]> {
+    return this.http.get<PerformanceEvent[]>(`${environment.baseApiUri}/PerformanceEvent/by-month/${monthYear}`)
+  }
+
+  getEventDates(yearMonth: string): Observable<EventInstanceInfo[]> {
+    return this.http.get<EventInstanceInfo[]>(`${environment.baseApiUri}/PerformanceEvent/by-month/${yearMonth}`);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
