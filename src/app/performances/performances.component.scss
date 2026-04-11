@@ -5,7 +5,12 @@
   background: #000;
   color: #fff;
   font-family: "Neutral Face", Roboto, "Helvetica Neue", sans-serif;
-  overflow-x: hidden;
+}
+
+.performances-loading {
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
 }
 
 * {
@@ -74,7 +79,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transform: translateY(-1px);
+  transform: translateY(-4px);
 }
 
 .month-arrow:disabled {
@@ -99,7 +104,7 @@
   column-gap: 36px;
   padding: 26px 20px 30px;
 //  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  overflow: hidden;
+  //overflow: hidden;
   min-height: 230px;
 }
 

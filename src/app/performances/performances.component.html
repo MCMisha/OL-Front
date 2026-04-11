@@ -37,44 +37,49 @@
       </ng-template>
     </div>
   </div>
+  <div *ngIf="isLoading" class="performances-loading">
+    Ładowanie...
+  </div>
 
-  <div *ngFor="let performance of performances">
-    <div class="performance-card">
-      <div
-        class="performance-card__bg"
-        [style.background]="getPerformanceBackground(performance.mainImage)"
-      ></div>
+  <ng-container *ngIf="!isLoading">
+    <div *ngFor="let performance of performances">
+      <div class="performance-card">
+        <div
+          class="performance-card__bg"
+          [style.background]="getPerformanceBackground(performance.mainImage)"
+        ></div>
 
-      <div class="date">
-        <div class="day">{{ performance.startAt | date:'dd' }}</div>
-        <div class="month">{{ performance.startAt | date:'MMMM':'':'pl-PL' | uppercase }}</div>
-        <div class="weekday">{{ performance.startAt | date:'EEEE':'':'pl-PL' }}</div>
+        <div class="date">
+          <div class="day">{{ performance.startAt | date:'dd' }}</div>
+          <div class="month">{{ performance.startAt | date:'MMMM':'':'pl-PL' | uppercase }}</div>
+          <div class="weekday">{{ performance.startAt | date:'EEEE':'':'pl-PL' }}</div>
 
-        <div class="time-place">
-          <div class="time">{{ performance.startAt | date:'HH:mm':'Europe/Warsaw' }}</div>
-          <div class="place">{{ performance.place }}</div>
+          <div class="time-place">
+            <div class="time">{{ performance.startAt | date:'HH:mm':'Europe/Warsaw' }}</div>
+            <div class="place">{{ performance.place }}</div>
+          </div>
         </div>
-      </div>
 
-      <div class="performance-info">
-        <div class="genre">{{ performance.genre }}</div>
-        <div class="title">{{ performance.title }}</div>
-      </div>
+        <div class="performance-info">
+          <div class="genre">{{ performance.genre }}</div>
+          <div class="title">{{ performance.title }}</div>
+        </div>
 
-      <div class="performances-buy-info">
-        <a
-          class="buy-button"
-          [href]="performance.buyLink"
-          target="_blank"
-          rel="noopener"
-        >
-          KUP BILET
-        </a>
+        <div class="performances-buy-info">
+          <a
+            class="buy-button"
+            [href]="performance.buyLink"
+            target="_blank"
+            rel="noopener"
+          >
+            KUP BILET
+          </a>
 
-        <div>
-          <a>ZAREZERWUJ MIEJSCE</a>
+          <div>
+            <a>ZAREZERWUJ MIEJSCE</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>

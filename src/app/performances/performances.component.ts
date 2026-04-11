@@ -74,12 +74,13 @@ export class PerformancesComponent implements OnInit, OnDestroy {
   }
 
   loadPerformancesByMonth(month: string): void {
-    if (!month || this.activeMonth === month && this.performances.length > 0) {
+    if (!month || (this.activeMonth === month && !this.isLoading)) {
       return;
     }
 
-    this.isLoading = true;
     this.activeMonth = month;
+    this.performances = [];
+    this.isLoading = true;
 
     this.subscription.add(
       this.performanceEventService
