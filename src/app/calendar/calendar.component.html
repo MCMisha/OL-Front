@@ -1,11 +1,8 @@
 <section class="calendar">
-  <!-- background -->
   <div class="calendar__bg" aria-hidden="true"></div>
   <div class="calendar__vignette" aria-hidden="true"></div>
 
-  <!-- content grid -->
   <div class="calendar__inner">
-    <!-- LEFT: month + arrows -->
     <div class="calendar__month">
       <button class="calendar__arrow" aria-label="Poprzedni miesiąc" (click)="prevMonth()">
         <mat-icon>chevron_left</mat-icon>
@@ -21,7 +18,7 @@
     </div>
 
     <div class="calendar__days">
-      <div class="days" #daysWrap>
+      <div class="days" #calendarPopupRoot #daysWrap>
         <ng-container *ngFor="let d of days">
           <div
             class="days__item"
@@ -38,13 +35,19 @@
           </div>
         </ng-container>
 
-        <!-- FLOATING CARD under active day -->
-        <ng-container *ngIf="selectedEvents?.length > 0;">
-          <div class="messageCard messageCard--floating" [style.left.px]="cardX"
-               [style.--caret-left.px]="caretLeft">
+        <ng-container *ngIf="selectedEvents?.length > 0">
+          <div
+            class="messageCard messageCard--floating"
+            [style.left.px]="cardX"
+            [style.--caret-left.px]="caretLeft"
+          >
             <div class="messageCard__top">
               <div class="messageCard__meta">{{ selectedEvents[0]?.genre ?? 'Spektakl' }}</div>
-              <a class="messageCard__btn messageCard__btn--primary" [href]="selectedEvents[0]?.buyLink">
+              <a
+                class="messageCard__btn messageCard__btn--primary"
+                *ngIf="isSelling(selectedEvents[0])"
+                [href]="selectedEvents[0]?.buyLink"
+              >
                 KUP BILET
               </a>
             </div>
@@ -60,4 +63,3 @@
     </div>
   </div>
 </section>
-

@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  Component, ElementRef,
+  Component, ElementRef, HostListener,
   OnDestroy,
   OnInit, QueryList,
   ViewChild, ViewChildren
@@ -16,6 +16,7 @@ import {PerformanceEventService} from '../services/performance-event.service';
 import {PerformancesService} from '../services/performances.service';
 import {GenreService} from '../services/genre.service';
 import {DateFormatterUtil} from "../shared/utils/date-formatter.util";
+import moment from "moment";
 
 @Component({
   selector: 'app-calendar',
@@ -30,7 +31,8 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('daysWrap', { read: ElementRef }) daysWrap!: ElementRef<HTMLElement>;
   @ViewChildren('dayEl', { read: ElementRef }) dayEls!: QueryList<ElementRef<HTMLElement>>;
-
+  @ViewChild('calendarPopupRoot', { read: ElementRef })
+  calendarPopupRoot!: ElementRef<HTMLElement>;
   private readonly noPerformMonths = new Set<number>([6, 7]);
   selectedEvents: any;
   currentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -80,6 +82,10 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateCardPosition();
   }
 
+  private closeCard(): void {
+    this.selectedEvents = [];
+  }
+
   private updateCardPosition(): void {
     requestAnimationFrame(() => {
       const wrap = this.daysWrap?.nativeElement;
@@ -119,6 +125,18 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateCardPosition();
   }
 
+  @HostListener('document:mousedown', ['$event'])
+  onDocumentMouseDown(event: MouseEvent): void {
+    const root = this.calendarPopupRoot?.nativeElement;
+    const target = event.target as Node | null;
+
+    if (!root || !target) return;
+
+    if (!root.contains(target)) {
+      this.closeCard();
+    }
+  }
+
   onMonthChange(date: Date): void {
     if (!this.minDate || !this.maxDate) return;
 
@@ -133,6 +151,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loadMonthData(date);
     }
   }
+
   private rebuildSelectedEvents(): void {
     const y = this.currentMonth.getFullYear();
     const m = this.currentMonth.getMonth();
@@ -277,5 +296,9 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  protected isSelling(selectedEvent: any) {
+    return moment(selectedEvent.startAt) > moment() && !!selectedEvent.buyLink && selectedEvent.isActive;
   }
 }
