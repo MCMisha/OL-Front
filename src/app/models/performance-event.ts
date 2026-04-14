@@ -7,4 +7,5 @@ export interface PerformanceEvent {
   place: string;
   mainImage: string;
   buyLink: string;
+  isActive: boolean;
 }
