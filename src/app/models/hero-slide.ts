@@ -5,5 +5,5 @@ export interface HeroSlide {
   dateRange?: string;     // "10.12 — 11.12"
   backgroundUrl: string;  // картинка фона
   buyUrl?: string;
-  detailsLink?: any[];
+  detailsLink?: any[] | null;
 }

@@ -1,48 +1,96 @@
-import {Component} from '@angular/core';
-import {HeroSlide} from "../models/hero-slide";
-import {Subscription} from "rxjs";
-import {NavigationEnd, Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HeroSlide } from '../models/hero-slide';
+import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { MainPageBackgroundService } from '../services/main-page-background.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
-export class MainComponent {
+export class MainComponent implements OnInit, OnDestroy {
   days = Array.from({ length: 31 }, (_, i) => i + 1);
   activeDay = 13;
-  showMenu: boolean = true;
-  isLoading: boolean = true;
+  showMenu = true;
+  isLoading = true;
   mobileMenuOpen = false;
-  private subscription = new Subscription();
-  slides: HeroSlide[] = [
-    {
-      id: 1,
-      subtitle: 'Operetka',
-      title: 'ZEMSTA NIETOPERZA',
-      dateRange: '10.12 — 11.12',
-      backgroundUrl: 'assets/hero/zemsta.jpg',
-      buyUrl: 'https://...',
-      detailsLink: ['/performances', 1]
-    },
-    {
-      id: 2,
-      subtitle: 'Musical',
-      title: 'PHANTOM',
-      dateRange: '12.01 — 13.01',
-      backgroundUrl: 'assets/hero/phantom.jpg',
-      buyUrl: 'https://...',
-      detailsLink: ['/performances', 2]
-    }
-  ];
 
+  private subscription = new Subscription();
+
+  slides: HeroSlide[] = [];
   active = 0;
   isAnimating = false;
 
   private timerId: any = null;
-  autoplayMs = 5000; // если не надо — отключишь
-  constructor(private router: Router) {
+  autoplayMs = 5000;
+
+  constructor(
+    private mainPageBackgroundService: MainPageBackgroundService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.subscription.add(
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.showMenu = !event.url.startsWith('/admin');
+          this.isLoading = false;
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.mainPageBackgroundService.getAllActive().subscribe({
+        next: (backgrounds) => {
+          this.slides = backgrounds.map(bg => ({
+            id: bg.id,
+            subtitle: bg.title,
+            title: bg.title,
+            dateRange: '',
+            backgroundUrl: this.toImageUrl(bg.mainImage),
+            buyUrl: '',
+            detailsLink: null
+          }));
+
+          this.active = 0;
+
+          if (this.slides.length > 1) {
+            this.startAutoplay();
+          }
+        },
+        error: (err) => {
+          console.error('Ошибка загрузки фонов главной страницы', err);
+        }
+      })
+    );
   }
+
+  ngOnDestroy(): void {
+    this.stopAutoplay();
+    this.subscription.unsubscribe();
+  }
+
+  get activeSlide(): HeroSlide | null {
+    return this.slides.length ? this.slides[this.active] : null;
+  }
+
+  get dots(): number[] {
+    return Array.from({ length: this.slides.length }, (_, i) => i);
+  }
+
+  toImageUrl(base64: string | null | undefined): string {
+    if (!base64) {
+      return '';
+    }
+
+    if (base64.startsWith('data:image')) {
+      return base64;
+    }
+
+    return `data:image/jpeg;base64,${base64}`;
+  }
+
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
@@ -52,29 +100,7 @@ export class MainComponent {
   }
 
   navigateFromMenu() {
-    // закрыть меню после перехода
     this.closeMobileMenu();
-  }
-
-  ngOnInit(): void {
-    this.subscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.showMenu = !event.url.startsWith('/admin');
-        this.isLoading = false;
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  get activeSlide(): HeroSlide {
-    return this.slides[this.active];
-  }
-
-  get dots(): number[] {
-    return Array.from({ length: this.slides.length }, (_, i) => i);
   }
 
   goTo(index: number): void {
@@ -82,13 +108,11 @@ export class MainComponent {
 
     this.isAnimating = true;
 
-    // маленькая пауза для fade-out
     setTimeout(() => {
       this.active = index;
       this.isAnimating = false;
     }, 220);
 
-    // сбрасываем таймер при ручном клике
     this.restartAutoplay();
   }
 
@@ -104,6 +128,7 @@ export class MainComponent {
 
   startAutoplay(): void {
     if (this.slides.length <= 1) return;
+
     this.stopAutoplay();
     this.timerId = setInterval(() => this.next(), this.autoplayMs);
   }
@@ -116,7 +141,6 @@ export class MainComponent {
   }
 
   restartAutoplay(): void {
-    // если автоплей не нужен — просто убери вызовы
     this.startAutoplay();
   }
 
