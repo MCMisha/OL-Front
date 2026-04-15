@@ -6,4 +6,6 @@ export interface UpcomingEventVm {
   genre: string;
   place: string;
   imageUrl: string | null;
+  buyLink?: string;
+  isActive: boolean;
 }

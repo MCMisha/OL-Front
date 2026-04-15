@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {UpcomingEventVm} from "../../models/upcoming-event-vm";
 import {PerformanceEventService} from "../../services/performance-event.service";
 import {map} from "rxjs/operators";
+import {HelperFunctionsUtil} from "../../shared/utils/helper-functions.util";
 
 @Component({
   selector: 'app-upcoming-events',
@@ -19,7 +20,8 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
   private startX = 0;
   private startScrollLeft = 0;
 
-  constructor(private performanceEventService: PerformanceEventService) {}
+  constructor(private performanceEventService: PerformanceEventService,
+              protected helperFunctions: HelperFunctionsUtil) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -31,7 +33,9 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
           title: dto.title,
           genre: dto.genre,
           place: dto.place,
-          imageUrl: dto.imageUrl
+          imageUrl: dto.imageUrl,
+          buyLink: dto.buyLink,
+          isActive: dto.isActive
         } as UpcomingEventVm)))
       ).subscribe(events => this.events = events)
     );

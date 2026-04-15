@@ -6,4 +6,6 @@ export interface UpcomingEvent {
   genre: string;
   place: string;
   mainImage: string | null;
+  buyLink?: string;
+  isActive: boolean;
 }

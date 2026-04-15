@@ -38,7 +38,8 @@
             </div>
 
             <div class="card__bottom">
-              <a class="btn btn--solid" [href]="'#'" target="_blank" rel="noreferrer">KUP BILET</a>
+
+              <a class="btn btn--solid" *ngIf="helperFunctions.isSelling(e)" [href]="e.buyLink" target="_blank" rel="noreferrer">KUP BILET</a>
               <a class="btn btn--link" [href]="'#'" target="_blank" rel="noreferrer">CZYTAJ WIĘCEJ</a>
             </div>
           </div>

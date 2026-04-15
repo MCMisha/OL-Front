@@ -27,7 +27,9 @@ export class PerformanceEventService {
           title: dto.title,
           genre: dto.genre,
           place: dto.place,
-          imageUrl: dto.mainImage ? `data:image/jpeg;base64,${dto.mainImage}` : null
+          imageUrl: dto.mainImage ? `data:image/jpeg;base64,${dto.mainImage}` : null,
+          buyLink: dto.buyLink,
+          isActive: dto.isActive
         }))),
         catchError(this.handleError<UpcomingEventVm[]>('getNearestSixEvents'))
       );

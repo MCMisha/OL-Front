@@ -65,7 +65,7 @@
           <div class="title">{{ performance.title }}</div>
         </div>
 
-        <div class="performances-buy-info">
+        <div *ngIf="helperFunctions.isSelling(performance)" class="performances-buy-info">
           <a
             class="buy-button"
             [href]="performance.buyLink"

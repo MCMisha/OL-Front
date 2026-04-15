@@ -5,6 +5,7 @@ import { Genre } from '../models/genre';
 import { PerformanceEventService } from '../services/performance-event.service';
 import { PerformanceEvent } from '../models/performance-event';
 import {MonthItem} from "../models/month-item";
+import {HelperFunctionsUtil} from "../shared/utils/helper-functions.util";
 
 @Component({
   selector: 'app-performances',
@@ -23,7 +24,8 @@ export class PerformancesComponent implements OnInit, OnDestroy {
 
   constructor(
     private genreService: GenreService,
-    private performanceEventService: PerformanceEventService
+    private performanceEventService: PerformanceEventService,
+    protected helperFunctions: HelperFunctionsUtil
   ) {}
 
   ngOnInit(): void {
