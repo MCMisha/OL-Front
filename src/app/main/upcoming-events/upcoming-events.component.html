@@ -2,8 +2,12 @@
   <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
 
   <div class="upcoming__wrap">
-    <div class="viewport">
-      <div #track class="track">
+    <div #viewport class="viewport" (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp()"
+         (pointerleave)="onPointerUp()"
+         (pointercancel)="onPointerUp()">
+      <div class="track">
         <article
           class="card text-white"
           *ngFor="let e of events"

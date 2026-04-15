@@ -1,3 +1,21 @@
+.viewport {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewport.dragging {
+  cursor: grabbing;
+}
+
 .upcoming {
   color: #fff;
   padding: 80px;
@@ -20,18 +38,10 @@
   padding-left: clamp(24px, 5vw, 80px);
 }
 
-/* ВАЖНО: viewport задаёт ширину "4 карточки + хвост" */
-.viewport {
-  width: min(1280px, calc(100vw - clamp(24px, 5vw, 80px)));
-  overflow: hidden; /* обрезает 5-ю карточку справа */
-  padding-bottom: 12px;
-}
-
 /* дорожка со скроллом */
 .track {
   display: flex;
   gap: 24px; /* ближе к макету */
-  overflow-x: auto;
   scroll-behavior: smooth;
   padding-right: 20px;
   padding-bottom: 8px;
@@ -278,6 +288,7 @@
 @media (max-width: 520px) {
   .viewport {
     overflow: visible;
+    overflow-x: hidden;
     width: 100%;
     padding-right: 16px;
   }
@@ -302,9 +313,5 @@
   .upcoming__title {
     margin-left: 16px;
     padding-left: 0;
-  }
-
-  .nav {
-    display: none;
   }
 }

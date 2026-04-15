@@ -10,10 +10,14 @@ import {map} from "rxjs/operators";
   styleUrls: ['./upcoming-events.component.scss']
 })
 export class UpcomingEventsComponent implements OnInit, OnDestroy{
-  @ViewChild('track', { static: true }) trackRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('viewport', { static: true }) viewportRef!: ElementRef<HTMLDivElement>;
 
   events: UpcomingEventVm[] = [];
   subscription = new Subscription();
+
+  private isDragging = false;
+  private startX = 0;
+  private startScrollLeft = 0;
 
   constructor(private performanceEventService: PerformanceEventService) {}
 
@@ -38,11 +42,41 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
   }
 
   scroll(dir: 'prev' | 'next'): void {
-    const el = this.trackRef.nativeElement;
-    const cardWidth = 260;
-    const gap = 24;
-    const delta = cardWidth + gap;
+    const el = this.viewportRef.nativeElement;
+    const delta = 260 + 24;
 
-    el.scrollBy({ left: dir === 'next' ? delta : -delta, behavior: 'smooth' });
+    el.scrollBy({
+      left: dir === 'next' ? delta : -delta,
+      behavior: 'smooth'
+    });
+  }
+
+  onPointerDown(event: PointerEvent): void {
+    const el = this.viewportRef.nativeElement;
+
+    this.isDragging = true;
+    this.startX = event.clientX;
+    this.startScrollLeft = el.scrollLeft;
+
+    el.setPointerCapture(event.pointerId);
+    el.classList.add('dragging');
+  }
+
+  onPointerMove(event: PointerEvent): void {
+    if (!this.isDragging) return;
+
+    const el = this.viewportRef.nativeElement;
+    const dx = event.clientX - this.startX;
+    const speed = 2.2;
+
+    el.scrollLeft = this.startScrollLeft - dx * speed;
+  }
+
+  onPointerUp(): void {
+    if (!this.isDragging) return;
+
+    const el = this.viewportRef.nativeElement;
+    this.isDragging = false;
+    el.classList.remove('dragging');
   }
 }
