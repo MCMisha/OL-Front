@@ -70,10 +70,10 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
     if (!this.isDragging) return;
 
     const el = this.viewportRef.nativeElement;
-    const dx = event.clientX - this.startX;
-    const speed = 2.2;
+    const dx = event.clientX - this.startX > 0 ? 284 : -284;
 
-    el.scrollLeft = this.startScrollLeft - dx * speed;
+
+    el.scrollLeft = this.startScrollLeft - dx;
   }
 
   onPointerUp(): void {
