@@ -19,6 +19,7 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
   private isDragging = false;
   private startX = 0;
   private startScrollLeft = 0;
+  private dxMove = 284;
 
   constructor(private performanceEventService: PerformanceEventService,
               protected helperFunctions: HelperFunctionsUtil) {}
@@ -70,8 +71,7 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
     if (!this.isDragging) return;
 
     const el = this.viewportRef.nativeElement;
-    const dx = event.clientX - this.startX > 0 ? 284 : -284;
-
+    const dx = event.clientX - this.startX > 0 ? this.dxMove : -this.dxMove;
 
     el.scrollLeft = this.startScrollLeft - dx;
   }

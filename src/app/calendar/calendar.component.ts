@@ -1,14 +1,14 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  Component, ElementRef, HostListener,
+  Component, ElementRef, EventEmitter, HostListener,
   OnDestroy,
-  OnInit, QueryList,
+  OnInit, Output, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {isSameDay} from 'date-fns';
 import {MatPaginator} from '@angular/material/paginator';
-import {Subject, takeUntil} from 'rxjs';
+import {forkJoin, Subject, takeUntil} from 'rxjs';
 import {Performance} from '../models/performance';
 import {Genre} from '../models/genre';
 import {EventInstanceInfo} from "../models/event-instance-info";
@@ -50,6 +50,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
   isLoading: boolean = true;
   currentLoadedMonth: string = '';
+  @Output() emitLoadingEvent = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -63,6 +64,8 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.emitLoadingEvent.emit(true);
+
     this.ensureAllowedMonth();
     this.rebuildMonth();
     this.performanceEventService.getMinMaxDates()
@@ -181,49 +184,54 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateCardPosition();
   }
 
-  private loadMonthData(date: Date) {
+  private loadMonthData(date: Date): void {
     if (!this.minDate || !this.maxDate) return;
-
     const current = new Date(date.getFullYear(), date.getMonth(), 1);
     const min = new Date(this.minDate.getFullYear(), this.minDate.getMonth(), 1);
     const max = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth(), 1);
+
     if (current < min || current > max) return;
 
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const yearMonth = `${date.getFullYear()}-${month}`;
     this.currentLoadedMonth = yearMonth;
 
-    this.isLoading = true;
 
-    this.performanceEventService.getEventDates(yearMonth)
+    forkJoin({
+      dates: this.performanceEventService.getEventDates(yearMonth),
+      genres: this.genreService.getGenres(),
+      performances: this.performancesService.getPerformances()
+    })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((dates: EventInstanceInfo[]) => {
-        this.performanceDatesTickets = dates;
+      .subscribe({
+        next: ({ dates, genres, performances }) => {
+          this.performanceDatesTickets = dates;
+          this.genres = genres;
+          this.events = performances.map((event: Performance) => ({
+            ...event,
+            date: undefined
+          }));
 
-        this.genreService.getGenres()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe(genres => {
-            this.genres = genres;
-            this.cdr.detectChanges();
-          });
+          this.selectedDate = new Date(
+            this.currentMonth.getFullYear(),
+            this.currentMonth.getMonth(),
+            this.activeDay
+          );
 
-        this.performancesService.getPerformances()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: Performance[]) => {
-            this.events = data.map((event: Performance) => ({
-              ...event,
-              date: undefined
-            }));
+          this.rebuildMonth();
+          this.rebuildDaysWithEvents();
+          this.onDateChange(this.selectedDate);
 
-            this.onDateChange(this.selectedDate ?? new Date());
-            this.isLoading = false;
-            this.rebuildMonth();
-            this.rebuildDaysWithEvents();
-            this.cdr.detectChanges();
-          });
+          this.isLoading = false;
+          this.emitLoadingEvent.emit(false);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('loadMonthData error', err);
+          this.isLoading = false;
+          this.emitLoadingEvent.emit(false);
+        }
       });
-    this.rebuildMonth();
-    this.rebuildDaysWithEvents();
   }
 
   private updatePaginatedEvents(): void {

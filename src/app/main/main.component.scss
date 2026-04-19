@@ -37,6 +37,22 @@
   z-index: 3;
 }
 
+.performances-loading {
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+
+.performances-loading--overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
 .dot {
   width: 6px;
   height: 6px;
@@ -70,4 +86,14 @@
 
 .section {
   padding: 120px 80px;
+}
+
+.main-loading-screen {
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 108px;
 }

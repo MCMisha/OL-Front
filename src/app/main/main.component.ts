@@ -35,7 +35,6 @@ export class MainComponent implements OnInit, OnDestroy {
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           this.showMenu = !event.url.startsWith('/admin');
-          this.isLoading = false;
         }
       })
     );
@@ -146,5 +145,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
   trackByIndex(i: number): number {
     return i;
+  }
+
+  public handleLoading(isLoading: boolean) {
+    this.isLoading = isLoading;
   }
 }

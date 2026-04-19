@@ -1,27 +1,39 @@
-<section
-  *ngIf="activeSlide"
-  class="hero"
-  [class.is-fading]="isAnimating"
-  [ngStyle]="{ 'background-image': 'url(' + activeSlide.backgroundUrl + ')' }"
-  (mouseleave)="startAutoplay()"
->
-  <div class="hero__overlay"></div>
-
-  <app-calendar class="hero__calendar"></app-calendar>
-
-  <div class="hero__dots" *ngIf="slides.length > 1">
-    <button
-      class="dot"
-      *ngFor="let i of dots; trackBy: trackByIndex"
-      type="button"
-      [class.is-active]="i === active"
-      (click)="goTo(i)"
-      [attr.aria-label]="'Slide ' + (i + 1)"
-    ></button>
+<div *ngIf="isLoading" class="main-loading-screen">
+  <div class="performances-loading">
+    Ładowanie...
   </div>
-</section>
-<app-upcoming-events></app-upcoming-events>
-<app-recent-news></app-recent-news>
-<app-newest-premiers></app-newest-premiers>
-<app-public-comments></app-public-comments>
-<app-artists></app-artists>
+</div>
+
+<div [style.display]="isLoading ? 'none' : 'block'">
+  <section
+    *ngIf="activeSlide"
+    class="hero"
+    [class.is-fading]="isAnimating"
+    [ngStyle]="{ 'background-image': 'url(' + activeSlide.backgroundUrl + ')' }"
+    (mouseleave)="startAutoplay()"
+  >
+    <div class="hero__overlay"></div>
+
+    <app-calendar
+      class="hero__calendar"
+      (emitLoadingEvent)="handleLoading($event)"
+    ></app-calendar>
+
+    <div class="hero__dots" *ngIf="slides.length > 1">
+      <button
+        class="dot"
+        *ngFor="let i of dots; trackBy: trackByIndex"
+        type="button"
+        [class.is-active]="i === active"
+        (click)="goTo(i)"
+        [attr.aria-label]="'Slide ' + (i + 1)"
+      ></button>
+    </div>
+  </section>
+
+  <app-upcoming-events></app-upcoming-events>
+  <app-recent-news></app-recent-news>
+  <app-newest-premiers></app-newest-premiers>
+  <app-public-comments></app-public-comments>
+  <app-artists></app-artists>
+</div>
