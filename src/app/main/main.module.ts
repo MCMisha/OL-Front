@@ -10,6 +10,7 @@ import { NewestPremiersComponent } from './newest-premiers/newest-premiers.compo
 import { PublicCommentsComponent } from './public-comments/public-comments.component';
 import { ArtistsComponent } from './artists/artists.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
+import {DragScrollDirective} from "../shared/utils/drag-scroll-util.directive";
 
 
 @NgModule({
@@ -20,17 +21,18 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
     NewestPremiersComponent,
     PublicCommentsComponent,
     ArtistsComponent,
-    MainFooterComponent
+    MainFooterComponent,
+    DragScrollDirective
   ],
     exports: [
         MainComponent,
         MainFooterComponent
     ],
-  imports: [
-    CommonModule,
-    MainRoutingModule,
-    MatIcon,
-    CalendarModule
-  ]
+    imports: [
+        CommonModule,
+        MainRoutingModule,
+        MatIcon,
+        CalendarModule,
+    ]
 })
 export class MainModule { }

@@ -2,11 +2,7 @@
   <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
 
   <div class="upcoming__wrap">
-    <div #viewport class="viewport" (pointerdown)="onPointerDown($event)"
-         (pointermove)="onPointerMove($event)"
-         (pointerup)="onPointerUp()"
-         (pointerleave)="onPointerUp()"
-         (pointercancel)="onPointerUp()">
+    <div #viewport class="viewport" appDragScroll>
       <div class="track">
         <article
           class="card text-white"

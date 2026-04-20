@@ -59,6 +59,7 @@
   flex: 0 0 300px;          /* ширина карточки */
   height: 390px;            /* высота как в макете */
   overflow: hidden;
+  user-select: none;
 
   background: #3a3a3a;
   padding: 22px 22px 18px;  /* аккуратные отступы */

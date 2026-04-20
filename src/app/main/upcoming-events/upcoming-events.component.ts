@@ -16,11 +16,6 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
   events: UpcomingEventVm[] = [];
   subscription = new Subscription();
 
-  private isDragging = false;
-  private startX = 0;
-  private startScrollLeft = 0;
-  private dxMove = 284;
-
   constructor(private performanceEventService: PerformanceEventService,
               protected helperFunctions: HelperFunctionsUtil) {}
 
@@ -55,32 +50,32 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
       behavior: 'smooth'
     });
   }
-
-  onPointerDown(event: PointerEvent): void {
-    const el = this.viewportRef.nativeElement;
-
-    this.isDragging = true;
-    this.startX = event.clientX;
-    this.startScrollLeft = el.scrollLeft;
-
-    el.setPointerCapture(event.pointerId);
-    el.classList.add('dragging');
-  }
-
-  onPointerMove(event: PointerEvent): void {
-    if (!this.isDragging) return;
-
-    const el = this.viewportRef.nativeElement;
-    const dx = event.clientX - this.startX > 0 ? this.dxMove : -this.dxMove;
-
-    el.scrollLeft = this.startScrollLeft - dx;
-  }
-
-  onPointerUp(): void {
-    if (!this.isDragging) return;
-
-    const el = this.viewportRef.nativeElement;
-    this.isDragging = false;
-    el.classList.remove('dragging');
-  }
+  //
+  // onPointerDown(event: PointerEvent): void {
+  //   const el = this.viewportRef.nativeElement;
+  //
+  //   this.isDragging = true;
+  //   this.startX = event.clientX;
+  //   this.startScrollLeft = el.scrollLeft;
+  //
+  //   el.setPointerCapture(event.pointerId);
+  //   el.classList.add('dragging');
+  // }
+  //
+  // onPointerMove(event: PointerEvent): void {
+  //   if (!this.isDragging) return;
+  //
+  //   const el = this.viewportRef.nativeElement;
+  //   const dx = event.clientX - this.startX > 0 ? this.dxMove : -this.dxMove;
+  //
+  //   el.scrollLeft = this.startScrollLeft - dx;
+  // }
+  //
+  // onPointerUp(): void {
+  //   if (!this.isDragging) return;
+  //
+  //   const el = this.viewportRef.nativeElement;
+  //   this.isDragging = false;
+  //   el.classList.remove('dragging');
+  // }
 }
