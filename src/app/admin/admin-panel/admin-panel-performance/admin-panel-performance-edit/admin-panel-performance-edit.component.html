@@ -5,7 +5,7 @@
       <mat-label>Nazwa spektaklu</mat-label>
       <input matInput formControlName="title" placeholder="Wprowadź nazwę miejsca">
       <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('required')">
-        Nazwa miejsca jest wymagana
+        Nazwa spektaklu jest wymagana
       </mat-error>
       <mat-error *ngIf="editPerformanceForm.get('title')?.hasError('minlength')">
         Długość musi być więcej niż 2
