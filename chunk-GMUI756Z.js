@@ -1,0 +1,1 @@
+import{a as c}from"./chunk-AOYJJWFW.js";import{da as o,f as a}from"./chunk-5475SRIF.js";var i=a(c());var f=(()=>{class t{isSelling(r){return(0,i.default)(r.startAt)>(0,i.default)()&&!!r.buyLink&&r.isActive}static{this.\u0275fac=function(n){return new(n||t)}}static{this.\u0275prov=o({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{f as a};
