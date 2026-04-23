@@ -30,6 +30,19 @@ mat-sidenav {
     gap: 1rem;
     padding:0.75rem;
   }
+  overflow-y: auto;
+
+  /* Chrome / Edge / Safari */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* IE / старый Edge */
+  -ms-overflow-style: none;
 }
 
 mat-sidenav-content{

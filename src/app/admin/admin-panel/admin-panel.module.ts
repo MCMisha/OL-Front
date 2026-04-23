@@ -20,34 +20,38 @@ import {
 } from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
+import { AdminPanelSliderComponent } from './admin-panel-slider/admin-panel-slider.component';
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 
 @NgModule({
   declarations: [
     AdminPanelComponent,
-    AdminPanelMainComponent
+    AdminPanelMainComponent,
+    AdminPanelSliderComponent
   ],
-  imports: [
-    CommonModule,
-    AdminPanelRoutingModule,
-    MatIconModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    RouterOutlet,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatPaginator,
-    MatHeaderRowDef,
-    MatRowDef,
-    MatRow,
-    MatHeaderRow,
-    MatTooltip
-  ]
+    imports: [
+        CommonModule,
+        AdminPanelRoutingModule,
+        MatIconModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        RouterOutlet,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        MatPaginator,
+        MatHeaderRowDef,
+        MatRowDef,
+        MatRow,
+        MatHeaderRow,
+        MatTooltip,
+        MatProgressBar
+    ]
 })
 export class AdminPanelModule { }

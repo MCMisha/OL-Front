@@ -1,0 +1,125 @@
+<div class="slider-form" *ngIf="!isLoading; else loadingTpl">
+  <div class="slider-form__card">
+    <div class="slider-form__header">
+      <h2>{{ isEditMode ? 'Edycja slajdu' : 'Dodawanie slajdu' }}</h2>
+      <p>Uzupełnij dane slajdu głównego.</p>
+    </div>
+
+    <form [formGroup]="form" class="slider-form__body">
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tytuł</mat-label>
+          <input matInput formControlName="title" placeholder="Wpisz tytuł slajdu" />
+          <mat-error *ngIf="form.get('title')?.hasError('required')">
+            Tytuł jest wymagany
+          </mat-error>
+          <mat-error *ngIf="form.get('title')?.hasError('maxlength')">
+            Tytuł może mieć maksymalnie 200 znaków
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Kolejność wyświetlania</mat-label>
+          <input matInput type="number" formControlName="displayOrder" />
+          <mat-error *ngIf="form.get('displayOrder')?.hasError('required')">
+            Pole jest wymagane
+          </mat-error>
+          <mat-error *ngIf="form.get('displayOrder')?.hasError('min')">
+            Wartość nie może być mniejsza niż 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Data utworzenia</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="createdAt" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('createdAt')?.hasError('required')">
+            Data utworzenia jest wymagana
+          </mat-error>
+        </mat-form-field>
+
+        <div class="toggle-wrap">
+          <mat-slide-toggle formControlName="isActive">
+            Aktywny slajd
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="upload-section">
+        <div class="upload-section__title">Zdjęcie główne</div>
+
+        <div class="upload-box" [class.upload-box--loaded]="isFileLoaded.mainImage || !!form.get('mainImage')?.value">
+          <ng-container *ngIf="mainImage && mainImage !== 'data:image/jpeg;base64,'; else emptyState">
+            <div class="preview">
+              <img [src]="mainImage" alt="Podgląd zdjęcia głównego" />
+            </div>
+          </ng-container>
+
+          <ng-template #emptyState>
+            <div class="upload-placeholder">
+              <mat-icon>image</mat-icon>
+              <span>Nie wybrano obrazu</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="upload-actions">
+          <label class="upload-btn" for="mainImageInput">
+            <mat-icon>upload</mat-icon>
+            <span>Wybierz plik</span>
+          </label>
+
+          <input
+            id="mainImageInput"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'mainImage')"
+            hidden
+          />
+
+          <button
+            mat-stroked-button
+            color="warn"
+            type="button"
+            (click)="onDeleteImage('mainImage')"
+            [disabled]="!form.get('mainImage')?.value && !selectedFiles.mainImage"
+          >
+            <mat-icon>delete</mat-icon>
+            Usuń obraz
+          </button>
+        </div>
+
+        <div class="file-name" *ngIf="selectedFileNames.mainImage">
+          Wybrany plik: <strong>{{ selectedFileNames.mainImage }}</strong>
+        </div>
+
+        <div class="upload-error" *ngIf="form.get('mainImage')?.invalid && form.get('mainImage')?.touched">
+          Obraz jest wymagany
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" routerLink="/admin/panel/slider">
+          Anuluj
+        </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="form.invalid"
+        >
+          {{ isEditMode ? 'Zapisz zmiany' : 'Dodaj slajd' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading-wrap">
+    <mat-spinner diameter="42"></mat-spinner>
+  </div>
+</ng-template>

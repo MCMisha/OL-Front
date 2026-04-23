@@ -1,13 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminPanelCommentComponent} from "./admin-panel-comment.component";
-import {AdminPanelCommentNewComponent} from "./admin-panel-comment-new/admin-panel-comment-new.component";
-import {AdminPanelCommentEditComponent} from "./admin-panel-comment-edit/admin-panel-comment-edit.component";
+import {AdminPanelCommentFormComponent} from "./admin-panel-comment-form/admin-panel-comment-form.component";
 
 const routes: Routes = [
   {path: '', component: AdminPanelCommentComponent},
-  {path: 'new', component: AdminPanelCommentNewComponent},
-  {path: ':id/edit', component: AdminPanelCommentEditComponent}
+  {path: 'new', component: AdminPanelCommentFormComponent},
+  {path: ':id/edit', component: AdminPanelCommentFormComponent}
 ];
 
 @NgModule({

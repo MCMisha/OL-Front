@@ -6,6 +6,13 @@ const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'prefix'},
   {path: 'main', component: AdminPanelMainComponent},
   {
+    path: 'slider',
+    loadChildren: () =>
+      import('./admin-panel-slider/admin-panel-slider.module').then(
+        (m) => m.AdminPanelSliderModule
+      )
+  },
+  {
     path: 'genre', loadChildren: () =>
       import('./admin-panel-genre/admin-panel-genre.module').then(
         (m) => m.AdminPanelGenreModule

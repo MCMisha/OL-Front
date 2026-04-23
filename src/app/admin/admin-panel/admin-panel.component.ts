@@ -17,6 +17,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   private basePath = '/admin/panel';
   protected menuItems = [
     { icon: 'home', title: 'Strona głowna', link: `${this.basePath}/main` },
+    { icon: 'wallpaper', title: 'Slider główny', link: `${this.basePath}/slider`},
     { icon: 'theater_comedy', title: 'Gatunki', link: `${this.basePath}/genre` },
     { icon: 'pin_drop', title: 'Miejsca', link: `${this.basePath}/place` },
     { icon: 'event', title: 'Spektakle', link: `${this.basePath}/performance` },
@@ -24,7 +25,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     { icon: 'info', title: 'O nas', link: `${this.basePath}/about-us` },
     { icon: 'contact_page', title: 'Kontakt', link: `${this.basePath}/contact` },
     { icon: 'person_outline', title: 'Artyści', link: `${this.basePath}/artists` },
-    { icon: 'forum', title: 'Publiczne komentarze', link: `${this.basePath}/comment` }
+    { icon: 'forum', title: 'Publiczne recencji', link: `${this.basePath}/comment` }
   ];
 
   protected currentTitle = '';

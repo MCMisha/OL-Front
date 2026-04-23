@@ -109,7 +109,7 @@ export class AdminPanelCommentFormComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: (err) => {
-          this.snackBar.open(`Ошибка загрузки комментария: ${err.error}`, 'Закрыть', {
+          this.snackBar.open(`Błąd ładowania komentarza: ${err.error}`, 'Zamknij', {
             duration: 5000
           });
           this.isLoading = false;
