@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ArtistService} from "../../../services/artist.service";
 import {Artist} from "../../../models/artist";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import { ArtistCategory } from '../../../models/enums/artist-category.enum';
 import { ArtistCategoryLabels } from '../../../models/enums/artist-category-labels';
 import {HelperService} from "../../../shared/services/helper.service";
@@ -19,7 +19,6 @@ export class AboutArtistsDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private artistService: ArtistService,
     private helperService: HelperService
   ) {}

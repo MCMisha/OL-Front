@@ -58,10 +58,12 @@ export class AboutComponent implements OnInit, OnDestroy {
         ...this.sections,
       ];
 
-      const currentSlug = this.route.snapshot.paramMap.get('slug') ?? 'artists';
-      this.router.navigate(['./', currentSlug], {
-        relativeTo: this.route
-      });
+      const hasChildRoute = this.route.firstChild?.snapshot.url.length;
+      if (!hasChildRoute) {
+        this.router.navigate(['artists'], {
+          relativeTo: this.route
+        });
+      }
     });
   }
 
