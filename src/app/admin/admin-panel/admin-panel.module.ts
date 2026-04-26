@@ -22,6 +22,12 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTooltip} from "@angular/material/tooltip";
 import { AdminPanelSliderComponent } from './admin-panel-slider/admin-panel-slider.component';
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {
+  MatAccordion,
+  MatExpansionPanel, MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
 
 
 @NgModule({
@@ -30,28 +36,33 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     AdminPanelMainComponent,
     AdminPanelSliderComponent
   ],
-    imports: [
-        CommonModule,
-        AdminPanelRoutingModule,
-        MatIconModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        RouterOutlet,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCell,
-        MatCell,
-        MatCellDef,
-        MatHeaderCellDef,
-        MatPaginator,
-        MatHeaderRowDef,
-        MatRowDef,
-        MatRow,
-        MatHeaderRow,
-        MatTooltip,
-        MatProgressBar
-    ]
+  imports: [
+    CommonModule,
+    AdminPanelRoutingModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    RouterOutlet,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatPaginator,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatHeaderRow,
+    MatTooltip,
+    MatProgressBar,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription
+  ]
 })
 export class AdminPanelModule { }

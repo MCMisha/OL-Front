@@ -58,18 +58,7 @@ export class AboutComponent implements OnInit, OnDestroy {
         ...this.sections,
       ];
 
-      const hasChildRoute = this.route.firstChild?.snapshot.url.length;
-      if (!hasChildRoute) {
-        this.router.navigate(['artists'], {
-          relativeTo: this.route
-        });
-      }
-    });
-  }
 
-  loadSection(slug: string) {
-    this.aboutService.getBySlug(slug).subscribe(res => {
-      this.currentSection = res;
     });
   }
 
