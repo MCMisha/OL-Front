@@ -81,5 +81,43 @@
         </div>
       </div>
     </div>
+    <div class="months-nav">
+      <div
+        class="month-header"
+        *ngFor="let month of visibleMonths; trackBy: trackByMonth"
+        [class.active]="month.value === activeMonth"
+        (click)="loadPerformancesByMonth(month.value)"
+      >
+        <ng-container *ngIf="month.value === activeMonth; else defaultMonth">
+          <div class="month-header__active-wrap">
+            <button
+              type="button"
+              class="month-arrow"
+              (click)="showPreviousMonth(); $event.stopPropagation()"
+              [disabled]="!canGoPrevious"
+              aria-label="Poprzedni miesiąc"
+            >
+              ‹
+            </button>
+
+            <a>_{{ month.label }}</a>
+
+            <button
+              type="button"
+              class="month-arrow"
+              (click)="showNextMonth(); $event.stopPropagation()"
+              [disabled]="!canGoNext"
+              aria-label="Następny miesiąc"
+            >
+              ›
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-template #defaultMonth>
+          <a>_{{ month.label }}</a>
+        </ng-template>
+      </div>
+    </div>
   </ng-container>
 </div>
