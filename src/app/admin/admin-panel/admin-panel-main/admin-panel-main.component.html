@@ -1,1 +1,15 @@
-<p>admin-panel-main works!</p>
+<h3 class="title">Instrukcja obsługi panelu:
+  <mat-icon matTooltip="Rozwiń instrukcję do odpowiedniej sekcji">info_i</mat-icon>
+</h3>
+<mat-accordion class="me-1" multi *ngFor="let accordionItem of accordionItems">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon [matTooltip]="accordionItem.title" class="me-1">{{accordionItem.icon}}</mat-icon>
+        {{accordionItem.title}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>{{accordionItem.description}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
