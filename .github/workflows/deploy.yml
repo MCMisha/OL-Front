@@ -25,7 +25,7 @@ jobs:
         run: npm run build -- --base-href "https://MCMisha.github.io/OL-Front/"
 
       - name: Copy 404.html
-        run: cp dist/OL-Front/browser/index.html dist/browser/browser/404.html
+        run: cp dist/OL-Front/browser/index.html dist/OL-Front/browser/404.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
