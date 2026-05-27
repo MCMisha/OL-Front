@@ -22,6 +22,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {RichTextEditorModule} from "../../../shared/rich-text-editor/rich-text-editor.module";
 import {MatOption, MatSelect} from "@angular/material/select";
+import { AdminPanelArtistEditPhotosComponent } from './admin-panel-artist-edit/admin-panel-artist-edit-photos/admin-panel-artist-edit-photos.component';
 
 
 
@@ -29,7 +30,8 @@ import {MatOption, MatSelect} from "@angular/material/select";
   declarations: [
     AdminPanelArtistsComponent,
     AdminPanelArtistNewComponent,
-    AdminPanelArtistEditComponent
+    AdminPanelArtistEditComponent,
+    AdminPanelArtistEditPhotosComponent
   ],
   imports: [
     CommonModule,

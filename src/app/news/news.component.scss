@@ -1,0 +1,27 @@
+.news-page {
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  padding: 120px 0 80px;
+  margin-top: 14vh;
+}
+
+.news-card {
+  min-height: 305px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: #000;
+  //box-sizing: border-box;
+  border-radius: 0;
+  padding: 28px 28px 24px;
+  color: #fff;
+}
+
+.card-img-top {
+  border-radius: 0;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 64px 10px 48px;
+  }
+}

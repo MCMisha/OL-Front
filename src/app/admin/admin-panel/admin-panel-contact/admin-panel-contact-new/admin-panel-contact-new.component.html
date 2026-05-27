@@ -1,0 +1,31 @@
+<h2>Dodaj sekcję</h2>
+
+<form [formGroup]="aboutSectionForm" (ngSubmit)="save()">
+  <div class="ms-1 mb-1 d-flex align-items-center">
+    <mat-form-field appearance="fill" style="width: 500px;">
+      <mat-label>Tytuł</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="fill" style="width: 500px;">
+    <mat-label>Slug</mat-label>
+    <input matInput formControlName="slug">
+  </mat-form-field>
+
+  <div class="editor-wrapper">
+    <label>Treść HTML</label>
+    <app-rich-text-editor formControlName="contentHtml"></app-rich-text-editor>
+  </div>
+
+  <mat-slide-toggle formControlName="isVisible">
+    Widoczna na stronie
+  </mat-slide-toggle>
+
+  <br><br>
+
+  <button mat-raised-button color="primary">Zapisz</button>
+  <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
+    Anuluj
+  </button>
+
+</form>

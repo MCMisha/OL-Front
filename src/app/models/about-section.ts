@@ -7,4 +7,5 @@ export interface AboutSection{
   contentHtml: string;
   createdAt: Date;
   updatedAt: Date;
+  isMain: boolean;
 }

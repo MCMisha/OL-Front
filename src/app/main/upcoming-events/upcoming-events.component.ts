@@ -12,6 +12,9 @@ import {HelperFunctionsUtil} from "../../shared/utils/helper-functions.util";
 })
 export class UpcomingEventsComponent implements OnInit, OnDestroy{
   @ViewChild('viewport', { static: true }) viewportRef!: ElementRef<HTMLDivElement>;
+  private isDragging = false;
+  private startX = 0;
+  private startScrollLeft = 0;
 
   events: UpcomingEventVm[] = [];
   subscription = new Subscription();
@@ -50,32 +53,39 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
       behavior: 'smooth'
     });
   }
-  //
-  // onPointerDown(event: PointerEvent): void {
-  //   const el = this.viewportRef.nativeElement;
-  //
-  //   this.isDragging = true;
-  //   this.startX = event.clientX;
-  //   this.startScrollLeft = el.scrollLeft;
-  //
-  //   el.setPointerCapture(event.pointerId);
-  //   el.classList.add('dragging');
-  // }
-  //
-  // onPointerMove(event: PointerEvent): void {
-  //   if (!this.isDragging) return;
-  //
-  //   const el = this.viewportRef.nativeElement;
-  //   const dx = event.clientX - this.startX > 0 ? this.dxMove : -this.dxMove;
-  //
-  //   el.scrollLeft = this.startScrollLeft - dx;
-  // }
-  //
-  // onPointerUp(): void {
-  //   if (!this.isDragging) return;
-  //
-  //   const el = this.viewportRef.nativeElement;
-  //   this.isDragging = false;
-  //   el.classList.remove('dragging');
-  // }
+
+  onPointerDown(event: PointerEvent): void {
+    const el = this.viewportRef.nativeElement;
+
+    this.isDragging = true;
+    this.startX = event.clientX;
+    this.startScrollLeft = el.scrollLeft;
+
+    el.setPointerCapture(event.pointerId);
+    el.classList.add('dragging');
+  }
+
+  onPointerMove(event: PointerEvent): void {
+    if (!this.isDragging) return;
+
+    event.preventDefault();
+
+    const el = this.viewportRef.nativeElement;
+    const dx = event.clientX - this.startX;
+
+    el.scrollLeft = this.startScrollLeft - dx * 1.7;
+  }
+
+  onPointerUp(event: PointerEvent): void {
+    if (!this.isDragging) return;
+
+    const el = this.viewportRef.nativeElement;
+
+    this.isDragging = false;
+    el.classList.remove('dragging');
+
+    if (el.hasPointerCapture(event.pointerId)) {
+      el.releasePointerCapture(event.pointerId);
+    }
+  }
 }

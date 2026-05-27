@@ -26,7 +26,8 @@ export class AdminPanelAboutNewComponent implements OnInit, OnDestroy {
       slug: [''],
       contentHtml: [''],
       order: [0],
-      isVisible: [true]
+      isVisible: [true],
+      type: [0]
     });
   }
 

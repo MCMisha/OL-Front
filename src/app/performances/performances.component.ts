@@ -145,26 +145,26 @@ export class PerformancesComponent implements OnInit, OnDestroy {
     return this.months.slice(start, end);
   }
 
-  getPerformanceBackground(mainImage?: string): string {
-    if (!mainImage) {
-      return `linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.92) 0%,
-        rgba(0, 0, 0, 0.7) 24%,
-        rgba(0, 0, 0, 0.25) 58%,
-        rgba(0, 0, 0, 0.8) 100%
-      )`;
-    }
+    getPerformanceBackground(mainImage?: string): string {
+      if (!mainImage) {
+        return `linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.7) 24%,
+          rgba(0, 0, 0, 0.25) 58%,
+          rgba(0, 0, 0, 0.8) 100%
+        )`;
+      }
 
-    return `linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.92) 0%,
-        rgba(0, 0, 0, 0.7) 24%,
-        rgba(0, 0, 0, 0.25) 58%,
-        rgba(0, 0, 0, 0.8) 100%
-      ),
-      url(data:image/jpeg;base64,${mainImage}) center 70% / cover no-repeat`;
-  }
+      return `linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.7) 24%,
+          rgba(0, 0, 0, 0.25) 58%,
+          rgba(0, 0, 0, 0.8) 100%
+        ),
+        url(data:image/jpeg;base64,${mainImage}) center 70% / cover no-repeat`;
+    }
   get activeMonthIndex(): number {
     return this.months.findIndex(m => m.value === this.activeMonth);
   }

@@ -1,42 +1,103 @@
 <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-
-<div class="details-wrapper" *ngIf="artist">
-
-  <h2 class="title">
-    {{ artist.firstName }} {{ artist.lastName }}
-  </h2>
-
-  <div class="top-section">
-
-    <!-- PHOTO -->
-    <div class="photo-box">
-      <img
-        *ngIf="artist.photo"
-        [src]="'data:image/jpeg;base64,' + artist.photo"
-        alt="artist photo"
-      />
-    </div>
-
-    <div class="info-box">
-      <p><strong>Rola:</strong>
-        <span class="category-badge ms-2" [ngClass]="getCategoryClass(artist.category)">{{ getCategoryLabel(artist.category) }}</span>
-      </p>
-    </div>
-
+<div class="loading-screen" *ngIf="isLoading">
+  <div class="performances-loading">
+    Ładowanie...
   </div>
+</div>
 
-  <!-- DESCRIPTION -->
-  <div class="description-section">
-    <h3>Opis artysty</h3>
+<section class="artist-details" *ngIf="artist && !isLoading">
+  <div class="artist-details__inner">
+
+    <div class="artist-details__breadcrumb">
+      <a
+        [routerLink]="['/about/artists']"
+        [queryParams]="{ category: artist.category }"
+      >
+        {{ ArtistCategoryLabels[artist.category] }}
+      </a>
+      / {{ artist.firstName }} {{ artist.lastName }}
+    </div>
+
+    <header class="artist-hero">
+      <div class="artist-hero__photo">
+        <img
+          *ngIf="artist.photo"
+          [src]="getImage(artist.photo)"
+          [alt]="artist.firstName + ' ' + artist.lastName">
+      </div>
+
+      <h1 class="artist-hero__name">
+        {{ artist.firstName }} {{ artist.lastName }}
+      </h1>
+
+      <div class="artist-hero__role">
+        {{ getCategoryLabel(artist.category) }}
+      </div>
+    </header>
 
     <div
-      class="description-html"
+      class="artist-description"
       [innerHTML]="artist.description">
     </div>
-  </div>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" routerLink="../">Powrót</button>
-  </div>
+    <section class="artist-gallery" *ngIf="artistPhotos.length > 0">
+      <div #galleryTrack class="artist-gallery__track">
+        <img
+          *ngFor="let artistPhoto of artistPhotos; trackBy: trackByPhotoId"
+          [src]="getImage(artistPhoto.photo)"
+          [alt]="artist.firstName + ' ' + artist.lastName">
+      </div>
 
-</div>
+      <div class="artist-gallery__nav" *ngIf="artistPhotos.length > 1">
+        <button type="button" (click)="scrollGallery('left')">‹</button>
+        <button type="button" (click)="scrollGallery('right')">›</button>
+      </div>
+    </section>
+
+    <section class="artist-events">
+      <div class="artist-events__title">_MOŻNA ZOBACZYĆ W</div>
+
+      <div
+        #viewport
+        class="viewport"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp($event)"
+        (pointercancel)="onPointerUp($event)"
+        (pointerleave)="onPointerUp($event)">
+        <div class="track">
+          <article class="card text-white" *ngFor="let event of visibleEvents">
+            <div class="card__content">
+              <div class="card__top">
+                <div class="date">
+                  <div class="date__day">{{ event.day }}</div>
+
+                  <div class="date__meta">
+                    <div class="date__month">{{ event.month }}</div>
+                    <div class="date__weekday">{{ event.weekday }}</div>
+                  </div>
+                </div>
+
+                <div class="meta">
+                  <div class="meta__time">{{ event.time }}</div>
+                  <div class="meta__place">{{ event.place }}</div>
+                </div>
+              </div>
+
+              <div class="card__mid">
+                <div class="tag">OPERA</div>
+                <div class="name">{{ event.title }}</div>
+              </div>
+
+              <div class="card__bottom">
+                <button class="btn btn--solid" type="button">KUP BILET</button>
+                <a class="btn btn--link">Czytaj więcej</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>

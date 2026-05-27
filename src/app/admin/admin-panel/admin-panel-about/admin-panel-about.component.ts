@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AdminAboutService} from "../../../services/admin/admin-about.service";
 import {Subscription} from "rxjs";
-import {AboutSectionList} from "../../../models/about-section-list";
+import {SectionList} from "../../../models/section-list";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -12,7 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrl: './admin-panel-about.component.scss'
 })
 export class AdminPanelAboutComponent implements OnInit, OnDestroy {
-  sections: AboutSectionList[] = [];
+  sections: SectionList[] = [];
   subscription = new Subscription();
 
   constructor(
@@ -61,5 +61,9 @@ export class AdminPanelAboutComponent implements OnInit, OnDestroy {
     this.service.updateOrder(payload).subscribe(() => {
       this.ngOnInit();
     });
+  }
+
+  protected setAsMain(id: number) {
+    this.subscription.add(this.service.updateMain(id).subscribe(_ => this.ngOnInit()));
   }
 }

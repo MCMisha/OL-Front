@@ -28,7 +28,9 @@ export class AdminPanelAboutEditComponent implements OnInit {
       slug: [''],
       contentHtml: [''],
       order: [1],
-      isVisible: [true]
+      isVisible: [true],
+      type: [0],
+      isMain: [false]
     });
 
     this.service.getById(this.id).subscribe(section => {
@@ -39,7 +41,8 @@ export class AdminPanelAboutEditComponent implements OnInit {
         slug: section.slug,
         contentHtml: section.contentHtml,
         order: section.order,
-        isVisible: section.isVisible
+        isVisible: section.isVisible,
+        isMain: section.isMain
       });
     });
   }

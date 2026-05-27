@@ -1,9 +1,9 @@
 import { ArtistCategory } from './artist-category.enum';
 
 export const ArtistCategoryLabels: Record<ArtistCategory, string> = {
-  [ArtistCategory.Solista]: 'Solista',
-  [ArtistCategory.Dyrygent]: 'Dyrygent',
-  [ArtistCategory.ZespolOrkiestry]: 'Zespół orkiestry',
+  [ArtistCategory.Solista]: 'Soliści',
+  [ArtistCategory.Dyrygent]: 'Dyrygenci',
+  [ArtistCategory.ZespolOrkiestry]: 'Orkiestra',
 
   [ArtistCategory.SkrzypceI]: 'Skrzypce I',
   [ArtistCategory.SkrzypceII]: 'Skrzypce II',

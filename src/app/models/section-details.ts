@@ -1,4 +1,4 @@
-export interface AboutSectionDetails {
+export interface SectionDetails {
   id: number,
   title: string,
   slug: string,

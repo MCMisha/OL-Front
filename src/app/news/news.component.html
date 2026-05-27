@@ -1,5 +1,5 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<div class="container py-4">
+<div class="container py-5 page">
   <h1 class="mb-4">Aktualności</h1>
 
   <div class="row" *ngIf="news.length">
@@ -16,11 +16,11 @@
         <div class="card-body">
           <h5>{{ n.title }}</h5>
 
-          <p class="text-muted small">
+          <p class="small">
             {{ n.creationDate | date:'dd MMM yyyy' }}
           </p>
 
-          <p class="text-muted">
+          <p>
             {{ n.subtitle }}
           </p>
 

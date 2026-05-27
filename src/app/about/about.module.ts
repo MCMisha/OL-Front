@@ -9,6 +9,7 @@ import {MatProgressBar} from "@angular/material/progress-bar";
 import { AboutDetailsComponent } from './about-details/about-details.component';
 import { AboutArtistsDetailsComponent } from './about-artists/about-artists-details/about-artists-details.component';
 import {MatButton} from "@angular/material/button";
+import { AboutMainComponent } from './about-main/about-main.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatButton} from "@angular/material/button";
     AboutComponent,
     AboutArtistsComponent,
     AboutDetailsComponent,
-    AboutArtistsDetailsComponent
+    AboutArtistsDetailsComponent,
+    AboutMainComponent
   ],
     imports: [
         CommonModule,

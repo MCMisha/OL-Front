@@ -1,18 +1,18 @@
-<div class="mobile-menu mobile-only">
-  <button class="accordion-btn" (click)="menuOpen = !menuOpen">
-    Rozwiń sekcję "O nas"
-  </button>
+<!--<div class="mobile-menu mobile-only">-->
+<!--  <button class="accordion-btn" (click)="menuOpen = !menuOpen">-->
+<!--    Rozwiń sekcję "O nas"-->
+<!--  </button>-->
 
-  <div class="accordion-panel" *ngIf="menuOpen">
-    <ul>
-      <a style="cursor: pointer;">
-        <li *ngFor="let item of menu" [routerLink]="['/about', item.slug]" (click)="menuOpen = false">
-          {{ item.title }}
-        </li>
-      </a>
-    </ul>
-  </div>
-</div>
+<!--  <div class="accordion-panel" *ngIf="menuOpen">-->
+<!--    <ul>-->
+<!--      <a style="cursor: pointer;">-->
+<!--        <li *ngFor="let item of menu" [routerLink]="['/about', item.slug]" (click)="menuOpen = false">-->
+<!--          {{ item.title }}-->
+<!--        </li>-->
+<!--      </a>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</div>-->
 <section class="content-area">
   <router-outlet></router-outlet>
 </section>

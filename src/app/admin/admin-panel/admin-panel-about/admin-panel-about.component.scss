@@ -52,3 +52,28 @@
 .actions button {
   margin-left: 5px;
 }
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.main-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 30px;
+  padding: 0 12px;
+
+  border-radius: 15px;
+
+  background: #169b62;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1;
+}

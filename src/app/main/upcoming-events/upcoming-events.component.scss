@@ -5,7 +5,8 @@
   touch-action: pan-x;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
-  scroll-behavior: smooth;
+//  scroll-behavior: smooth;
+  user-select: none;
 }
 
 .viewport::-webkit-scrollbar {
@@ -288,16 +289,25 @@
 
 @media (max-width: 520px) {
   .viewport {
-    overflow: visible;
     overflow-x: hidden;
-    width: 100%;
-    padding-right: 16px;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    scroll-behavior: auto;
+    cursor: grab;
+  }
+
+  .viewport:active {
+    cursor: grabbing;
   }
 
   .track {
     padding-right: 16px;
     gap: 12px;
     scroll-snap-type: x mandatory;
+    user-select: none;
   }
 
   .card {

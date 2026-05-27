@@ -24,8 +24,8 @@ export class AdminPanelArtistEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
+    protected route: ActivatedRoute,
+    protected router: Router,
     private snack: MatSnackBar,
     private artistService: AdminArtistService
   ) {}

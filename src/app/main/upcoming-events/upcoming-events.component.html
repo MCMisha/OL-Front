@@ -2,7 +2,11 @@
   <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
 
   <div class="upcoming__wrap">
-    <div #viewport class="viewport" appDragScroll>
+    <div #viewport class="viewport" (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         (pointerleave)="onPointerUp($event)">
       <div class="track">
         <article
           class="card text-white"
@@ -15,7 +19,6 @@
                 <div class="date__day">{{ e.startAt | date:'d' }}</div>
 
                 <div class="date__meta">
-                  <!-- если хочешь НОМИНАТИВ: STYCZEŃ/LUTY -> ставь LLLL -->
                   <div class="date__month">{{ e.startAt | date:'LLLL':'':'pl' | uppercase }}</div>
 
                   <div class="date__weekday">{{ e.startAt | date:'EEEE':'':'pl' }}</div>

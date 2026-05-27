@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AboutSectionList} from "../../models/about-section-list";
+import {SectionList} from "../../models/section-list";
 import {environment} from "../../../environments/environment";
 import {AboutSectionCreate} from "../../models/about-section-create";
 import {AboutSection} from "../../models/about-section";
@@ -14,8 +14,8 @@ export class AdminAboutService {
   constructor(private http: HttpClient) {
   }
 
-  getAboutSectionList(): Observable<AboutSectionList[]> {
-    return this.http.get<AboutSectionList[]>(`${environment.baseApiUri}/AdminAboutSection/all`, {withCredentials: true});
+  getAboutSectionList(): Observable<SectionList[]> {
+    return this.http.get<SectionList[]>(`${environment.baseApiUri}/AdminAboutSection/all`, {withCredentials: true});
   }
 
   createAboutSection(aboutSection: AboutSectionCreate): Observable<AboutSection> {
@@ -36,5 +36,9 @@ export class AdminAboutService {
 
   getById(id: number): Observable<AboutSection> {
     return this.http.get<AboutSection>(`${environment.baseApiUri}/AdminAboutSection/by-id/${id}`, {withCredentials: true});
+  }
+
+  updateMain(id: number): Observable<AboutSection> {
+    return this.http.put<AboutSection>(`${environment.baseApiUri}/AdminAboutSection/update-main?id=${id}`, null, {withCredentials: true});
   }
 }

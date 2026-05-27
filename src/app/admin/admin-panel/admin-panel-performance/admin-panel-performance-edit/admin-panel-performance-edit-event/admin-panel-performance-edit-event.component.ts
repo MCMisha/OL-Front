@@ -52,8 +52,7 @@ export class AdminPanelPerformanceEditEventComponent implements OnInit, OnDestro
   }
 
   back(): void {
-    // подстрой под свою навигацию
-    this.router.navigate(['../../..'], { relativeTo: this.route });
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   addRow(patch?: Partial<EventRow>): void {

@@ -26,16 +26,27 @@
       </div>
     </div>
 
-      <div class="item-actions">
-        <button mat-icon-button routerLink="{{s.id}}/edit" color="primary" >
-          <mat-icon>edit</mat-icon>
-        </button>
+    <div class="item-actions">
+      <button mat-icon-button routerLink="{{s.id}}/edit" color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
 
-        <button mat-icon-button (click)="openDialog(s.id)" color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+      <button mat-icon-button (click)="openDialog(s.id)" color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        *ngIf="!s.isMain && s.isVisible"
+        (click)="setAsMain(s.id)">
+        Ustaw jako główną
+      </button>
 
+      <span *ngIf="s.isMain" class="main-badge bg-success">
+        Główna
+      </span>
     </div>
+
   </div>
+</div>
 
