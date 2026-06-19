@@ -1,7 +1,40 @@
 .newsStrip {
   background: #000;
   color: #fff;
+  overflow: hidden;
   padding: 80px 0;
+}
+
+.viewport {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  user-select: none;
+  width: 100%;
+  min-width: 0;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewport.dragging {
+  cursor: grabbing;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.navBlock {
+  padding-right: 0;
 }
 
 .newsStrip__header {
@@ -22,15 +55,31 @@
   color: #fff;
 }
 
-.newsStrip__grid {
+.newsStrip__wrap {
   width: min(1400px, calc(100vw - 100px));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+
+.track {
+  display: flex;
   gap: 24px;
+  scroll-behavior: smooth;
+  padding-right: 20px;
+  padding-bottom: 8px;
+  width: max-content;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
 }
 
 .newsCard {
+  flex: 0 0 calc((min(1400px, calc(100vw - 100px)) - 24px) / 2);
   min-height: 305px;
   border: 1px solid rgba(255, 255, 255, 0.28);
   background: #000;
@@ -143,12 +192,12 @@
   }
 
   .newsStrip__header,
-  .newsStrip__grid,
+  .newsStrip__wrap,
   .newsStrip__footer {
     width: calc(100vw - 64px);
   }
 
-  .newsStrip__grid {
+  .newsStrip__wrap {
     gap: 18px;
   }
 
@@ -167,9 +216,6 @@
 }
 
 @media (max-width: 900px) {
-  .newsStrip__grid {
-    grid-template-columns: 1fr;
-  }
 
   .newsCard {
     min-height: 260px;
@@ -186,7 +232,7 @@
   }
 
   .newsStrip__header,
-  .newsStrip__grid,
+  .newsStrip__wrap,
   .newsStrip__footer {
     width: calc(100vw - 32px);
   }

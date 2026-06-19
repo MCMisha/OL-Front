@@ -11,51 +11,65 @@
     </a>
   </div>
 
-  <div class="premieres__grid">
-    <article class="pCard" *ngFor="let p of items">
-      <!-- IMAGE -->
-      <div class="pCard__media">
-        <img
-          [src]="p.imageUrl || 'assets/images/placeholder.jpg'"
-          [alt]="p.title"
-          loading="lazy"
-        />
-      </div>
+  <div class="premieres__wrap">
+    <div #viewport
+         class="viewport"
+         (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         (pointerleave)="onPointerUp($event)">
 
-      <!-- BODY -->
-      <div class="pCard__body">
-
-        <!-- CATEGORY -->
-        <div class="pCard__meta">
-          <span class="pCard__cat">
-            {{ p.category || 'WYDARZENIE' }}
-          </span>
-        </div>
-
-        <!-- TITLE + DATE -->
-        <div class="pCard__row">
-          <div class="pCard__name">
-            {{ p.title || 'Brak tytułu' }}
+      <div class="track">
+        <article class="pCard" *ngFor="let p of items">
+          <div class="pCard__media">
+            <img
+              [src]="p.imageUrl || 'assets/images/placeholder.jpg'"
+              [alt]="p.title"
+              loading="lazy"
+              draggable="false"
+            />
           </div>
 
-          <div class="pCard__prem">
-            <div class="pCard__premLabel">
-              {{ p.labelLeft || 'Premiera' }}
+          <div class="pCard__body">
+            <div class="pCard__meta">
+            <span class="pCard__cat">
+              {{ p.category || 'WYDARZENIE' }}
+            </span>
             </div>
-            <div class="pCard__premDate">
-              {{ p.date }}
-            </div>
-          </div>
-        </div>
 
-        <!-- BUTTON -->
-        <a
-          class="pCard__btn"
-          [routerLink]="p.moreUrl || '/repertuar'"
-        >
-          CZYTAJ WIĘCEJ
-        </a>
+            <div class="pCard__row">
+              <div class="pCard__name">
+                {{ p.title || 'Brak tytułu' }}
+              </div>
+
+              <div class="pCard__prem">
+                <div class="pCard__premLabel">
+                  {{ p.labelLeft || 'Premiera' }}
+                </div>
+                <div class="pCard__premDate">
+                  {{ p.date | date: 'dd.MM' }}.<span class="fw-bold year">{{p.date | date: 'yyyy' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <a
+              class="pCard__btn"
+              [routerLink]="p.moreUrl || '/repertuar'"
+              (click)="onLinkClick($event)"
+            >
+              CZYTAJ WIĘCEJ
+            </a>
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
+
+    <div class="navBlock">
+      <div class="nav">
+        <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
+        <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+      </div>
+    </div>
   </div>
 </section>

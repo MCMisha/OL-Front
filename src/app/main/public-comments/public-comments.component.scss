@@ -19,9 +19,9 @@
   min-height: 260px;
   padding: 28px 36px 24px;
   background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.18);
   overflow: visible;
   color: #fff;
+  border: 2px solid transparent;
 
   display: flex;
   flex-direction: column;
@@ -35,8 +35,11 @@
   bottom: -30px;
   border-left: 30px solid transparent;
   border-right: 30px solid transparent;
-  border-top: 30px solid rgba(255, 255, 255, 0.18);
+  border-top: 30px solid rgba(255, 255, 255);
   z-index: 1;
+
+  opacity: 0;
+  pointer-events: none;
 }
 
 .rCard::after {
@@ -48,6 +51,17 @@
   border-right: 29px solid transparent;
   border-top: 30px solid #000;
   z-index: 2;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rCard:hover::before,
+.rCard:hover::after {
+  opacity: 1;
+}
+.rCard:hover {
+  border: 2px solid rgba(255, 255, 255);
 }
 
 .rCard__head {

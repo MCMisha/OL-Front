@@ -1,20 +1,37 @@
 <section class="newsStrip">
   <header class="newsStrip__header">
     <h2 class="newsStrip__title">{{ headerTitle }}</h2>
+    <a class="navLink" routerLink="/news">
+      WSZYSTKIE AKTUALNOŚCI
+    </a>
   </header>
 
-  <div class="newsStrip__grid">
-    <article class="newsCard" *ngFor="let n of items; let i = index">
-      <div class="newsCard__content">
-        <div class="newsCard__date">{{ formatDatePl(n.creationDate) }}</div>
-        <div class="newsCard__heading">{{ n.title }}</div>
-        <p class="newsCard__text" [innerHTML]="truncate(n.content)"></p>
-        <a class="newsCard__cta" [routerLink]="'news/'+n.id">Czytaj więcej</a>
+  <div class="newsStrip__wrap">
+    <div #viewport class="viewport"
+         (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         (pointerleave)="onPointerUp($event)">
+
+      <div class="track">
+        <article class="newsCard" *ngFor="let n of items; let i = index">
+          <div class="newsCard__content">
+            <div class="newsCard__date">{{ formatDatePl(n.creationDate) }}</div>
+            <div class="newsCard__heading">{{ n.title }}</div>
+            <p class="newsCard__text" [innerHTML]="n.subtitle"></p>
+            <a class="newsCard__cta" [routerLink]="'news/'+n.id">Czytaj więcej</a>
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
+
+    <div class="navBlock">
+      <div class="nav">
+        <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
+        <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+      </div>
+    </div>
   </div>
 
-  <div class="newsStrip__footer">
-    <a class="newsStrip__more" [routerLink]="moreLink">Aktualności</a>
-  </div>
 </section>

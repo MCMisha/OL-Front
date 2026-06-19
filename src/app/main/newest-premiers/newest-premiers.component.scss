@@ -2,6 +2,7 @@
   background: #000;
   color: #fff;
   padding: 32px 54px 56px;
+  margin-bottom: 24px;
 }
 
 .premieres__head {
@@ -28,7 +29,6 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  padding-bottom: 4px;
   transition: opacity 0.2s ease, border-color 0.2s ease;
 
   &:hover {
@@ -37,17 +37,47 @@
   }
 }
 
-.premieres__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.premieres__wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.viewport {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  user-select: none;
+  cursor: grab;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewport.dragging {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
   gap: 28px;
-  align-items: start;
+  width: max-content;
+  padding-bottom: 8px;
 }
 
 .pCard {
+  flex: 0 0 calc((100vw - 108px - 56px) / 3);
+  max-width: 450px;
+  min-width: 360px;
+
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
 }
 
 .pCard__body {
@@ -117,6 +147,9 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
+.year {
+  font-size: 20px;
+}
 .pCard__premDate {
   font-size: 18px;
   font-weight: 500;
@@ -146,13 +179,18 @@
   }
 }
 
+.navBlock {
+  padding-right: 0;
+}
+
 @media (max-width: 1200px) {
   .premieres {
     padding-inline: 32px;
   }
 
-  .premieres__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .pCard {
+    flex-basis: calc((100vw - 64px - 28px) / 2);
+    min-width: 340px;
   }
 }
 
@@ -172,9 +210,13 @@
     font-size: 18px;
   }
 
-  .premieres__grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .track {
+    gap: 20px;
+  }
+
+  .pCard {
+    flex-basis: min(360px, 82vw);
+    min-width: 0;
   }
 
   .pCard__body {

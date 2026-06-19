@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {News} from "../models/news";
@@ -10,14 +10,17 @@ import {NewsStripItem} from "../models/news-strip-item";
 })
 export class NewsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getNews(): Observable<News[]> {
     return this.http.get<News[]>(`${environment.baseApiUri}/News/all`);
   }
-  getTwoRecent(): Observable<NewsStripItem[]> {
-    return this.http.get<NewsStripItem[]>(`${environment.baseApiUri}/News/two-recent`)
+
+  getFiveRecent(): Observable<NewsStripItem[]> {
+    return this.http.get<NewsStripItem[]>(`${environment.baseApiUri}/News/five-recent`)
   }
+
   getNewsById(id: number): Observable<News> {
     return this.http.get<News>(`${environment.baseApiUri}/News/by-id/${id}`);
   }

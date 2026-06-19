@@ -1,8 +1,6 @@
 export interface NewsStripItem {
   id: number;
   title: string;
+  subtitle: string;
   creationDate: Date;
-  excerpt: string;
-  content: string;
-  link: string;
 }

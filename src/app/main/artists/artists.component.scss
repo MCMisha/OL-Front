@@ -1,6 +1,7 @@
 .artists {
   color: #fff;
   padding-top: 10px;
+  margin-bottom: 24px;
   overflow: hidden;
 }
 
@@ -95,6 +96,7 @@
 .card:hover .card__photo {
   opacity: 1;
   transform: scale(1.03);
+  filter: grayscale(0) contrast(1) brightness(1);
 }
 
 /* затемнения краёв */

@@ -1,5 +1,11 @@
 <section class="upcoming">
-  <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
+  <div class="header">
+    <div class="upcoming__title">_NAJBLIŻSZE WYDARZENIA</div>
+    <a class="navLink" routerLink="/performances">
+      Przejdź do repertuaru
+    </a>
+  </div>
+
 
   <div class="upcoming__wrap">
     <div #viewport class="viewport" (pointerdown)="onPointerDown($event)"
@@ -51,9 +57,6 @@
         <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
         <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
       </div>
-      <a class="navLink" routerLink="/performances">
-        PRZEJŚĆ DO REPERTUARU
-      </a>
     </div>
   </div>
 </section>

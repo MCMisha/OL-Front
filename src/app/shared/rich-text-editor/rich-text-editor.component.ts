@@ -178,10 +178,15 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
   }
 
   setAlignment(alignment: string): void {
-    this.formatText('justifyLeft');
-    if (alignment !== 'left') {
-      this.formatText(`justify${alignment.charAt(0).toUpperCase() + alignment.slice(1)}`);
-    }
+    const commands: any = {
+      left: 'justifyLeft',
+      center: 'justifyCenter',
+      right: 'justifyRight',
+      justify: 'justifyFull'
+    };
+
+    document.execCommand(commands[alignment], false);
+    this.onContentChange();
   }
 
   // Link handling

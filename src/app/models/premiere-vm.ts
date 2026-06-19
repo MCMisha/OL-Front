@@ -4,7 +4,7 @@ export interface PremiereVm {
   category: string;
   title: string;
   labelLeft: string;
-  date: string;
+  date: Date | undefined;
   imageUrl: string;
   moreUrl?: string;
 }
@@ -14,7 +14,7 @@ export function mapPremiereToVm(dto: Performance): PremiereVm {
     category: mapGenreToCategory(dto.genre ?? 1),
     title: dto.title ?? "",
     labelLeft: 'Premiera',
-    date: formatDate(dto.premiereDate ?? ""),
+    date: dto.premiereDate ?? undefined,
     imageUrl: dto.mainImage ? `data:image/jpeg;base64,${dto.mainImage}` : "",
     moreUrl: `/repertuar/${dto.id}`
   };

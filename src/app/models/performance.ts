@@ -9,5 +9,5 @@ export interface Performance {
   mainImage?: string;
   poster?: string;
   externalId?: number;
-  premiereDate?: string;
+  premiereDate?: Date;
 }
