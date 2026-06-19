@@ -1,42 +1,61 @@
 <section class="reviews">
-  <div class="reviews__track">
-    <article class="rCard" *ngFor="let comment of comments">
-      <div class="rCard__head">
-        <img
-          class="rCard__avatar"
-          [src]="'data:image/jpeg;base64,' + comment.photo"
-          [alt]="comment.firstName"
-        />
+  <div class="reviews__wrap">
+    <div #viewport
+         class="viewport"
+         (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         (pointerleave)="onPointerUp($event)">
 
-        <div class="rCard__who">
-          <div class="rCard__name">{{ comment.firstName }}</div>
-          <div class="rCard__title">{{ comment.performanceTitle }}</div>
-        </div>
+      <div class="reviews__track">
+        <article class="rCard" *ngFor="let comment of comments">
+          <div class="rCard__head">
+            <img
+              class="rCard__avatar"
+              [src]="'data:image/jpeg;base64,' + comment.photo"
+              [alt]="comment.firstName"
+              draggable="false"
+            />
 
-        <div class="rCard__stars" aria-label="Ocena">
-          <span
-            class="star"
-            *ngFor="let s of stars(comment.stars)"
-            [class.star--on]="s"
-          >
-            ★
-          </span>
-        </div>
+            <div class="rCard__who">
+              <div class="rCard__name">{{ comment.firstName }}</div>
+              <div class="rCard__title">{{ comment.performanceTitle }}</div>
+            </div>
+
+            <div class="rCard__stars" aria-label="Ocena">
+              <span
+                class="star"
+                *ngFor="let s of stars(comment.stars)"
+                [class.star--on]="s"
+              >
+                ★
+              </span>
+            </div>
+          </div>
+
+          <div class="rCard__text">
+            „{{ comment.comment }}”
+          </div>
+
+          <div class="rCard__foot">
+            <div class="rCard__date">
+              {{ comment.datePublished | date:'d MMMM y':'':'pl' }}
+            </div>
+
+            <a class="rCard__more" href="javascript:void(0)" (click)="onLinkClick($event)">
+              więcej...
+            </a>
+          </div>
+        </article>
       </div>
+    </div>
 
-      <div class="rCard__text">
-        „{{ comment.comment }}”
+    <div class="navBlock">
+      <div class="nav">
+        <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
+        <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
       </div>
-
-      <div class="rCard__foot">
-        <div class="rCard__date">
-          {{ comment.datePublished | date:'d MMMM y':'':'pl' }}
-        </div>
-
-        <a class="rCard__more" href="javascript:void(0)">
-          więcej...
-        </a>
-      </div>
-    </article>
+    </div>
   </div>
 </section>
