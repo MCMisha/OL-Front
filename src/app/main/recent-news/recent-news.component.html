@@ -2,7 +2,7 @@
   <header class="newsStrip__header">
     <h2 class="newsStrip__title">{{ headerTitle }}</h2>
     <a class="navLink" routerLink="/news">
-      WSZYSTKIE AKTUALNOŚCI
+      WIĘCEJ AKTUALNOŚCI
     </a>
   </header>
 
@@ -15,7 +15,7 @@
          (pointerleave)="onPointerUp($event)">
 
       <div class="track">
-        <article class="newsCard" *ngFor="let n of items; let i = index">
+        <article class="newsCard" *ngFor="let n of items;">
           <div class="newsCard__content">
             <div class="newsCard__date">{{ formatDatePl(n.creationDate) }}</div>
             <div class="newsCard__heading">{{ n.title }}</div>
@@ -28,8 +28,8 @@
 
     <div class="navBlock">
       <div class="nav">
-        <button class="nav__btn" type="button" (click)="scroll('prev')" aria-label="Poprzednie">‹</button>
-        <button class="nav__btn" type="button" (click)="scroll('next')" aria-label="Następne">›</button>
+        <button class="nav__btn nav__btn--prev" type="button" (click)="scroll('prev')" aria-label="Poprzednie"></button>
+        <button class="nav__btn nav__btn--next" type="button" (click)="scroll('next')" aria-label="Następne"></button>
       </div>
     </div>
   </div>

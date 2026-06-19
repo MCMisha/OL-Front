@@ -21,20 +21,18 @@
           [attr.aria-label]="a.name"
         >
           <div class="card__photo" [style.backgroundImage]="'url(' + a.photoUrl + ')'"></div>
-
-          <!-- Подпись можно включить позже (на скрине её нет) -->
-          <!--
-          <div class="card__meta">
-            <div class="card__name">{{ a.name }}</div>
-            <div class="card__role" *ngIf="a.role">{{ a.role }}</div>
-          </div>
-          -->
         </a>
       </div>
 
       <!-- лёгкие затемнения по краям как в рефе -->
       <div class="fade fade--left"></div>
       <div class="fade fade--right"></div>
+    </div>
+    <div class="navBlock">
+      <div class="nav">
+        <button class="nav__btn nav__btn--prev" type="button" (click)="scroll('prev')" aria-label="Poprzednie"></button>
+        <button class="nav__btn nav__btn--next" type="button" (click)="scroll('next')" aria-label="Następne"></button>
+      </div>
     </div>
   </div>
 </section>
