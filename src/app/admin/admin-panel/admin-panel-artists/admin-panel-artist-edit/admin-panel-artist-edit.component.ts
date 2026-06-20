@@ -45,7 +45,7 @@ export class AdminPanelArtistEditComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       category: [null, Validators.required],
-      description: ['', [Validators.maxLength(5000)]],
+      description: ['', [Validators.maxLength(6000)]],
       photo: [null, Validators.required]
     });
 

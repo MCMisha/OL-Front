@@ -41,7 +41,7 @@ export class AdminPanelArtistNewComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       category: [null, Validators.required],
-      description: ['', [Validators.maxLength(5000)]],
+      description: ['', [Validators.maxLength(6000)]],
       photo: [null, Validators.required]
     });
   }
@@ -57,6 +57,7 @@ export class AdminPanelArtistNewComponent implements OnInit {
       const base64 = (reader.result as string).split(',')[1];
       this.artistForm.patchValue({ photo: base64 });
       this.previewImage = 'data:image/jpeg;base64,' + base64;
+      this.isFileLoaded = true;
     };
     reader.readAsDataURL(file);
   }

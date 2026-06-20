@@ -15,9 +15,10 @@ interface ArtistCard {
   styleUrl: './artists.component.scss'
 })
 export class ArtistsComponent implements OnInit {
-
-  @ViewChild('track', { static: true }) track!: ElementRef<HTMLElement>;
-
+  @ViewChild('viewport', { static: true }) viewportRef!: ElementRef<HTMLElement>;
+  private isDragging = false;
+  private startX = 0;
+  private startScrollLeft = 0;
   artists: ArtistCard[] = [];
   isLoading = false;
 
@@ -50,7 +51,7 @@ export class ArtistsComponent implements OnInit {
   }
 
   scroll(dir: 'prev' | 'next'): void {
-    const el = this.track.nativeElement;
+    const el = this.viewportRef.nativeElement;
     const step = el.clientWidth * 0.7;
 
     el.scrollBy({
@@ -59,14 +60,38 @@ export class ArtistsComponent implements OnInit {
     });
   }
 
-  onWheel(e: WheelEvent): void {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      e.preventDefault();
+  onPointerDown(event: PointerEvent): void {
+    const el = this.viewportRef.nativeElement;
 
-      this.track.nativeElement.scrollBy({
-        left: e.deltaY,
-        behavior: 'auto'
-      });
+    this.isDragging = true;
+    this.startX = event.clientX;
+    this.startScrollLeft = el.scrollLeft;
+
+    el.setPointerCapture(event.pointerId);
+    el.classList.add('dragging');
+  }
+
+  onPointerMove(event: PointerEvent): void {
+    if (!this.isDragging) return;
+
+    event.preventDefault();
+
+    const el = this.viewportRef.nativeElement;
+    const dx = event.clientX - this.startX;
+
+    el.scrollLeft = this.startScrollLeft - dx * 1.7;
+  }
+
+  onPointerUp(event: PointerEvent): void {
+    if (!this.isDragging) return;
+
+    const el = this.viewportRef.nativeElement;
+
+    this.isDragging = false;
+    el.classList.remove('dragging');
+
+    if (el.hasPointerCapture(event.pointerId)) {
+      el.releasePointerCapture(event.pointerId);
     }
   }
 

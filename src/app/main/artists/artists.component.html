@@ -10,9 +10,13 @@
   <div class="artists__wrap">
     <div class="viewport">
       <div
-        #track
+        #viewport
         class="track"
-        (wheel)="onWheel($event)"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp($event)"
+        (pointercancel)="onPointerUp($event)"
+        (pointerleave)="onPointerUp($event)"
       >
         <a
           class="card"

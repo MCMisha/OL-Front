@@ -62,16 +62,15 @@
 /* карточка */
 .card {
   flex: 0 0 auto;
-  width: 170px;
-  height: 140px; /* подогнано под скрин */
+  width: 214px;
+  height: 314px;
   border-radius: 6px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.06);
   text-decoration: none;
   position: relative;
-
-  // чтобы клики были четкие
   transform: translateZ(0);
+  transition: 0.5s;
 }
 
 .card__photo {
@@ -80,8 +79,8 @@
   background-size: cover;
   background-position: center;
   filter: grayscale(100%) contrast(1.05) brightness(0.95);
-  opacity: 0.85;
-  transition: opacity .2s ease, transform .25s ease;
+  opacity: 0.5;
+  transition: opacity .2s ease, filter .25s ease;
 }
 
 /* лёгкий “софт” как в рефе */
@@ -95,8 +94,13 @@
 
 .card:hover .card__photo {
   opacity: 1;
-  transform: scale(1.03);
   filter: grayscale(0) contrast(1) brightness(1);
+}
+
+.card:hover {
+  height: 395px;
+  width: 270px;
+  transition: height .2s ease, width .2s ease;
 }
 
 /* затемнения краёв */
