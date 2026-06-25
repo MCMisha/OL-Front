@@ -25,7 +25,7 @@
                 <div class="date__day">{{ e.startAt | date:'d' }}</div>
 
                 <div class="date__meta">
-                  <div class="date__month">{{ e.startAt | date:'LLLL':'':'pl' | uppercase }}</div>
+                  <div class="date__month">{{ e.startAt | date:'MMMM':'':'pl' | uppercase }}</div>
 
                   <div class="date__weekday">{{ e.startAt | date:'EEEE':'':'pl' }}</div>
                 </div>
@@ -45,7 +45,7 @@
             <div class="card__bottom">
 
               <a class="btn btn--solid" *ngIf="helperFunctions.isSelling(e)" [href]="e.buyLink" target="_blank" rel="noreferrer">KUP BILET</a>
-              <a class="btn btn--link" [href]="'#'" target="_blank" rel="noreferrer">CZYTAJ WIĘCEJ</a>
+              <a class="btn btn--link" [href]="'#'" target="_blank" rel="noreferrer">Czytaj więcej</a>
             </div>
           </div>
         </article>
