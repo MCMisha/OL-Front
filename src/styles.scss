@@ -183,3 +183,39 @@ $admin-theme: mat.define-light-theme((
   gap: 12px;
   margin-top: 10px;
 }
+
+.drag-viewport {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  user-select: none;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.drag-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.drag-viewport.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.drag-viewport img,
+.drag-viewport [draggable="false"] {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.drag-track {
+  display: flex;
+  width: max-content;
+  scrollbar-width: none;
+}
+
+.drag-track::-webkit-scrollbar {
+  display: none;
+}

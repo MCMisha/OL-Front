@@ -1,14 +1,14 @@
 <section class="reviews">
   <div class="reviews__wrap">
     <div #viewport
-         class="viewport"
+         class="viewport drag-viewport"
          (pointerdown)="onPointerDown($event)"
          (pointermove)="onPointerMove($event)"
          (pointerup)="onPointerUp($event)"
          (pointercancel)="onPointerUp($event)"
          (pointerleave)="onPointerUp($event)">
 
-      <div class="reviews__track">
+      <div class="reviews__track drag-track">
         <article class="rCard" *ngFor="let comment of comments">
           <div class="rCard__head">
             <img

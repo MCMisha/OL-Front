@@ -8,16 +8,16 @@
   </div>
 
   <div class="artists__wrap">
-    <div class="viewport">
-      <div
-        #viewport
-        class="track"
-        (pointerdown)="onPointerDown($event)"
-        (pointermove)="onPointerMove($event)"
-        (pointerup)="onPointerUp($event)"
-        (pointercancel)="onPointerUp($event)"
-        (pointerleave)="onPointerUp($event)"
-      >
+    <div
+      #viewport
+      class="viewport drag-viewport"
+      (pointerdown)="onPointerDown($event)"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp($event)"
+      (pointercancel)="onPointerUp($event)"
+      (pointerleave)="onPointerUp($event)"
+    >
+      <div class="track drag-track">
         <a
           class="card"
           *ngFor="let a of artists"
@@ -28,10 +28,10 @@
         </a>
       </div>
 
-      <!-- лёгкие затемнения по краям как в рефе -->
       <div class="fade fade--left"></div>
       <div class="fade fade--right"></div>
     </div>
+
     <div class="navBlock">
       <div class="nav">
         <button class="nav__btn nav__btn--prev" type="button" (click)="scroll('prev')" aria-label="Poprzednie"></button>

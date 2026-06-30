@@ -6,23 +6,8 @@
 }
 
 .viewport {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  user-select: none;
   width: 100%;
   min-width: 0;
-}
-
-.viewport::-webkit-scrollbar {
-  display: none;
-}
-
-.viewport.dragging {
-  cursor: grabbing;
 }
 
 .nav {
@@ -65,17 +50,9 @@
 
 
 .track {
-  display: flex;
   gap: 24px;
-  scroll-behavior: smooth;
   padding-right: 20px;
   padding-bottom: 8px;
-  width: max-content;
-  scrollbar-width: none;
-}
-
-.track::-webkit-scrollbar {
-  display: none;
 }
 
 .newsCard {

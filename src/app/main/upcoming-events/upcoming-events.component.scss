@@ -1,20 +1,6 @@
 .viewport {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-//  scroll-behavior: smooth;
-  user-select: none;
-}
-
-.viewport::-webkit-scrollbar {
-  display: none;
-}
-
-.viewport.dragging {
-  cursor: grabbing;
+  width: 100%;
+  min-width: 0;
 }
 
 .upcoming {
@@ -55,20 +41,11 @@
 }
 
 .track {
-  display: flex;
-  gap: 20px; /* ближе к макету */
-  scroll-behavior: smooth;
+  gap: 20px;
   padding-right: 20px;
   padding-bottom: 8px;
-  width: max-content;
-  scrollbar-width: none;
 }
 
-.track::-webkit-scrollbar {
-  display: none;
-}
-
-/* карточка */
 .card {
   position: relative;
   width: 325px;
@@ -80,7 +57,6 @@
   border-radius: 0;
 }
 
-/* фото видно сразу */
 .card::before {
   content: "";
   position: absolute;
@@ -94,7 +70,6 @@
   pointer-events: none;
 }
 
-/* затемнение + лёгкая читаемость текста */
 .card::before {
   content: "";
   position: absolute;
@@ -154,7 +129,6 @@
     rgba(0, 0, 0, .16);
 }
 
-/* контент всегда сверху */
 .card__content {
   position: relative;
   z-index: 2;
@@ -201,7 +175,6 @@
   opacity: .75;
 }
 
-/* время / место */
 .meta {
   margin-top: 13px;
 }
@@ -220,7 +193,6 @@
   text-transform: none;
 }
 
-/* тип и название */
 .tag {
   font-size: 12px;
   letter-spacing: 0.08em;
@@ -237,7 +209,6 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
 
-  /* чтобы длинные названия красиво ломались */
   word-break: break-word;
 }
 
@@ -316,21 +287,6 @@
 }
 
 @media (max-width: 520px) {
-  .viewport {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    scroll-behavior: auto;
-    cursor: grab;
-  }
-
-  .viewport:active {
-    cursor: grabbing;
-  }
-
   .track {
     padding-right: 16px;
     gap: 12px;

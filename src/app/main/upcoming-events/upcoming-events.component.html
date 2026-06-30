@@ -8,12 +8,12 @@
 
 
   <div class="upcoming__wrap">
-    <div #viewport class="viewport" (pointerdown)="onPointerDown($event)"
+    <div #viewport class="viewport drag-viewport" (pointerdown)="onPointerDown($event)"
          (pointermove)="onPointerMove($event)"
          (pointerup)="onPointerUp($event)"
          (pointercancel)="onPointerUp($event)"
          (pointerleave)="onPointerUp($event)">
-      <div class="track">
+      <div class="track drag-track">
         <article
           class="card text-white"
           *ngFor="let e of events"
