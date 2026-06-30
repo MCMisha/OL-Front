@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {forkJoin, Subscription, tap} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AdminPerformanceInfoService} from "../../../../../services/admin/admin-performance-info.service";
 import {Implementer} from "../../../../../models/implementer";
 import {AdminPerformanceService} from "../../../../../services/admin/admin-performance.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-admin-performance-edit-implementers',
@@ -19,6 +20,7 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
   });
   performanceName = '';
   private subscription = new Subscription();
+  private _snackBar = inject(MatSnackBar);
 
   get implementersFA() {
     return this.form.get('implementers') as FormArray<FormGroup>;
@@ -50,6 +52,7 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
   load() {
     this.adminPerformanceInfoService.getImplementers(this.performanceId).subscribe(items => {
       this.implementersFA.clear();
+      console.log(items);
       items.forEach(i => this.implementersFA.push(this.createRow(i)));
     });
   }
@@ -66,7 +69,14 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
       firstName: [i?.firstName ?? '', Validators.required],
       lastName: [i?.lastName ?? '', Validators.required],
       role: [i?.role ?? '', Validators.required],
-      isDirector: [i?.isDirector ?? false, Validators.required]
+      isDirector: [i?.isDirector ?? false, Validators.required],
+      photo: [i?.photo ?? null],
+      photoPreview: [
+        i?.photo
+          ? `data:image/jpeg;base64,${i.photo}`
+          : null
+      ],
+      removePhoto: [false]
     });
   }
 
@@ -153,5 +163,54 @@ export class AdminPanelPerformanceEditImplementersComponent implements OnInit, O
 
   back() {
     this.router.navigate(['../'], { relativeTo: this.route }); // вернёт на /edit
+  }
+
+  onPhotoSelected(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      this._snackBar.open('Można wybrać tylko plik graficzny.', 'Zamknij', {
+        duration: 4000
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      const base64 = dataUrl.split(',')[1];
+
+      const row = this.implementersFA.at(index);
+
+      row.patchValue({
+        photo: base64,
+        photoContentType: file.type,
+        photoPreview: dataUrl,
+        removePhoto: false
+      });
+
+      row.markAsDirty();
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  removePhoto(index: number): void {
+    const row = this.implementersFA.at(index);
+
+    row.patchValue({
+      photo: null,
+      photoContentType: null,
+      photoPreview: null,
+      removePhoto: true
+    });
+
+    row.markAsDirty();
   }
 }

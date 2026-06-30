@@ -27,4 +27,6 @@ export const ArtistCategoryLabels: Record<ArtistCategory, string> = {
 
   [ArtistCategory.ZespolChoru]: 'Zespół chóru',
   [ArtistCategory.ZespolBaletu]: 'Zespół baletu',
+
+  [ArtistCategory.Wspolpraca]: 'Współpraca'
 };

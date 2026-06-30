@@ -47,10 +47,10 @@
 /* дорожка */
 .track {
   display: flex;
-  gap: 26px;
+  gap: 10px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-right: 24px;
+  padding-right: 6px;
   padding-bottom: 6px;
 
   scrollbar-width: none;
@@ -98,9 +98,8 @@
 }
 
 .card:hover {
-  height: 395px;
-  width: 270px;
-  transition: height .2s ease, width .2s ease;
+  scale: 1.05;
+  transition: .2s ease, .2s ease;
 }
 
 /* затемнения краёв */

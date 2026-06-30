@@ -2,7 +2,7 @@
   <div class="artists__head">
     <div class="artists__title">_ARTYŚCI</div>
 
-    <a class="artists__all" routerLink="/artists">
+    <a class="artists__all" routerLink="/about/artists">
       WSZYSCY ARTYŚCI
     </a>
   </div>
@@ -24,7 +24,7 @@
           [routerLink]="['/about','artists', a.id]"
           [attr.aria-label]="a.name"
         >
-          <div class="card__photo" [style.backgroundImage]="'url(' + a.photoUrl + ')'"></div>
+          <div class="card__photo" draggable="false" [style.backgroundImage]="'url(' + a.photoUrl + ')'"></div>
         </a>
       </div>
 

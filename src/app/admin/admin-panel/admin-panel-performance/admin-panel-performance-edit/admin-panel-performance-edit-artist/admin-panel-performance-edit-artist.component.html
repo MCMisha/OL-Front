@@ -23,6 +23,19 @@
     <div formArrayName="cast">
       <mat-card class="row" *ngFor="let r of castFA.controls; let i = index" [formGroupName]="i">
         <mat-form-field appearance="fill" class="field">
+          <mat-label>Wydarzenie</mat-label>
+          <mat-select
+            formControlName="eventId"
+            [disabled]="r.get('existing')?.value === true">
+            <mat-option *ngFor="let e of events" [value]="e.id">
+              {{ e.startAt | date: 'dd.MM.yyyy HH:mm' }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="r.get('eventId')?.touched && r.get('eventId')?.invalid">
+            Wybierz wydarzenie
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
           <mat-label>Artysta</mat-label>
           <mat-select
             formControlName="artistId"

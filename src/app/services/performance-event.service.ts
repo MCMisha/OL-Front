@@ -35,6 +35,12 @@ export class PerformanceEventService {
       );
   }
 
+  getNearestFiveForPerformance(performanceId: number): Observable<PerformanceEvent[]> {
+    return this.http
+      .get<PerformanceEvent[]>(`${environment.baseApiUri}/PerformanceEvent/nearest-five-for-performance/${performanceId}`)
+      .pipe(catchError(this.handleError<PerformanceEvent[]>('getNearestFiveForPerformance')));
+  }
+
   getMinMaxDates(): Observable<MinMaxDate> {
     return this.http.get<MinMaxDate>(`${environment.baseApiUri}/PerformanceEvent/min-max-date`);
   }

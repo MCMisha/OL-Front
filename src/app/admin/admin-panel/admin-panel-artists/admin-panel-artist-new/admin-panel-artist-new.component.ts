@@ -42,7 +42,7 @@ export class AdminPanelArtistNewComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       category: [null, Validators.required],
       description: ['', [Validators.maxLength(6000)]],
-      photo: [null, Validators.required]
+      photo: [null]
     });
   }
 

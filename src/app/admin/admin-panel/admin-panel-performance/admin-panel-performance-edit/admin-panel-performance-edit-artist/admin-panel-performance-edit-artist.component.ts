@@ -9,6 +9,8 @@ import {switchMap} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CastRowView} from "../../../../../models/cast-row-view";
 import {AdminPerformanceService} from "../../../../../services/admin/admin-performance.service";
+import {AdminPerformanceEventService} from "../../../../../services/admin/admin-performance-event.service";
+import {AdminPerformanceEventRowDto} from "../../../../../models/admin-performance-event-row-dto";
 
 @Component({
   selector: 'app-admin-panel-performance-edit-artist',
@@ -23,7 +25,7 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
   isLoading = false;
 
   artists: ArtistOption[] = [];
-
+  events: AdminPerformanceEventRowDto[] = [];
   private sub = new Subscription();
 
   form = this.fb.group({
@@ -35,6 +37,7 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
     private router: Router,
     private castService: AdminPerformanceCastService,
     private adminPerformanceService: AdminPerformanceService,
+    private adminPerformanceEventService: AdminPerformanceEventService,
     private artistsService: AdminArtistService
   ) {
   }
@@ -44,7 +47,7 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
       this.route.paramMap
         .pipe(
           switchMap(params => {
-            this.performanceId = Number(params.get('id')); // если param другой — поменяй тут
+            this.performanceId = Number(params.get('id'));
             this.isLoading = true;
 
             return this.artistsService.getArtists().pipe(
@@ -61,7 +64,6 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
         .subscribe({
           next: (cast) => {
             this.setCast(cast ?? []);
-            this.isLoading = false;
           },
           error: (err) => {
             this.isLoading = false;
@@ -70,6 +72,7 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
         })
     );
     this.loadPerformanceName();
+    this.loadPerformanceEvents();
   }
 
   ngOnDestroy(): void {
@@ -80,8 +83,9 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
     return this.form.get('cast') as FormArray<FormGroup>;
   }
 
-  private buildRow(artistId: number | null = null, role: string = '', existing = true): FormGroup {
+  private buildRow(eventId: number | null, artistId: number | null = null, role: string = '', existing = true): FormGroup {
     return this.fb.group({
+      eventId: [{value: eventId, disabled: existing}, Validators.required],
       artistId: [{value: artistId, disabled: existing}, Validators.required],
       role: [{value: role, disabled: existing}, [Validators.required, Validators.maxLength(120)]],
       existing: [existing]
@@ -92,11 +96,21 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
     this.castFA.clear();
 
     if (cast.length === 0) {
-      this.castFA.push(this.buildRow(null, '', false));
+      this.castFA.push(this.buildRow(null, null, '', false));
       return;
     }
 
-    cast.forEach(row => this.castFA.push(this.buildRow(row.artistId, row.role, true)));
+    cast.forEach(row => this.castFA.push(this.buildRow(row.eventId, row.artistId, row.role, true)));
+  }
+
+  private loadPerformanceEvents() {
+    this.sub.add(
+      this.adminPerformanceEventService.getEventsByPerformance(this.performanceId).subscribe(events => {
+          this.events = events;
+          this.isLoading = false;
+        }
+      )
+    )
   }
 
   loadPerformanceName() {
@@ -125,7 +139,7 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
   }
 
   addRow(): void {
-    this.castFA.push(this.buildRow(null, '', false));
+    this.castFA.push(this.buildRow(null, null, '', false));
   }
 
   removeRow(index: number): void {
@@ -164,25 +178,14 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
     const payload = this.castFA.controls
       .filter(c => c.get('existing')?.value === false)
       .map(c => ({
+        eventId: Number(c.get('eventId')?.value),
         artistId: Number(c.get('artistId')?.value),
-        role: String(c.get('role')?.value ?? '').trim()
+        role: String(c.get('role')?.value ?? '').trim(),
       }));
 
     if (payload.length === 0) {
       this.snack.open('Nie ma nowych pozycji do zapisania.', 'OK', {duration: 3000});
       return;
-    }
-
-    const existingIds = new Set<number>(
-      this.castFA.controls
-        .filter(c => c.get('existing')?.value === true)
-        .map(c => Number(c.get('artistId')?.value))
-    );
-    for (const p of payload) {
-      if (existingIds.has(p.artistId)) {
-        this.snack.open('Ten artysta jest już dodany do obsady.', 'Zamknij', {duration: 6000});
-        return;
-      }
     }
 
     this.isLoading = true;
@@ -209,6 +212,8 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
   }
 
   back() {
-    this.router.navigate(['../'], { relativeTo: this.route }); // вернёт на /edit
+    this.router.navigate(['../'], {relativeTo: this.route}); // вернёт на /edit
   }
+
+
 }

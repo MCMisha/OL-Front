@@ -1,0 +1,97 @@
+<section class="artist-photos-admin">
+  <div class="artist-photos-admin__header">
+    <div>
+      <h2>Zdjęcia spektaklu</h2>
+      <p>Dodaj lub usuń zdjęcia widoczne w galerii spektaklu.</p>
+    </div>
+
+    <label class="upload-button">
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        (change)="onFilesSelected($event)">
+      Wybierz zdjęcia
+    </label>
+  </div>
+
+  <mat-progress-bar
+    *ngIf="isLoading || isUploading || isDeleting"
+    mode="indeterminate">
+  </mat-progress-bar>
+
+  <div class="selected-photos" *ngIf="selectedPhotos.length > 0">
+    <div class="selected-photos__top">
+      <h3>Wybrane zdjęcia</h3>
+
+      <button
+        mat-button
+        type="button"
+        color="warn"
+        [disabled]="isUploading"
+        (click)="clearSelectedPhotos()">
+        Wyczyść
+      </button>
+    </div>
+
+    <div class="photos-grid">
+      <article
+        class="photo-card"
+        *ngFor="let selectedPhoto of selectedPhotos; let i = index; trackBy: trackByPreview">
+        <img [src]="selectedPhoto.previewUrl" alt="Podgląd zdjęcia">
+
+        <div class="photo-card__actions">
+          <button
+            mat-flat-button
+            color="warn"
+            type="button"
+            [disabled]="isUploading"
+            (click)="removeSelectedPhoto(i)">
+            Usuń
+          </button>
+        </div>
+      </article>
+    </div>
+
+    <div class="selected-photos__actions">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="isUploading"
+        (click)="uploadPhotos()">
+        Dodaj zdjęcia
+      </button>
+    </div>
+  </div>
+
+  <div class="current-photos">
+    <h3>Aktualne zdjęcia</h3>
+
+    <p class="empty-message" *ngIf="!isLoading && artistPhotos.length === 0">
+      Brak zdjęć dla tego spektaklu.
+    </p>
+
+    <div class="photos-grid" *ngIf="artistPhotos.length > 0">
+      <article
+        class="photo-card"
+        *ngFor="let artistPhoto of artistPhotos; trackBy: trackByPhotoId">
+        <img
+          [src]="getPhotoUrl(artistPhoto.photo)"
+          alt="Zdjęcie spektaklu">
+
+        <div class="photo-card__actions">
+          <button
+            mat-flat-button
+            color="warn"
+            type="button"
+            [disabled]="isDeleting"
+            (click)="deletePhoto(artistPhoto.id)">
+            Usuń
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

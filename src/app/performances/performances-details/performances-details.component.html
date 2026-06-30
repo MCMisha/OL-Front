@@ -1,77 +1,175 @@
-<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-
-<div class="details-wrapper" *ngIf="performance">
-  <div class="image-section">
-    <img [src]="'data:image/jpeg;base64,' + performance.mainImage"
-         [alt]="performance.title" />
+<div *ngIf="isLoading" class="loading-screen">
+  <div class="loading">
+    Ładowanie...
   </div>
+</div>
+<section class="performancePage" *ngIf="performance">
+  <div class="performancePage__inner">
 
-  <div class="info-section">
-    <h1 class="title">{{ performance.title }}</h1>
+    <nav class="breadcrumb">
+      <a routerLink="../..">REPERTUAR</a>
+      <span>{{ performance.title }}</span>
+    </nav>
 
-    <div class="meta">
-      <span class="genre">{{ performance.genreNavigation?.name }}</span>
-      <span class="place">Miejsce: {{ performance.placeNavigation?.name }}</span>
-    </div>
-    <div class="details-block">
-      <ng-container *ngIf="implementers?.length">
-      <h2 class="block-title">Realizacja</h2>
+    <!-- HERO -->
+    <section class="hero">
+      <img
+        class="hero__image"
+        [src]="'data:image/jpeg;base64,' + performance.mainImage"
+        [alt]="performance.title"
+      />
 
-        <div class="cast-list">
-          <div class="cast-row" *ngFor="let i of implementers">
-            <div class="cast-artist">{{ i.firstName}} {{i.lastName}}</div>
-            <div class="cast-role">{{ i.role }}</div>
-          </div>
+      <div class="hero__overlay">
+        <h1 class="hero__title">{{ performance.title }}</h1>
+
+        <div class="hero__tags">
+          <span *ngIf="performance.genreNavigation?.name">
+            {{ performance.genreNavigation?.name }}
+          </span>
+
+          <span *ngIf="performance.breaksCount">
+            {{ actsLabel }}
+          </span>
+
+          <span *ngIf="performance.duration">
+            {{ minutesLabel }}
+          </span>
+
+          <span *ngIf="directorLabel !== ''">
+            {{ directorLabel }}
+          </span>
+
         </div>
-      </ng-container>
-    </div>
+      </div>
+    </section>
 
-    <p class="description" [innerHTML]="performance.description"></p>
+    <!-- NAJBLIŻSZE TERMINY -->
+    <section class="datesSection" *ngIf="events?.length">
+      <h2 class="sectionTitle">_NAJBLIŻSZE TERMINY</h2>
 
-    <!-- ===================== -->
-    <!--        OBSADA         -->
-    <!-- ===================== -->
-    <div class="details-block">
-      <ng-container *ngIf="cast?.length">
-      <h2 class="block-title">Obsada</h2>
-
-
-        <div class="cast-list">
-          <div class="cast-row" *ngFor="let c of cast">
-            <div class="cast-artist">{{ c.artistName }}</div>
-            <div class="cast-role">{{ c.role }}</div>
+      <div class="datesList">
+        <article class="dateRow" *ngFor="let e of events">
+          <div class="dateRow__date">
+            <div class="dateRow__day">{{ e.startAt | date:'d' }}</div>
+            <div class="dateRow__month">{{ e.startAt | date:'MMMM':'':'pl' }}</div>
+            <div class="dateRow__weekday">{{ e.startAt | date:'EEEE':'':'pl' }}</div>
           </div>
-        </div>
-      </ng-container>
 
-    </div>
+          <div class="dateRow__time">
+            <div>{{ e.startAt | date:'HH:mm' }}</div>
+            <span>{{ performance.placeNavigation?.name }}</span>
+          </div>
 
-    <!-- ===================== -->
-    <!--     CENY BILETÓW      -->
-    <!-- ===================== -->
-    <div class="details-block">
-      <ng-container *ngIf="ticketPriceGroups?.length">
-      <h2 class="block-title">Ceny biletów</h2>
+          <div class="dateRow__actions">
+            <a
+              class="smallBtn"
+              *ngIf="e.buyLink"
+              [href]="e.buyLink"
+              target="_blank"
+              rel="noreferrer"
+            >
+              KUP BILET
+            </a>
 
+            <a class="smallLink" [routerLink]="['/repertuar', performance.id]">
+              ZAREZERWUJ MIEJSCE
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        <div class="price-groups">
-          <div class="price-group" *ngFor="let group of ticketPriceGroups">
-            <div class="group-title">{{ group.name }}</div>
+    <!-- OPIS + REALIZATORZY -->
+    <section class="contentGrid">
+      <div class="descriptionBlock">
+        <h2 class="sectionTitle">_OPIS</h2>
+        <div class="description" [innerHTML]="performance.description"></div>
+      </div>
 
-            <div class="price-row" *ngFor="let price of group.prices">
-              <div class="price-type">
-                {{ price.type === TicketType.Normal ? 'Normalny' : 'Ulgowy' }}
+      <div class="realizersBlock" *ngIf="implementers?.length">
+        <h2 class="sectionTitle">_REALIZATORZY</h2>
+
+        <div class="creditsList">
+          <div class="creditRow" *ngFor="let i of implementersView">
+            <div class="creatorsRole">
+              {{ i.role }}:
+            </div>
+
+            <div class="creatorsNames">
+              <ng-container *ngFor="let person of i.people; let last = last">
+            <span class="creatorPerson">
+              <span class="creatorName">
+                {{ person.fullName }}
+              </span>
+
+              <div class="creatorPhotoPopup" *ngIf="person.photoSrc">
+                <img
+                  [src]="'data:image/jpeg;base64,' + person.photoSrc"
+                  alt="Zdjęcie realizatora"
+                />
               </div>
-              <div class="price-amount">{{ price.amount }} zł</div>
+            </span>
+
+                <span *ngIf="!last">, </span>
+              </ng-container>
             </div>
           </div>
         </div>
-      </ng-container>
+      </div>
+    </section>
 
-    </div>
+    <!-- GALERIA -->
+    <section class="gallerySection" *ngIf="galleryImages?.length">
+      <h2 class="sectionTitle">_GALERIA</h2>
 
-    <button mat-stroked-button color="accent" (click)="goBack()">
-      Wróć
-    </button>
+      <div class="gallery">
+        <img
+          *ngFor="let img of galleryImages"
+          [src]="'data:image/jpeg;base64,' + img.photo"
+          [alt]="performance.title"
+        />
+      </div>
+    </section>
+
+    <!-- OBSADA -->
+    <section class="castSection">
+      <h2 class="sectionTitle">_OBSADA</h2>
+
+      <div class="castFilters">
+        <ng-container *ngFor="let event of events.slice(0, 2)">
+          <button type="button" [ngClass]="selectedDate === event.startAt ? 'selected' : ''" (click)="changeSelectedDate(event.startAt)">{{ event.startAt | date: 'dd MMMM' }}</button>
+        </ng-container>
+      </div>
+
+      <div class="castGrid">
+        <article class="castCard" *ngFor="let c of filteredCast">
+          <div class="castCard__photo" *ngIf="c.photo">
+            <img [src]="'data:image/jpeg;base64,' + c.photo" [alt]="c.firstName + ' ' + c.lastName"/>
+          </div>
+
+          <div class="castCard__info">
+            <div class="castCard__role">{{ c.role }}</div>
+            <div class="castCard__name">{{ c.firstName + ' ' + c.lastName }}</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CENY BILETÓW -->
+    <!--    <section class="pricesSection" *ngIf="ticketPriceGroups?.length">-->
+    <!--      <h2 class="sectionTitle">_CENY BILETÓW</h2>-->
+
+    <!--      <div class="priceGroups">-->
+    <!--        <div class="priceGroup" *ngFor="let group of ticketPriceGroups">-->
+    <!--          <div class="priceGroup__title">{{ group.name }}</div>-->
+
+    <!--          <div class="priceRow" *ngFor="let price of group.prices">-->
+    <!--            <span>{{ price.type === TicketType.Normal ? 'Normalny' : 'Ulgowy' }}</span>-->
+    <!--            <strong>{{ price.amount }} zł</strong>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </section>-->
+
   </div>
-</div>
+</section>

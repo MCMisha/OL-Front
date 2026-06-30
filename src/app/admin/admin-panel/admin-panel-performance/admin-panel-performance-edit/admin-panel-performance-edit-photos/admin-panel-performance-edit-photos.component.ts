@@ -1,19 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {AdminArtistPhotoService} from '../../../../../services/admin/admin-artist-photo.service';
-import {ArtistPhoto} from '../../../../../models/artist-photo';
+import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {SelectedPhotoPreview} from "../../../../../models/selected-photo-preview";
+import {AdminPerformancePhotoService} from "../../../../../services/admin/admin-performance-photo.service";
+import {PerformancePhoto} from "../../../../../models/performance-photo";
 
 @Component({
-  selector: 'app-admin-panel-artist-edit-photos',
-  templateUrl: './admin-panel-artist-edit-photos.component.html',
-  styleUrl: './admin-panel-artist-edit-photos.component.scss'
+  selector: 'app-admin-panel-performance-edit-photos',
+  templateUrl: './admin-panel-performance-edit-photos.component.html',
+  styleUrl: './admin-panel-performance-edit-photos.component.scss'
 })
-export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
-  artistId: number | undefined;
-  artistPhotos: ArtistPhoto[] = [];
+export class AdminPanelPerformanceEditPhotosComponent implements OnInit, OnDestroy {
+  performanceId: number | undefined;
+  artistPhotos: PerformancePhoto[] = [];
   selectedPhotos: SelectedPhotoPreview[] = [];
 
   isLoading = false;
@@ -23,15 +23,14 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(
-    private artistPhotoService: AdminArtistPhotoService,
+    private adminPerformancePhotoService: AdminPerformancePhotoService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.artistId = this.route.snapshot.params['id'];
-    console.log(this.artistId);
-    if (this.artistId) {
+    this.performanceId = this.route.snapshot.params['id'];
+    if (this.performanceId) {
       this.loadArtistPhotos();
     }
   }
@@ -45,7 +44,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.subscription.add(
-      this.artistPhotoService.getArtistPhotos(this.artistId ?? 0).subscribe({
+      this.adminPerformancePhotoService.getPerformancePhoto(this.performanceId ?? 0).subscribe({
         next: photos => {
           this.artistPhotos = photos;
           this.isLoading = false;
@@ -100,7 +99,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
   }
 
   uploadPhotos(): void {
-    if (!this.artistId || this.selectedPhotos.length === 0) {
+    if (!this.performanceId || this.selectedPhotos.length === 0) {
       return;
     }
 
@@ -109,7 +108,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
     const files = this.selectedPhotos.map(photo => photo.file);
 
     this.subscription.add(
-      this.artistPhotoService.addArtistPhotos(this.artistId, files).subscribe({
+      this.adminPerformancePhotoService.addPerformancePhotos(this.performanceId, files).subscribe({
         next: createdPhotos => {
           this.artistPhotos = [...this.artistPhotos, ...createdPhotos];
           this.clearSelectedPhotos();
@@ -132,7 +131,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
   }
 
   deletePhoto(photoId: number): void {
-    if (!this.artistId) {
+    if (!this.performanceId) {
       return;
     }
 
@@ -145,7 +144,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
     this.isDeleting = true;
 
     this.subscription.add(
-      this.artistPhotoService.deleteArtistPhoto(this.artistId, photoId).subscribe({
+      this.adminPerformancePhotoService.deletePerformancePhoto(this.performanceId, photoId).subscribe({
         next: () => {
           this.artistPhotos = this.artistPhotos.filter(photo => photo.id !== photoId);
 
@@ -183,7 +182,7 @@ export class AdminPanelArtistEditPhotosComponent implements OnInit, OnDestroy {
     this.selectedPhotos = [];
   }
 
-  trackByPhotoId(index: number, photo: ArtistPhoto): number {
+  trackByPhotoId(index: number, photo: PerformancePhoto): number {
     return photo.id;
   }
 

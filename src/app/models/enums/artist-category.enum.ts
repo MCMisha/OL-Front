@@ -24,5 +24,7 @@ export enum ArtistCategory {
   Harfa = 43,
 
   ZespolChoru = 50,
-  ZespolBaletu = 51
+  ZespolBaletu = 51,
+
+  Wspolpraca = 60
 }

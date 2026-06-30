@@ -1,12 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from "rxjs";
-import { ActivatedRoute, Router } from "@angular/router";
-import { PerformancesService } from "../../services/performances.service";
-import { PerformanceCastService } from "../../services/performance-cast.service";
-import { PerformanceInfoService } from "../../services/performance-info.service";
-import { TicketPriceService } from "../../services/ticket-price.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PerformancesService} from "../../services/performances.service";
+import {PerformanceCastService} from "../../services/performance-cast.service";
+import {PerformanceInfoService} from "../../services/performance-info.service";
+import {TicketPriceService} from "../../services/ticket-price.service";
 import {TicketPriceGroup} from "../../models/ticket-price-group";
-import {TicketType} from "../../models/enums/ticket-type.enum"; // <-- добавь
+import {TicketType} from "../../models/enums/ticket-type.enum";
+import {PerformanceEvent} from "../../models/performance-event";
+import {PerformanceEventService} from "../../services/performance-event.service";
+import {HelperFunctionsUtil} from "../../shared/utils/helper-functions.util";
+import {Performance} from "../../models/performance";
+import {PerformancePhotoService} from "../../services/performance-photo.service";
+import {PerformancePhoto} from "../../models/performance-photo";
+import {Implementer} from "../../models/implementer";
+import {ArtistPerformanceCastDto} from "../../models/artist-performance-cast-dto"; // <-- добавь
 
 @Component({
   selector: 'app-performances-details',
@@ -14,14 +22,26 @@ import {TicketType} from "../../models/enums/ticket-type.enum"; // <-- доба�
   styleUrl: './performances-details.component.scss'
 })
 export class PerformancesDetailsComponent implements OnInit, OnDestroy {
-  performance: any;
-  implementers: any;
+  performance: Performance | any;
+  implementers: Implementer[] = [];
   isLoading = true;
-  implementersView: { role: string; names: string[] }[] = [];
-
+  implementersView: {
+    role: string;
+    people: {
+      fullName: string;
+      photoSrc: string | null;
+      isDirector: boolean;
+    }[];
+  }[] = [];
+  events: PerformanceEvent[] = [];
+  galleryImages: PerformancePhoto[] = [];
+  actsLabel = '';
+  minutesLabel = '';
+  directorLabel = '';
   // OBSADA (mapped)
-  cast: { artistId: number; artistName: string; role: string }[] = [];
-
+  cast: ArtistPerformanceCastDto[] = [];
+  filteredCast: ArtistPerformanceCastDto[] = [];
+  selectedDate: Date | undefined;
   // CENY
   ticketPriceGroups: TicketPriceGroup[] = [];
 
@@ -32,9 +52,13 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private service: PerformancesService,
     private castService: PerformanceCastService,
+    private performanceEventService: PerformanceEventService,
     private performanceInfoService: PerformanceInfoService,
-    private ticketPriceService: TicketPriceService // <-- добавь
-  ) {}
+    private performancePhotoService: PerformancePhotoService,
+    private ticketPriceService: TicketPriceService,
+    private helperFunctions: HelperFunctionsUtil
+  ) {
+  }
 
   ngOnInit() {
     this.sub.add(
@@ -42,9 +66,11 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
         const id = Number(params.get("id"));
         if (id) {
           this.loadPerformance(id);
-          this.loadImplementers(id);
           this.loadCast(id);
+          this.loadImplementers(id);
+          this.loadPerformanceEvents(id);
           this.loadTicketPrices(id);
+          this.loadPerformancePhotos(id);
         }
       })
     );
@@ -54,41 +80,70 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.service.getPerformanceById(id).subscribe(res => {
         this.performance = res;
+        this.actsLabel = `${this.helperFunctions.toRomanNumber(this.performance.breaksCount + 1)} akty`;
+        this.minutesLabel = `${this.helperFunctions.fromTimeToMinute(this.performance.duration)} min`;
         this.isLoading = false;
       })
     );
   }
 
-  private loadImplementers(id: number) {
+  private loadImplementers(id: number): void {
     this.sub.add(
       this.performanceInfoService.getImplementers(id).subscribe((res: any[]) => {
-        this.implementers = res;
+        this.implementers = (res ?? []).map(x => ({
+          ...x,
+          fullName: `${x.firstName ?? ''} ${x.lastName ?? ''}`.trim(),
+          photoSrc: this.getPhotoSrc(x.photo)
+        }));
 
-        // универсальный мэппинг: под разные форматы
-        const rows = (res ?? []).map(x => {
-          const role =
-            x.role ??
-            x.implementerRole ??
-            x.type ??
-            x.name ?? // если роль приходит как name
-            '';
+        const map = new Map<string, {
+          role: string;
+          people: Map<string, {
+            fullName: string;
+            photoSrc: string | null;
+            isDirector: boolean;
+          }>;
+        }>();
 
-          const fullName =x.firstName + ' ' + x.lastName;
-          return { role: String(role), name: String(fullName).trim() };
+        this.directorLabel = '';
+
+        this.implementers.forEach(x => {
+          const rawRole =
+            x.role ?? '';
+
+          const role = String(rawRole)
+            .replace(':', '')
+            .trim();
+
+          const key = role.toLowerCase();
+          const fullName = `${x.firstName} ${x.lastName}`;
+
+          if (x.isDirector && fullName) {
+            this.directorLabel = `Reż. ${fullName}`;
+          }
+
+          if (!role || !fullName) {
+            return;
+          }
+
+          if (!map.has(key)) {
+            map.set(key, {
+              role,
+              people: new Map()
+            });
+          }
+
+          map.get(key)!.people.set(fullName.toLowerCase(), {
+            fullName,
+            photoSrc: x.photo ?? '',
+            isDirector: x.isDirector
+          });
         });
 
-        const map = new Map<string, string[]>();
-        rows.forEach(r => {
-          if (!r.role) return;
-          if (!map.has(r.role)) map.set(r.role, []);
-          if (r.name) map.get(r.role)!.push(r.name);
-        });
-
-        this.implementersView = Array.from(map.entries())
-          .map(([role, names]) => ({
-            role,
-            names: Array.from(new Set(names)) // уберём дубли
-          }));
+        this.implementersView = Array.from(map.values()).map(item => ({
+          role: item.role,
+          people: Array.from(item.people.values())
+        }));
       })
     );
   }
@@ -96,11 +151,8 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
   private loadCast(id: number) {
     this.sub.add(
       this.castService.getCast(id).subscribe(items => {
-        this.cast = (items ?? []).map(x => ({
-          artistId: x.artistId,
-          artistName: `${x.artist?.firstName ?? ''} ${x.artist?.lastName ?? ''}`.trim(),
-          role: x.role
-        }));
+        this.cast = items ?? [];
+        this.filteredCast = this.cast.filter(ap => ap.startAt === this.selectedDate);
       })
     );
   }
@@ -122,4 +174,40 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
   }
 
   protected readonly TicketType = TicketType;
+
+  loadPerformanceEvents(id: number) {
+    this.sub.add(
+      this.performanceEventService.getNearestFiveForPerformance(id).subscribe(res => {
+        this.events = res;
+        if (this.events.length > 0) {
+          this.selectedDate = this.events[0].startAt;
+        }
+      })
+    )
+  }
+
+  loadPerformancePhotos(id: number) {
+    this.sub.add(
+      this.performancePhotoService.getPerformancePhoto(id).subscribe(res => {
+        this.galleryImages = res;
+      })
+    )
+  }
+
+  getPhotoSrc(photo: string | null | undefined): string | null {
+    if (!photo) {
+      return null;
+    }
+
+    if (photo.startsWith('data:')) {
+      return photo;
+    }
+
+    return `data:image/jpeg';base64,${photo}`;
+  }
+
+  protected changeSelectedDate(startAt: Date) {
+    this.selectedDate = startAt;
+    this.filteredCast = this.cast.filter(ap => ap.startAt == this.selectedDate);
+  }
 }

@@ -6,7 +6,6 @@ export interface PerformanceEvent {
   genre: string;
   place: string;
   mainImage: string;
-
   buyLink: string;
   isActive: boolean;
 }

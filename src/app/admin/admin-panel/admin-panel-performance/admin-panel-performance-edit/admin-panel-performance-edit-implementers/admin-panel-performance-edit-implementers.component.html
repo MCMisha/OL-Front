@@ -42,7 +42,36 @@
           <mat-label>Rola</mat-label>
           <input matInput formControlName="role"/>
         </mat-form-field>
+        <div class="impl-photo">
+          <img
+            *ngIf="row.get('photoPreview')?.value"
+            [src]="row.get('photoPreview')?.value"
+            class="impl-photo-preview"
+            alt="Zdjęcie realizatora"
+          />
 
+          <input
+            hidden
+            type="file"
+            accept="image/*"
+            #photoInput
+            (change)="onPhotoSelected($event, i)"
+          />
+
+          <button mat-stroked-button type="button" (click)="photoInput.click()">
+            Wybierz zdjęcie
+          </button>
+
+          <button
+            mat-button
+            color="warn"
+            type="button"
+            *ngIf="row.get('photoPreview')?.value"
+            (click)="removePhoto(i)"
+          >
+            Usuń
+          </button>
+        </div>
         <div class="impl-row-actions">
           <mat-checkbox formControlName="isDirector" (change)="onDirectorChange(i, $event.checked)">
             Reżyser

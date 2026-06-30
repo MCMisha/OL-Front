@@ -23,7 +23,7 @@ export class AdminPanelPerformanceEditComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   places: Place[] = [];
   genres: Genre[] = [];
-  durations: string[] = ['0:30', '1:00', '1:30', '1:40', '2:00', '2:30', '3:00'];
+  durations: string[] = ['0:30', '1:00', '1:20', '1:30', '1:40', '2:00', '2:20', '2:30', '2:40', '3:00'];
   breaksCount = [0, 1, 2, 3];
   selectedFiles: { mainImage: string | undefined; poster: string | undefined } = {
     mainImage: undefined,

@@ -4,4 +4,5 @@ export interface Implementer {
   lastName: string;
   role: string;
   isDirector: boolean;
+  photo?: string;
 }

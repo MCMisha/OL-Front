@@ -6,6 +6,7 @@ import { PerformanceEventService } from '../services/performance-event.service';
 import { PerformanceEvent } from '../models/performance-event';
 import {MonthItem} from "../models/month-item";
 import {HelperFunctionsUtil} from "../shared/utils/helper-functions.util";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-performances',
@@ -25,6 +26,8 @@ export class PerformancesComponent implements OnInit, OnDestroy {
   constructor(
     private genreService: GenreService,
     private performanceEventService: PerformanceEventService,
+    private route: ActivatedRoute,
+    private router: Router,
     protected helperFunctions: HelperFunctionsUtil
   ) {}
 
@@ -104,6 +107,10 @@ export class PerformancesComponent implements OnInit, OnDestroy {
 
   trackByMonth(_: number, item: MonthItem): string {
     return item.value;
+  }
+
+  goToDetails(performance: PerformanceEvent): void {
+    this.router.navigate(['details', performance.performanceId], {relativeTo: this.route});
   }
 
   getMonthLabelPl(date: Date): string {
@@ -204,11 +211,14 @@ export class PerformancesComponent implements OnInit, OnDestroy {
       const year = current.getFullYear();
       const month = current.getMonth() + 1;
 
-      result.push({
-        value: `${year}-${String(month).padStart(2, '0')}`,
-        label: this.getMonthLabelPl(new Date(year, month - 1, 1)),
-        date: new Date(year, month - 1, 1)
-      });
+      // 7 = lipiec, 8 = sierpień
+      if (month !== 7 && month !== 8) {
+        result.push({
+          value: `${year}-${String(month).padStart(2, '0')}`,
+          label: this.getMonthLabelPl(new Date(year, month - 1, 1)),
+          date: new Date(year, month - 1, 1)
+        });
+      }
 
       current.setMonth(current.getMonth() + 1);
     }
@@ -219,9 +229,18 @@ export class PerformancesComponent implements OnInit, OnDestroy {
   private getCurrentOrLastAvailableMonth(months: MonthItem[]): string {
     const now = new Date();
     const currentValue = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    const exact = months.find(m => m.value === currentValue);
 
-    return exact ? exact.value : months[months.length - 1].value;
+    const exact = months.find(m => m.value === currentValue);
+    if (exact) {
+      return exact.value;
+    }
+
+    const nextAvailable = months.find(m => m.value > currentValue);
+    if (nextAvailable) {
+      return nextAvailable.value;
+    }
+
+    return months[months.length - 1].value;
   }
 
   ngOnDestroy(): void {

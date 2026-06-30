@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {PerformanceCastEntity} from "../models/performance-cast-entity";
+import {ArtistPerformanceCastDto} from "../models/artist-performance-cast-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class PerformanceCastService {
   }
 
   getCast(performanceId: number) {
-    return this.http.get<PerformanceCastEntity[]>(
+    return this.http.get<ArtistPerformanceCastDto[]>(
       `${this.baseUrl}/PerformanceCast/${performanceId}/get-cast`
     );
   }

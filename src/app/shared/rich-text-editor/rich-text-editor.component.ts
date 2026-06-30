@@ -170,23 +170,11 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
           selection?.removeAllRanges();
           selection?.addRange(this.selection);
         }
-        const img = `<img src="${e.target?.result}" style="max-width: 100%;">`;
+        const img = `<img src="${e.target?.result}" style="max-width: 100%;" alt="">`;
         this.formatText('insertHTML', img);
       };
       reader.readAsDataURL(file);
     }
-  }
-
-  setAlignment(alignment: string): void {
-    const commands: any = {
-      left: 'justifyLeft',
-      center: 'justifyCenter',
-      right: 'justifyRight',
-      justify: 'justifyFull'
-    };
-
-    document.execCommand(commands[alignment], false);
-    this.onContentChange();
   }
 
   // Link handling
@@ -224,11 +212,9 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
   toggleSourceView(): void {
     this.isSourceView = !this.isSourceView;
     if (this.isSourceView) {
-      const content = this.editableContent.nativeElement.innerHTML;
-      this.editableContent.nativeElement.textContent = content;
+      this.editableContent.nativeElement.textContent = this.editableContent.nativeElement.innerHTML;
     } else {
-      const content = this.editableContent.nativeElement.textContent || '';
-      this.editableContent.nativeElement.innerHTML = content;
+      this.editableContent.nativeElement.innerHTML = this.editableContent.nativeElement.textContent || '';
     }
   }
 
@@ -243,7 +229,7 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
             if (file) {
               const reader = new FileReader();
               reader.onload = (e) => {
-                const img = `<img src="${e.target?.result}" style="max-width: 100%;">`;
+                const img = `<img src="${e.target?.result}" style="max-width: 100%;" alt="">`;
                 this.formatText('insertHTML', img);
               };
               reader.readAsDataURL(file);
@@ -253,5 +239,20 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
         }
       }
     });
+  }
+
+  protected insertNonBreakingSpace() {
+    if (this.isSourceView) {
+      this.formatText('insertText', '&nbsp;');
+      return;
+    }
+
+    if (this.selection) {
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(this.selection);
+    }
+
+    this.formatText('insertHTML', '&nbsp;');
   }
 }
