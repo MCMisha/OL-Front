@@ -16,9 +16,9 @@
          class="viewport drag-viewport"
          (pointerdown)="onPointerDown($event)"
          (pointermove)="onPointerMove($event)"
-         (pointerup)="onPointerUp($event)"
-         (pointercancel)="onPointerUp($event)"
-         (pointerleave)="onPointerUp($event)">
+         (pointerup)="onPointerUp()"
+         (pointercancel)="onPointerUp()"
+         (pointerleave)="onPointerUp()">
 
       <div class="track drag-track">
         <article class="pCard" *ngFor="let p of items">
@@ -55,7 +55,7 @@
 
             <a
               class="pCard__btn"
-              [routerLink]="p.moreUrl || '/repertuar'"
+              routerLink="performances/details/{{ p.performanceId }}"
               (click)="onLinkClick($event)"
             >
               CZYTAJ WIĘCEJ

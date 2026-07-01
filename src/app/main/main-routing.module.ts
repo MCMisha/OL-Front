@@ -8,6 +8,10 @@ const routes: Routes = [
     component: MainComponent
   },
   {
+    path: 'about',
+    loadChildren: () => import('../about/about.module').then(m => m.AboutModule)
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('../calendar/calendar.module').then(m => m.CalendarModule)
   },

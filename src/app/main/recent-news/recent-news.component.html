@@ -10,12 +10,12 @@
     <div #viewport class="viewport drag-viewport"
          (pointerdown)="onPointerDown($event)"
          (pointermove)="onPointerMove($event)"
-         (pointerup)="onPointerUp($event)"
-         (pointercancel)="onPointerUp($event)"
-         (pointerleave)="onPointerUp($event)">
+         (pointerup)="onPointerUp()"
+         (pointercancel)="onPointerUp()"
+         (pointerleave)="onPointerUp()">
 
       <div class="track drag-track">
-        <article class="newsCard" *ngFor="let n of items;">
+        <article class="newsCard" *ngFor="let n of items;" (click)="onCardClick($event)">
           <div class="newsCard__content">
             <div class="newsCard__date">{{ formatDatePl(n.creationDate) }}</div>
             <div class="newsCard__heading">{{ n.title }}</div>

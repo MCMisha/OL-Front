@@ -15,7 +15,7 @@ export class NewestPremiersComponent implements OnInit, OnDestroy {
   private isDragging = false;
   private startX = 0;
   private startScrollLeft = 0;
-  private suppressClick = false;
+  private hasMoved = false;
   protected items: PremiereVm[] = [];
   subscription = new Subscription();
 
@@ -49,15 +49,18 @@ export class NewestPremiersComponent implements OnInit, OnDestroy {
   }
 
   onPointerDown(event: PointerEvent): void {
-    const viewport = this.viewport.nativeElement;
+    if (event.button !== 0) {
+      return;
+    }
+
+    const el = this.viewport.nativeElement;
 
     this.isDragging = true;
-    this.suppressClick = false;
+    this.hasMoved = false;
     this.startX = event.clientX;
-    this.startScrollLeft = viewport.scrollLeft;
+    this.startScrollLeft = el.scrollLeft;
 
-    viewport.classList.add('dragging');
-    viewport.setPointerCapture(event.pointerId);
+    el.classList.add('dragging');
   }
 
   onPointerMove(event: PointerEvent): void {
@@ -65,37 +68,37 @@ export class NewestPremiersComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const viewport = this.viewport.nativeElement;
-    const diff = event.clientX - this.startX;
+    const el = this.viewport.nativeElement;
+    const dx = event.clientX - this.startX;
 
-    if (Math.abs(diff) > 5) {
-      this.suppressClick = true;
+    if (Math.abs(dx) > 5) {
+      this.hasMoved = true;
+      event.preventDefault();
     }
 
-    viewport.scrollLeft = this.startScrollLeft - diff;
+    el.scrollLeft = this.startScrollLeft - dx * 1.7;
   }
 
-  onPointerUp(event: PointerEvent): void {
+  onPointerUp(): void {
     if (!this.isDragging) {
       return;
     }
 
-    const viewport = this.viewport.nativeElement;
+    const el = this.viewport.nativeElement;
 
     this.isDragging = false;
-    viewport.classList.remove('dragging');
+    el.classList.remove('dragging');
+  }
 
-    if (viewport.hasPointerCapture(event.pointerId)) {
-      viewport.releasePointerCapture(event.pointerId);
+  protected onCardClick($event: MouseEvent) {
+    if (this.hasMoved) {
+      $event.preventDefault();
+      $event.stopPropagation();
     }
-
-    setTimeout(() => {
-      this.suppressClick = false;
-    }, 0);
   }
 
   onLinkClick(event: MouseEvent): void {
-    if (!this.suppressClick) {
+    if (!this.hasMoved) {
       return;
     }
 

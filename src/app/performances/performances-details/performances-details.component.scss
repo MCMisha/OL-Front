@@ -324,7 +324,7 @@
 
 .castGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 2fr));
   gap: 42px 56px;
 }
 
@@ -335,9 +335,8 @@
 }
 
 .castCard__photo {
-  width: 78px;
-  height: 78px;
-  flex: 0 0 78px;
+  width: 150px;
+  height: 200px;
 
   background: #151515;
   overflow: hidden;
@@ -354,15 +353,17 @@
 .castCard__role {
   margin-bottom: 6px;
 
-  font-size: 10px;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.58);
 }
 
 .castCard__name {
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.3;
   font-weight: 700;
   text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* PRICES */

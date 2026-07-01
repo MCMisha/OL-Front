@@ -67,7 +67,6 @@
   filter: grayscale(1);
   opacity: .42;
   z-index: 0;
-  pointer-events: none;
 }
 
 .card::before {
@@ -89,7 +88,6 @@
     transform .25s ease;
 
   z-index: 0;
-  pointer-events: none;
 }
 
 .card::after {
@@ -109,7 +107,6 @@
   transition: background .25s ease, opacity .25s ease;
 
   z-index: 1;
-  pointer-events: none;
 }
 
 .card:hover::before {

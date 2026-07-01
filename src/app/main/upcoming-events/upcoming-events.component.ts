@@ -13,6 +13,7 @@ import {HelperFunctionsUtil} from "../../shared/utils/helper-functions.util";
 export class UpcomingEventsComponent implements OnInit, OnDestroy{
   @ViewChild('viewport', { static: true }) viewportRef!: ElementRef<HTMLDivElement>;
   private isDragging = false;
+  private hasMoved = false;
   private startX = 0;
   private startScrollLeft = 0;
 
@@ -55,37 +56,51 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy{
   }
 
   onPointerDown(event: PointerEvent): void {
+    if (event.button !== 0) {
+      return;
+    }
+
     const el = this.viewportRef.nativeElement;
 
     this.isDragging = true;
+    this.hasMoved = false;
     this.startX = event.clientX;
     this.startScrollLeft = el.scrollLeft;
 
-    el.setPointerCapture(event.pointerId);
     el.classList.add('dragging');
   }
 
   onPointerMove(event: PointerEvent): void {
-    if (!this.isDragging) return;
-
-    event.preventDefault();
+    if (!this.isDragging) {
+      return;
+    }
 
     const el = this.viewportRef.nativeElement;
     const dx = event.clientX - this.startX;
 
+    if (Math.abs(dx) > 5) {
+      this.hasMoved = true;
+      event.preventDefault();
+    }
+
     el.scrollLeft = this.startScrollLeft - dx * 1.7;
   }
 
-  onPointerUp(event: PointerEvent): void {
-    if (!this.isDragging) return;
+  onPointerUp(): void {
+    if (!this.isDragging) {
+      return;
+    }
 
     const el = this.viewportRef.nativeElement;
 
     this.isDragging = false;
     el.classList.remove('dragging');
+  }
 
-    if (el.hasPointerCapture(event.pointerId)) {
-      el.releasePointerCapture(event.pointerId);
+  protected onCardClick($event: MouseEvent) {
+    if (this.hasMoved) {
+      $event.preventDefault();
+      $event.stopPropagation();
     }
   }
 }

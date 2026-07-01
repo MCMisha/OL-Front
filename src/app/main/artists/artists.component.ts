@@ -19,6 +19,7 @@ export class ArtistsComponent implements OnInit {
   private isDragging = false;
   private startX = 0;
   private startScrollLeft = 0;
+  private hasMoved = false;
   artists: ArtistCard[] = [];
   isLoading = false;
 
@@ -61,44 +62,51 @@ export class ArtistsComponent implements OnInit {
   }
 
   onPointerDown(event: PointerEvent): void {
+    if (event.button !== 0) {
+      return;
+    }
+
     const el = this.viewportRef.nativeElement;
 
     this.isDragging = true;
+    this.hasMoved = false;
     this.startX = event.clientX;
     this.startScrollLeft = el.scrollLeft;
 
-    el.setPointerCapture(event.pointerId);
     el.classList.add('dragging');
   }
 
   onPointerMove(event: PointerEvent): void {
-    if (!this.isDragging) return;
-
-    event.preventDefault();
+    if (!this.isDragging) {
+      return;
+    }
 
     const el = this.viewportRef.nativeElement;
     const dx = event.clientX - this.startX;
 
+    if (Math.abs(dx) > 5) {
+      this.hasMoved = true;
+      event.preventDefault();
+    }
+
     el.scrollLeft = this.startScrollLeft - dx * 1.7;
   }
 
-  onPointerUp(event: PointerEvent): void {
-    if (!this.isDragging) return;
+  onPointerUp(): void {
+    if (!this.isDragging) {
+      return;
+    }
 
     const el = this.viewportRef.nativeElement;
 
     this.isDragging = false;
     el.classList.remove('dragging');
-
-    if (el.hasPointerCapture(event.pointerId)) {
-      el.releasePointerCapture(event.pointerId);
-    }
   }
 
   private getPhotoUrl(photo: string | number[] | null | undefined): string {
 
     if (!photo) {
-      return 'assets/mock/artists/placeholder.jpg';
+      return 'assets/artists/placeholder.png';
     }
 
     if (typeof photo === 'string') {
@@ -117,5 +125,12 @@ export class ArtistsComponent implements OnInit {
     }
 
     return 'assets/mock/artists/placeholder.jpg';
+  }
+
+  protected onCardClick($event: MouseEvent) {
+    if (this.hasMoved) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 }

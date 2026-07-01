@@ -58,10 +58,13 @@
 .newsCard {
   flex: 0 0 calc((min(1400px, calc(100vw - 100px)) - 24px) / 2);
   min-height: 305px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
   background: #000;
   box-sizing: border-box;
   padding: 28px 28px 24px;
+}
+
+.newsCard:hover {
+  border: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .newsCard__content {

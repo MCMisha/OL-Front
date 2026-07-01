@@ -13,9 +13,9 @@
       class="viewport drag-viewport"
       (pointerdown)="onPointerDown($event)"
       (pointermove)="onPointerMove($event)"
-      (pointerup)="onPointerUp($event)"
-      (pointercancel)="onPointerUp($event)"
-      (pointerleave)="onPointerUp($event)"
+      (pointerup)="onPointerUp()"
+      (pointercancel)="onPointerUp()"
+      (pointerleave)="onPointerUp()"
     >
       <div class="track drag-track">
         <a
@@ -23,6 +23,7 @@
           *ngFor="let a of artists"
           [routerLink]="['/about','artists', a.id]"
           [attr.aria-label]="a.name"
+          (click)="onCardClick($event)"
         >
           <div class="card__photo" draggable="false" [style.backgroundImage]="'url(' + a.photoUrl + ')'"></div>
         </a>

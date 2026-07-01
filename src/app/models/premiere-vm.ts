@@ -1,6 +1,7 @@
 import {Performance} from "./performance";
 
 export interface PremiereVm {
+  performanceId: number;
   category: string;
   title: string;
   labelLeft: string;
@@ -11,6 +12,7 @@ export interface PremiereVm {
 
 export function mapPremiereToVm(dto: Performance): PremiereVm {
   return {
+    performanceId: dto.id ?? 0,
     category: mapGenreToCategory(dto.genre ?? 1),
     title: dto.title ?? "",
     labelLeft: 'Premiera',
@@ -31,14 +33,4 @@ function mapGenreToCategory(genre: number): string {
     default:
       return 'WYDARZENIE';
   }
-}
-
-function formatDate(date: string): string {
-  const d = new Date(date);
-
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-
-  return `${day}.${month}.${year}`;
 }
