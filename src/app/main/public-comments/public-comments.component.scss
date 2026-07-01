@@ -1,7 +1,26 @@
 .reviews {
   background: #000;
+  color: #fff;
   padding: 40px 0 80px;
   overflow: hidden;
+}
+
+.reviews__head {
+  display: flex;
+  padding: 32px 40px 34px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.reviews__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .reviews__wrap {

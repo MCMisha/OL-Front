@@ -1,6 +1,6 @@
 .artists {
   color: #fff;
-  padding-top: 10px;
+  padding: 32px 40px 34px;
   margin-bottom: 100px;
   overflow: hidden;
 }
@@ -9,25 +9,22 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-
-  margin-left: clamp(24px, 5vw, 80px);
-  margin-right: clamp(24px, 5vw, 80px);
   margin-bottom: 14px;
 }
 
 .artists__title {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 0.08em;
   opacity: 0.9;
 }
 
 .artists__all {
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.78);
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .artists__all:hover {
