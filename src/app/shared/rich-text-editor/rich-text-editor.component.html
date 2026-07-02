@@ -50,7 +50,23 @@
     <button type="button" (click)="formatText('insertUnorderedList')" title="Bullet List">
       <i class="fas fa-list-ul"></i>
     </button>
+    
+    <!-- Text alignment -->
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="setTextAlign('justifyLeft')" title="Align Left">
+      <i class="fas fa-align-left"></i>
+    </button>
 
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="setTextAlign('justifyCenter')" title="Align Center">
+      <i class="fas fa-align-center"></i>
+    </button>
+
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="setTextAlign('justifyRight')" title="Align Right">
+      <i class="fas fa-align-right"></i>
+    </button>
+
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="setTextAlign('justifyFull')" title="Justify">
+      <i class="fas fa-align-justify"></i>
+    </button>
     <!-- Indent/Outdent -->
     <button type="button" (click)="formatText('indent')" title="Increase Indent">
       <i class="fas fa-indent"></i>

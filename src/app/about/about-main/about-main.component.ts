@@ -14,7 +14,7 @@ export class AboutMainComponent implements OnInit, OnDestroy {
   isLoading = true;
 
   aboutSections: SectionList[] = [];
-  mainSectionDetails!: SectionDetails;
+  mainSectionDetails?: SectionDetails = undefined;
   selectedSection?: SectionList = undefined;
 
   private subscription = new Subscription();

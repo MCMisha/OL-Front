@@ -219,3 +219,93 @@ $admin-theme: mat.define-light-theme((
 .drag-track::-webkit-scrollbar {
   display: none;
 }
+
+.history-page {
+  position: relative;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  padding: 70px 0 120px;
+  font-family: Arial, sans-serif;
+}
+
+.history-title {
+  position: absolute;
+  top: 20px;
+  right: 0;
+
+  margin: 0;
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #d8d8d8;
+}
+
+.history-layout {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  column-gap: 80px;
+  align-items: start;
+}
+
+.history-years {
+  position: sticky;
+  top: 110px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding-top: 35px;
+}
+
+.history-years a {
+  color: #d8d8d8;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.history-years a::before {
+  content: "_";
+}
+
+.history-years a.active {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.history-content {
+  max-width: 980px;
+  padding-top: 35px;
+}
+
+.history-section {
+  margin-bottom: 92px;
+}
+
+.history-section h2 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.history-section h2 span {
+  font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.history-section p {
+  max-width: 830px;
+  margin: 0 auto 22px;
+  font-size: 15px;
+  line-height: 1.42;
+  font-weight: 400;
+  color: #e8e8e8;
+}

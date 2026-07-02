@@ -1,18 +1,34 @@
-<!--<div class="mobile-menu mobile-only">-->
-<!--  <button class="accordion-btn" (click)="menuOpen = !menuOpen">-->
-<!--    Rozwiń sekcję "O nas"-->
-<!--  </button>-->
 
-<!--  <div class="accordion-panel" *ngIf="menuOpen">-->
-<!--    <ul>-->
-<!--      <a style="cursor: pointer;">-->
-<!--        <li *ngFor="let item of menu" [routerLink]="['/about', item.slug]" (click)="menuOpen = false">-->
-<!--          {{ item.title }}-->
-<!--        </li>-->
-<!--      </a>-->
-<!--    </ul>-->
-<!--  </div>-->
-<!--</div>-->
 <section class="content-area">
+  <div class="about-breadcrumb">
+    <span routerLink="/about" (click)="selectedMenuItem = undefined;">O nas</span>
+    <ng-container *ngIf="selectedMenuItem !== undefined">
+      <span>/</span>
+      <span>{{ selectedMenuItem!.title }}</span>
+    </ng-container>
+
+  </div>
+  <div
+    #titlesViewport
+    class="about-row-viewport drag-viewport"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp()"
+    (pointercancel)="onPointerUp()"
+    (pointerleave)="onPointerUp()"
+  >
+    <div class="about-row drag-track">
+      <div
+        class="about-title"
+        *ngFor="let m of menu"
+        [routerLink]="m.slug"
+        routerLinkActive="about-title--active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        (click)="onTitleClick($event)"
+      >
+        {{ m.title }}
+      </div>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </section>

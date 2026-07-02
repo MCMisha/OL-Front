@@ -20,7 +20,7 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
   selectedFile: string | undefined;
 
   isFileLoaded = false;
-  newsId: number | null = null;
+  newsId?: number;
 
 
   constructor(private newsService: AdminNewsService,
@@ -69,6 +69,7 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
       return;
     }
     const newsData = {
+      id: this.newsId,
       title: this.editNewsForm.value.title,
       subTitle: this.editNewsForm.value.subTitle,
       mainImage: this.selectedFile,
@@ -77,7 +78,7 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
     };
 
     this.newsService.updateNews(newsData).subscribe(() => {
-      this.router.navigate(['..'], {relativeTo: this.route});
+      this.router.navigate(['../..'], {relativeTo: this.route});
     });
   }
 

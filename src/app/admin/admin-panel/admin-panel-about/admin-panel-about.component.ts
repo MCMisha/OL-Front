@@ -55,7 +55,7 @@ export class AdminPanelAboutComponent implements OnInit, OnDestroy {
 
     const payload = this.sections.map((s, i) => ({
       id: s.id,
-      order: i
+      order: i > 0 ? i + 2 : i
     }));
 
     this.service.updateOrder(payload).subscribe(() => {

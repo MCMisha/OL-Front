@@ -21,7 +21,6 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
   backgroundColor: string = '#ffffff';
   fontSize: string = '3';
   fontFamily: string = 'Arial, sans-serif';
-  textAlign: string = 'left';
   isSourceView: boolean = false;
   selection: Range | null = null;
 
@@ -63,8 +62,17 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
   // ControlValueAccessor methods
   writeValue(value: string): void {
     this.content = value || '';
-    if (this.editableContent) {
-      this.editableContent.nativeElement.innerHTML = this.content;
+
+    if (!this.editableContent) {
+      return;
+    }
+
+    const el = this.editableContent.nativeElement;
+
+    if (this.isSourceView) {
+      el.textContent = this.content;
+    } else {
+      el.innerHTML = this.content;
     }
   }
 
@@ -123,13 +131,21 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
 
   // Event handlers with selection management
   onContentChange(): void {
-    const value = this.editableContent.nativeElement.innerHTML;
+    const el = this.editableContent.nativeElement;
+
+    const value = this.isSourceView
+      ? el.textContent || ''
+      : el.innerHTML;
+
     this.content = value;
     this.onChange(value);
-    // Save current selection
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      this.selection = selection.getRangeAt(0).cloneRange();
+
+    if (!this.isSourceView) {
+      const selection = window.getSelection();
+
+      if (selection && selection.rangeCount > 0) {
+        this.selection = selection.getRangeAt(0).cloneRange();
+      }
     }
   }
 
@@ -161,7 +177,6 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
   // Update image handler to maintain content
   onImageSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
-    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -177,6 +192,27 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
     }
   }
 
+  setTextAlign(command: 'justifyLeft' | 'justifyCenter' | 'justifyRight' | 'justifyFull'): void {
+    if (this.isSourceView) {
+      return;
+    }
+
+    this.restoreSelection();
+    this.editableContent.nativeElement.focus();
+
+    document.execCommand(command, false);
+    this.onContentChange();
+  }
+
+  private restoreSelection(): void {
+    if (!this.selection) {
+      return;
+    }
+
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(this.selection);
+  }
   // Link handling
   insertLink(): void {
     const url = prompt('Enter URL:');
@@ -210,11 +246,22 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, Af
 
   // Source code view toggle
   toggleSourceView(): void {
-    this.isSourceView = !this.isSourceView;
+    const el = this.editableContent.nativeElement;
+
     if (this.isSourceView) {
-      this.editableContent.nativeElement.textContent = this.editableContent.nativeElement.innerHTML;
+      const html = el.textContent || '';
+
+      this.isSourceView = false;
+      this.content = html;
+      el.innerHTML = html;
+      this.onChange(html);
     } else {
-      this.editableContent.nativeElement.innerHTML = this.editableContent.nativeElement.textContent || '';
+      const html = el.innerHTML;
+
+      this.isSourceView = true;
+      this.content = html;
+      el.textContent = html;
+      this.onChange(html);
     }
   }
 

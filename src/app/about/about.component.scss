@@ -1,3 +1,42 @@
+.content-area {
+  padding: 190px 80px 80px;
+  color: white;
+}
+
+.about-breadcrumb {
+  display: flex;
+  text-transform: uppercase;
+  gap: 10px;
+}
+
+.about-row-viewport {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.about-row {
+  display: flex;
+  gap: 150px;
+  width: max-content;
+}
+
+.about-title {
+  flex: 0 0 auto;
+  margin-right: 0;
+
+  font-size: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    font-weight: 700;
+  }
+}
+
+.about-title--active {
+  font-weight: 700;
+}
 
 .desktop-only {
   display: none;

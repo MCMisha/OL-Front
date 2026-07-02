@@ -14,7 +14,7 @@
     alt="Główny obrazek"
   />
 
-  <div [innerHTML]="news.content"></div>
+  <div [innerHTML]="safeContent"></div>
 
   <button class="btn btn-secondary mt-4" routerLink="/news">
     ← Powrót

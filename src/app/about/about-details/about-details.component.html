@@ -1,29 +1,31 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
 <section class="about-page">
-  <div class="about-page__inner">
+  <main class="about-content">
+    <div *ngIf="!isLoading" class="about-details-layout">
 
-    <aside class="about-sidebar">
-      <div class="about-sidebar__label"><a routerLink="..">wróc</a></div>
+      <aside class="about-sidebar" *ngIf="sidebarItems.length">
+        <button
+          type="button"
+          class="about-sidebar__item"
+          *ngFor="let item of sidebarItems"
+          [class.about-sidebar__item--active]="item.index === activeSidebarIndex"
+          (click)="scrollToSidebarItem(item.index)"
+          [textContent]="item.label"
+        >
+        </button>
+      </aside>
 
-      <button
-        class="artists-sidebar__item"
-        *ngFor="let section of aboutSections"
-        [class.active]="selectedSection === section?.title"
-        (click)="selectSection(section)">
-        _{{ section.title }}
-      </button>
-    </aside>
-
-    <main class="about-content">
-      <div *ngIf="!isLoading" class="about-details">
-
+      <div class="about-details">
         <h1>{{ section.title }}</h1>
 
-        <div [innerHTML]="section.contentHtml"></div>
+        <div
+          #contentRef
+          class="about-inner-content"
+          [innerHTML]="safeContent">
+        </div>
       </div>
-    </main>
 
-  </div>
+    </div>
+  </main>
 </section>
-
-

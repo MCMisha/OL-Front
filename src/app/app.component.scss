@@ -60,6 +60,10 @@
   white-space: nowrap;
 }
 
+.nav__link--active {
+  font-weight: 700;
+}
+
 .nav__link:hover {
   opacity: 1;
 }
