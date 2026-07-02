@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -11,18 +15,19 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Angular app
-        run: npm run build -- --base-href "https://MCMisha.github.io/OL-Front/"
+        run: npm run build -- --configuration production --base-href /OL-Front/
 
       - name: Copy 404.html
         run: cp dist/OL-Front/browser/index.html dist/OL-Front/browser/404.html
@@ -32,4 +37,4 @@ jobs:
         with:
           branch: gh-pages
           folder: dist/OL-Front/browser
-          token: ${{ secrets.GITHUB_TOKEN  }}
+          clean: true
