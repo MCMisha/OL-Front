@@ -12,8 +12,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,7 +38,10 @@ jobs:
       - name: Copy 404.html
         run: cp dist/OL-Front/browser/index.html dist/OL-Front/browser/404.html
 
-      - name: Upload artifact
+      - name: Disable Jekyll
+        run: touch dist/OL-Front/browser/.nojekyll
+
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist/OL-Front/browser
@@ -55,3 +58,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          timeout: 900000
