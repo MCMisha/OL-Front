@@ -88,11 +88,9 @@ $admin-theme: mat.define-light-theme((
   )
 ));
 
-/* 2. Typography + density — ОДИН раз */
 @include mat.all-component-typographies($public-theme);
 @include mat.all-component-densities($public-theme);
 
-/* 3. Colors — по классам */
 .public-theme {
   @include mat.all-component-colors($public-theme);
 }
