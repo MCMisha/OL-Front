@@ -10,6 +10,7 @@ import { AboutDetailsComponent } from './about-details/about-details.component';
 import { AboutArtistsDetailsComponent } from './about-artists/about-artists-details/about-artists-details.component';
 import {MatButton} from "@angular/material/button";
 import { AboutMainComponent } from './about-main/about-main.component';
+import { AboutPerformancesComponent } from './about-performances/about-performances.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { AboutMainComponent } from './about-main/about-main.component';
     AboutArtistsComponent,
     AboutDetailsComponent,
     AboutArtistsDetailsComponent,
-    AboutMainComponent
+    AboutMainComponent,
+    AboutPerformancesComponent
   ],
     imports: [
         CommonModule,
