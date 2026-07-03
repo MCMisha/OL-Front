@@ -309,3 +309,12 @@ $admin-theme: mat.define-light-theme((
   font-weight: 400;
   color: #e8e8e8;
 }
+
+.education-img {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.education-img:hover {
+  transform: scale(1.08);
+}
