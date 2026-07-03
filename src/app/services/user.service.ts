@@ -12,14 +12,31 @@ export class UserService {
   }
 
   login(username: string, password: string): Observable<any> {
-    const encodedLogin = encodeURIComponent(username);
-    const encodedPassword = encodeURIComponent(password);
-    return this.http.post(`${environment.baseApiUri}/Admin/login?login=${encodedLogin}&password=${encodedPassword}`,
-      null,
+    return this.http.post(`${environment.baseApiUri}/Admin/login`,
+      {
+        login: username,
+        password: password
+      },
       {withCredentials: true});
   }
 
-  checkToken(): Observable<any> {
+  refresh() {
+    return this.http.post(
+      `${environment.baseApiUri}/Admin/refresh`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  verify(): Observable<any> {
     return this.http.get<any>(`${environment.baseApiUri}/Admin/verify`, {withCredentials: true});
+  }
+
+  logout() {
+    return this.http.post(
+      `${environment.baseApiUri}/Admin/logout`,
+      {},
+      { withCredentials: true }
+    );
   }
 }
