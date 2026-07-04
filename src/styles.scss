@@ -308,11 +308,19 @@ $admin-theme: mat.define-light-theme((
   color: #e8e8e8;
 }
 
-.education-img {
+.scale-img {
   object-fit: cover;
-  transition: transform 0.3s ease;
-}
+  transition: transform 0.3s ease, filter 0.3s ease;
 
-.education-img:hover {
-  transform: scale(1.08);
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &-gray {
+    filter: grayscale(100%);
+
+    &:hover {
+      filter: grayscale(0%);
+    }
+  }
 }
