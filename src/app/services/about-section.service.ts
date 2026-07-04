@@ -8,7 +8,7 @@ import {SectionDetails} from "../models/section-details";
 @Injectable({
   providedIn: 'root'
 })
-export class AboutService {
+export class AboutSectionService {
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from "rxjs";
-import {AboutService} from "../../services/about.service";
+import {AboutSectionService} from "../../services/about-section.service";
 import {SectionDetails} from "../../models/section-details";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Artist} from "../../models/artist";
@@ -31,7 +31,7 @@ export class AboutDetailsComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(
-    private aboutSectionService: AboutService,
+    private aboutSectionService: AboutSectionService,
     private sanitazer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute

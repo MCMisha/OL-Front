@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {AboutService} from "../services/about.service";
+import {AboutSectionService} from "../services/about-section.service";
 import {filter, Subscription} from "rxjs";
 import {SectionDetails} from "../models/section-details";
 import {SectionList} from "../models/section-list";
@@ -26,7 +26,7 @@ export class AboutComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
-    private aboutService: AboutService,
+    private aboutService: AboutSectionService,
     private route: ActivatedRoute,
     private router: Router
   ) {

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {AboutService} from "../../services/about.service";
+import {AboutSectionService} from "../../services/about-section.service";
 import {SectionList} from "../../models/section-list";
 import {Router} from "@angular/router";
 import {SectionDetails} from "../../models/section-details";
@@ -21,7 +21,7 @@ export class AboutMainComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private aboutSectionService: AboutService,
+    private aboutSectionService: AboutSectionService,
     private router: Router  ) {
   }
   isMobileNavOpen = false;
