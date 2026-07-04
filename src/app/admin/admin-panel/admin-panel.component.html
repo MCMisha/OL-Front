@@ -4,6 +4,10 @@
       <mat-icon>menu</mat-icon>
     </button>
     <h1>Panel administratora</h1>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label="Logout icon" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
   </mat-toolbar>
   <mat-sidenav-container autosize>
     <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'"

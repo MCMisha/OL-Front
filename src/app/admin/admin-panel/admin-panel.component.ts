@@ -4,6 +4,7 @@ import { BreakpointObserver } from "@angular/cdk/layout";
 import { Subscription } from "rxjs";
 import { NavigationEnd, Router } from "@angular/router";
 import {OverlayContainer} from "@angular/cdk/overlay";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-admin-panel',
@@ -37,6 +38,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     private overlay: OverlayContainer,
     private observer: BreakpointObserver,
     private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -66,7 +68,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     document.body.classList.remove('admin-theme');
     this.overlay.getContainerElement().classList.remove('admin-theme');
-
   }
 
   toggleMenu() {
@@ -82,5 +83,13 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   private setCurrentTitle(url: string) {
     const menuItem = this.menuItems.find(item => url.startsWith(item.link));
     this.currentTitle = menuItem ? menuItem.title : '';
+  }
+
+  protected logout() {
+    this.subscription.add(
+      this.userService.logout().subscribe(_ => {
+        this.router.navigate(['']);
+      })
+    )
   }
 }
