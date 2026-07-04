@@ -14,7 +14,9 @@ import {Performance} from "../../models/performance";
 import {PerformancePhotoService} from "../../services/performance-photo.service";
 import {PerformancePhoto} from "../../models/performance-photo";
 import {Implementer} from "../../models/implementer";
-import {ArtistPerformanceCastDto} from "../../models/artist-performance-cast-dto"; // <-- добавь
+import {ArtistPerformanceCastDto} from "../../models/artist-performance-cast-dto";
+import {ArtistCategoryLabels} from "../../models/enums/artist-category-labels";
+import {ArtistCategory} from "../../models/enums/artist-category.enum"; // <-- добавь
 
 @Component({
   selector: 'app-performances-details',
@@ -86,7 +88,22 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
       })
     );
   }
+  get groupedCast() {
+    const groups = new Map<ArtistCategory, any[]>();
 
+    this.filteredCast.forEach(c => {
+      const category = c.category;
+
+      if (!groups.has(category)) {
+        groups.set(category, []);
+      }
+
+      groups.get(category)!.push(c);
+    });
+
+    return Array.from(groups.entries())
+      .map(([category, artists]) => ({ category, artists }));
+  }
   private loadImplementers(id: number): void {
     this.sub.add(
       this.performanceInfoService.getImplementers(id).subscribe((res: any[]) => {
@@ -210,4 +227,6 @@ export class PerformancesDetailsComponent implements OnInit, OnDestroy {
     this.selectedDate = startAt;
     this.filteredCast = this.cast.filter(ap => ap.startAt == this.selectedDate);
   }
+
+  protected readonly ArtistCategoryLabels = ArtistCategoryLabels;
 }

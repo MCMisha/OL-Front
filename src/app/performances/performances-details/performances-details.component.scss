@@ -7,6 +7,15 @@
   justify-content: center;
   padding-top: 108px;
 }
+.castCategory {
+  margin-bottom: 48px;
+}
+
+.castCategory__title {
+  margin-bottom: 24px;
+  font-size: 20px;
+  text-transform: capitalize;
+}
 
 .loading {
   color: #fff;
@@ -458,6 +467,11 @@
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
+}
+
+a.performance__link{
+  color: #FFF;
+  text-underline-offset: 3px;
 }
 /* RESPONSIVE */
 

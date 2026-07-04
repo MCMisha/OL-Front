@@ -137,39 +137,30 @@
 
       <div class="castFilters">
         <ng-container *ngFor="let event of events.slice(0, 2)">
-          <button type="button" [ngClass]="selectedDate === event.startAt ? 'selected' : ''" (click)="changeSelectedDate(event.startAt)">{{ event.startAt | date: 'dd MMMM' }}</button>
+          <button type="button" [ngClass]="selectedDate === event.startAt ? 'selected' : ''"
+                  (click)="changeSelectedDate(event.startAt)">{{ event.startAt | date: 'dd MMMM' }}
+          </button>
         </ng-container>
       </div>
+      <div class="castCategory" *ngFor="let group of groupedCast">
+        <h3 class="castCategory__title">{{ ArtistCategoryLabels[group.category] }}</h3>
 
-      <div class="castGrid">
-        <article class="castCard" *ngFor="let c of filteredCast">
-          <div class="castCard__photo" *ngIf="c.photo">
-            <img [src]="'data:image/jpeg;base64,' + c.photo" [alt]="c.firstName + ' ' + c.lastName"/>
-          </div>
+        <div class="castGrid">
+          <article class="castCard" *ngFor="let c of group.artists">
+            <div class="castCard__photo" *ngIf="c.photo">
+              <img [src]="'data:image/jpeg;base64,' + c.photo" [alt]="c.firstName + ' ' + c.lastName"/>
+            </div>
 
-          <div class="castCard__info">
-            <div class="castCard__role">{{ c.role }}</div>
-            <div class="castCard__name">{{ c.firstName + ' ' + c.lastName }}</div>
-          </div>
-        </article>
+            <div class="castCard__info">
+              <div class="castCard__role">{{ c.role }}</div>
+              <div class="castCard__name">{{ c.firstName + ' ' + c.lastName }}</div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
-
-    <!-- CENY BILETÓW -->
-    <!--    <section class="pricesSection" *ngIf="ticketPriceGroups?.length">-->
-    <!--      <h2 class="sectionTitle">_CENY BILETÓW</h2>-->
-
-    <!--      <div class="priceGroups">-->
-    <!--        <div class="priceGroup" *ngFor="let group of ticketPriceGroups">-->
-    <!--          <div class="priceGroup__title">{{ group.name }}</div>-->
-
-    <!--          <div class="priceRow" *ngFor="let price of group.prices">-->
-    <!--            <span>{{ price.type === TicketType.Normal ? 'Normalny' : 'Ulgowy' }}</span>-->
-    <!--            <strong>{{ price.amount }} zł</strong>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </section>-->
-
+  </div>
+  <div class="text-center text-uppercase mt-5">
+    <a class="performance__link" routerLink="/performances">Przejdź do repertuaru</a>
   </div>
 </section>

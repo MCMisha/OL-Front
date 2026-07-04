@@ -1,3 +1,5 @@
+import {ArtistCategory} from "./enums/artist-category.enum";
+
 export interface ArtistPerformanceCastDto {
   id: number;
   artistId: number;
@@ -6,4 +8,5 @@ export interface ArtistPerformanceCastDto {
   lastName: string;
   photo: string | undefined;
   role: string;
+  category: ArtistCategory;
 }
