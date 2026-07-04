@@ -2,7 +2,6 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AboutSectionService} from "../services/about-section.service";
 import {filter, Subscription} from "rxjs";
-import {SectionDetails} from "../models/section-details";
 import {SectionList} from "../models/section-list";
 
 @Component({
@@ -17,11 +16,9 @@ export class AboutComponent implements OnInit, OnDestroy {
   private hasMoved = false;
   private startX = 0;
   private startScrollLeft = 0;
-  menuOpen = false;
   isLoading = true;
   menu: SectionList[] = [];
   sections: SectionList[] = [];
-  currentSection?: SectionDetails;
   selectedMenuItem?: SectionList | undefined;
   subscription = new Subscription();
 

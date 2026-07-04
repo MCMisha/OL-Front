@@ -19,7 +19,7 @@ export class AboutDetailsComponent implements OnInit, OnDestroy {
   section!: SectionDetails;
   slug!: string;
   protected isLoading: boolean = true;
-  protected safeContent?: SafeHtml ;
+  protected safeContent?: SafeHtml;
   artists: Artist[] = [];
 
   activeSidebarIndex = 0;
