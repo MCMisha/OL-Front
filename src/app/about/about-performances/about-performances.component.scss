@@ -1,0 +1,175 @@
+.performanceFilters {
+  display: flex;
+  justify-content: end;
+  gap: 24px;
+  margin: 28px 0;
+
+  button {
+    padding: 7px 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background-color: #FFFFFF66;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+    height: 42px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &.selected {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+}
+
+:host ::ng-deep .sortField {
+  width: 340px;
+  border-radius: 90px 90px 0 0;
+}
+
+:host ::ng-deep .sortField .mat-mdc-text-field-wrapper {
+  height: 54px;
+  background: transparent;
+  border-radius: 999px;
+}
+
+:host ::ng-deep .sortField .mat-mdc-form-field-infix {
+  min-height: 54px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .sortField .mat-mdc-text-field-wrapper {
+  height: var(--sort-height) !important;
+  padding: 0 22px !important;
+
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 999px !important;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .sortField .mdc-notched-outline {
+  display: none !important;
+}
+
+:host ::ng-deep .sortField .mat-mdc-form-field-flex {
+  height: 100%;
+  align-items: center;
+}
+
+:host ::ng-deep .sortField .mat-mdc-form-field-infix {
+  height: 100%;
+  padding: 0 !important;
+
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .sortField .mat-mdc-select {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .sortField .mat-mdc-select-trigger {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .sortField .mat-mdc-select-value {
+  color: #fff;
+}
+
+:host ::ng-deep .sortField .mat-mdc-select-arrow svg {
+  fill: #fff;
+}
+
+:host ::ng-deep .sortField .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+:host ::ng-deep .sortField .mat-mdc-form-field-focus-overlay {
+  display: none;
+}
+
+.sortField__label {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-right: 8px;
+}
+
+.sortField__value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sortPrefix {
+  opacity: 0.75;
+  margin-right: 8px;
+  font-weight: 400;
+}
+
+.sortValue {
+  font-weight: 700;
+}
+
+.performance-list {
+  width: 100%;
+  min-height: 10vh;
+  margin-top: 6vh;
+}
+
+.performance-card {
+  height: 360px;
+  border-bottom: 1px solid #fff;
+  filter: grayscale(100%);
+  transition: filter .5s ease;
+
+}
+
+.performance-card:hover {
+  filter: grayscale(0);
+  transition: filter .5s ease;
+}
+
+.performance-card-content {
+  height: 100%;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 80px;
+
+  h2 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 120%;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.performance-card-base-info {
+  display: flex;
+  align-items: start;
+  gap: 24px;
+}
+
+.performance-card-director {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
+}

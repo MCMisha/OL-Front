@@ -1,1 +1,41 @@
-<p>about-performances works!</p>
+<div class="performances">
+  <div *ngIf="isLoading" class="performances-loading">
+    Ładowanie...
+  </div>
+  <div class="performanceFilters" *ngIf="!isLoading">
+    <ng-container *ngFor="let genre of genresForFilter">
+      <button type="button" [ngClass]="selectedFilter === genre ? 'selected' : ''"
+              (click)="changeSelectedGenre(genre)">{{ genre }}
+      </button>
+    </ng-container>
+  </div>
+  <div class="sort-select">
+    <mat-form-field class="sortField" appearance="outline" subscriptSizing="dynamic">
+      <mat-select panelClass="sortPanel" panelWidth="285px" [(value)]="selectedSort" (selectionChange)="sortPerformances()">
+        <mat-select-trigger>
+          <span class="sortPrefix">SORTOWANIE :</span>
+          <span class="sortValue">{{ selectedSortLabel | uppercase}}</span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">
+          {{ sortOption.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="performance-list">
+    <div class="performance-card" (click)="goToPerformancePage(performance.id)" [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,' + performance.mainImage + ')'}"  *ngFor="let performance of filteredPerformances">
+      <div class="performance-card-content">
+        <div class="performance-card-base-info">
+          <span>{{performance.genre}}</span>
+          <span>{{helperFunctions.toRomanNumber(performance.breaksCount + 1)}} akty</span>
+          <span *ngIf="performance.premiereDate!!">Premiera w {{performance.premiereDate | date: 'YYYY '}}</span>
+        </div>
+        <h2>{{ performance.title }}</h2>
+        <p class="performance-card-director" *ngIf="performance.directorName">
+          Reż. {{ performance.directorName }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
