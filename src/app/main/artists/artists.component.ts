@@ -32,7 +32,7 @@ export class ArtistsComponent implements OnInit {
   loadArtists(): void {
     this.isLoading = true;
 
-    this.artistService.getAll().subscribe({
+    this.artistService.getAllMain().subscribe({
       next: (data) => {
         this.artists = data.map(a => ({
           id: a.id,
