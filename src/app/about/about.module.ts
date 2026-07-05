@@ -4,7 +4,7 @@ import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
 import { AboutArtistsComponent } from './about-artists/about-artists.component';
 import {MatFormField, MatLabel} from "@angular/material/input";
-import {MatOption, MatSelect} from "@angular/material/select";
+import {MatOption, MatSelect, MatSelectTrigger} from "@angular/material/select";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import { AboutDetailsComponent } from './about-details/about-details.component';
 import { AboutArtistsDetailsComponent } from './about-artists/about-artists-details/about-artists-details.component';
@@ -30,7 +30,8 @@ import { AboutPerformancesComponent } from './about-performances/about-performan
         MatOption,
         MatFormField,
         MatProgressBar,
-        MatButton
+        MatButton,
+        MatSelectTrigger
     ]
 })
 export class AboutModule { }

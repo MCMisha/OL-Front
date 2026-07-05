@@ -5,7 +5,6 @@
   background-position: center;
   background-repeat: no-repeat;
   padding-top: 108px;
-  // плавность смены фона
   transition: opacity 220ms ease, transform 220ms ease;
 
   &.is-fading {
@@ -23,7 +22,6 @@
 .hero__content {
   position: relative;
   z-index: 2;
-  // тут подгони под макет: справа, центр по высоте
   padding: 80px 80px 60px;
 }
 

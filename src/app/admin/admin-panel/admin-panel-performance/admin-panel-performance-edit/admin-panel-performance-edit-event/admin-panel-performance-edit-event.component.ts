@@ -147,8 +147,6 @@ export class AdminPanelPerformanceEditEventComponent implements OnInit, OnDestro
         next: (events: any[]) => {
           this.eventsFA.clear();
 
-          // ожидаем от API startAt (ISO) + buyLink + isActive + id
-          // сортируем по времени
           (events ?? [])
             .slice()
             .sort((a, b) => new Date(a.startAt).getTime() - new Date(b.startAt).getTime())
@@ -195,6 +193,6 @@ export class AdminPanelPerformanceEditEventComponent implements OnInit, OnDestro
   private combineLocalDateAndTimeToUtcIso(date: Date, time: string): string {
     const [hh, mm] = time.split(':').map(x => Number(x));
     const local = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hh, mm, 0, 0);
-    return local.toISOString(); // -> UTC "...Z"
+    return local.toISOString();
   }
 }

@@ -1,6 +1,6 @@
 export interface EventRow {
   id: number | null;
-  date: Date | null;     // только дата
+  date: Date | null;
   time: string;          // "HH:mm"
   buyLink: string;
   isActive: boolean;

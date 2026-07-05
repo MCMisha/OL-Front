@@ -1,9 +1,9 @@
 export interface HeroSlide {
   id: number;
   title: string;
-  subtitle?: string;      // "Operetka" / "Musical"
-  dateRange?: string;     // "10.12 — 11.12"
-  backgroundUrl: string;  // картинка фона
+  subtitle?: string; 
+  dateRange?: string;
+  backgroundUrl: string;
   buyUrl?: string;
   detailsLink?: any[] | null;
 }

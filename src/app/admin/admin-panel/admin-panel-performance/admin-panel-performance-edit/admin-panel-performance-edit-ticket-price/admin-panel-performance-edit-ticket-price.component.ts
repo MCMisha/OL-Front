@@ -84,7 +84,6 @@ export class AdminPanelPerformanceEditTicketPriceComponent implements OnInit, On
     );
   }
 
-  // ---------- form builders ----------
   private buildPriceRow(type: TicketType = TicketType.Normal, amount: number | null = null): FormGroup {
     return this.fb.group({
       type: [type, Validators.required],
@@ -141,11 +140,9 @@ export class AdminPanelPerformanceEditTicketPriceComponent implements OnInit, On
     }
   }
 
-  // ---------- actions: prices ----------
   addPriceRow(groupIndex: number): void {
     const fa = this.pricesFA(groupIndex);
 
-    // выбираем тип, которого ещё нет (чтобы было удобно)
     const used = new Set<number>(fa.controls.map(c => Number(c.get('type')?.value)));
     const candidate = this.ticketTypeOptions.find(o => !used.has(o.value))?.value;
 
@@ -156,14 +153,12 @@ export class AdminPanelPerformanceEditTicketPriceComponent implements OnInit, On
     this.pricesFA(groupIndex).removeAt(priceIndex);
   }
 
-  // ---------- validation helpers ----------
   hasDuplicateTypes(groupIndex: number): boolean {
     const fa = this.pricesFA(groupIndex);
     const types = fa.controls.map(c => Number(c.get('type')?.value));
     return new Set(types).size !== types.length;
   }
 
-  // ---------- save ----------
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -171,7 +166,6 @@ export class AdminPanelPerformanceEditTicketPriceComponent implements OnInit, On
       return;
     }
 
-    // проверка дублей типов в каждой группе
     for (let i = 0; i < this.groupsFA.length; i++) {
       if (this.hasDuplicateTypes(i)) {
         this.snack.open('W jednej grupie nie można dodać dwóch cen o tym samym typie (np. dwa razy "Normalny").', 'Zamknij', { duration: 7000 });

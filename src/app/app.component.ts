@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   navigateFromMenu() {
-    // закрыть меню после перехода
     this.closeMobileMenu();
   }
 

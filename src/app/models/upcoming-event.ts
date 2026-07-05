@@ -1,6 +1,6 @@
 export interface UpcomingEvent {
   eventId: number;
-  startAt: string;        // DateTime приходит ISO строкой
+  startAt: string;
   performanceId: number;
   title: string;
   genre: string;

@@ -28,7 +28,7 @@
 
 .impl-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 240px; // последняя колонка под checkbox + иконки
+  grid-template-columns: 1fr 1fr 1fr 240px;
   gap: 16px;
   align-items: center;
   padding: 12px 0;

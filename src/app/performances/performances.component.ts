@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription, takeUntil} from 'rxjs';
-import {GenreService} from '../services/genre.service';
-import {Genre} from '../models/genre';
 import {PerformanceEventService} from '../services/performance-event.service';
 import {PerformanceEvent} from '../models/performance-event';
 import {MonthItem} from "../models/month-item";
@@ -16,7 +14,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class PerformancesComponent implements OnInit, OnDestroy {
   performances: PerformanceEvent[] = [];
   filteredPerformances: PerformanceEvent[] = [];
-  genres: Genre[] = [];
   months: MonthItem[] = [];
   activeMonth = '';
   isLoading = false;
@@ -26,7 +23,6 @@ export class PerformancesComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private genreService: GenreService,
     private performanceEventService: PerformanceEventService,
     private route: ActivatedRoute,
     private router: Router,
@@ -37,24 +33,7 @@ export class PerformancesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.loadGenres();
     this.loadMonthsAndInitialData();
-  }
-
-  private loadGenres(): void {
-    this.subscription.add(
-      this.genreService
-        .getGenres()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (genres) => {
-            this.genres = genres;
-          },
-          error: (error) => {
-            console.error('Błąd pobierania gatunków', error);
-          }
-        })
-    );
   }
 
   private loadMonthsAndInitialData(): void {

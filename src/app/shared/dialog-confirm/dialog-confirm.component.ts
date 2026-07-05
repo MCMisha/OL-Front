@@ -14,11 +14,11 @@ export class DialogConfirmComponent {
               @Inject(MAT_DIALOG_DATA) public data: { message: string }) {}
 
   onNoClick(): void {
-    this.dialogRef.close(false); // Возвращаем false, если пользователь нажал "Nie"
+    this.dialogRef.close(false);
   }
 
   onYesClick(): void {
-    this.dialogRef.close(true); // Возвращаем true, если пользователь нажал "Tak"
+    this.dialogRef.close(true);
   }
 
 }

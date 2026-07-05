@@ -1,17 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Performance} from "../models/performance";
+import {PerformanceListAbout} from "../models/performance-list-about";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerformancesService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
+
   getPerformances(): Observable<Performance[]> {
     return this.http.get<Performance[]>(`${environment.baseApiUri}/Performance/all`).pipe(catchError(this.handleError<Performance[]>('getPerformanceData')));
+  }
+
+  getPerformancesForAbout(): Observable<PerformanceListAbout[]> {
+    return this.http.get<PerformanceListAbout[]>(`${environment.baseApiUri}/Performance/all-for-about`).pipe(catchError(this.handleError<PerformanceListAbout[]>('getPerformancesForAbout')));
   }
 
   getPerformanceById(id: number): Observable<Performance> {

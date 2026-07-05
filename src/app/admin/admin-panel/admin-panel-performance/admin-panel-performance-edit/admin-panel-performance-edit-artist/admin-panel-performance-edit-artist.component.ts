@@ -207,12 +207,9 @@ export class AdminPanelPerformanceEditArtistComponent implements OnInit, OnDestr
     );
   }
 
-  displayArtistName(id: number): string {
-    return this.artists.find(a => a.id === id)?.fullName ?? `#${id}`;
-  }
 
   back() {
-    this.router.navigate(['../'], {relativeTo: this.route}); // вернёт на /edit
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 
 
