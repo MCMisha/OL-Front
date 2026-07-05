@@ -1,0 +1,69 @@
+.content-area {
+  padding: 190px 80px 80px;
+  color: white;
+}
+
+.contact-breadcrumb {
+  display: flex;
+  text-transform: uppercase;
+  gap: 10px;
+}
+
+.contact-row-viewport {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.contact-row {
+  display: flex;
+  gap: 150px;
+  width: max-content;
+}
+
+.contact-title {
+  flex: 0 0 auto;
+  margin-right: 0;
+
+  font-size: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    font-weight: 700;
+  }
+}
+
+.contact-title--active {
+  font-weight: 700;
+}
+
+.desktop-only {
+  display: none;
+}
+
+.mobile-only {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.accordion-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 16px;
+  text-align: left;
+}
+
+.accordion-panel ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 0;
+}
+
+.accordion-panel li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}

@@ -318,9 +318,59 @@ $admin-theme: mat.define-light-theme((
 
   &-gray {
     filter: grayscale(100%);
-
+    
     &:hover {
       filter: grayscale(0%);
+      transform: scale(1.08);
     }
   }
+}
+
+.faqBlock {
+  color: #fff;
+}
+
+.faqBlock h2 {
+  text-align: right;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.faqItem {
+  border: none;
+  margin-bottom: 24px;
+}
+
+.faqItem summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary::before {
+  content: "⌄";
+  display: inline-block;
+  font-size: 14px;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] summary::before {
+  transform: rotate(180deg);
+}
+
+.faqItem p {
+  margin: 8px 0 0 32px;
+  color: #bdbdbd;
+  font-size: 14px;
+  line-height: 1.5;
 }
