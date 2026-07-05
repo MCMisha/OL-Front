@@ -96,6 +96,32 @@
   box-shadow: none;
 }
 
+.performanceFilters {
+  display: flex;
+  justify-content: end;
+  gap: 24px;
+  margin-bottom: 28px;
+
+  button {
+    padding: 7px 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background-color: #FFFFFF66;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+    height: 42px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &.selected {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+}
 
 /* ===== CARD BASE ===== */
 .performance-card {
@@ -105,9 +131,8 @@
   align-items: center;
   column-gap: 36px;
   padding: 26px 20px 30px;
-//  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  //overflow: hidden;
-  min-height: 230px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  min-height: 360px;
 }
 
 

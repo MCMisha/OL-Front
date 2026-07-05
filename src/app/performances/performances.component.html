@@ -41,13 +41,20 @@
   <div *ngIf="isLoading" class="performances-loading">
     Ładowanie...
   </div>
-  <ng-container *ngIf="!isLoading && performances.length === 0">
+  <div class="performanceFilters">
+    <ng-container *ngFor="let genre of genresForFilter">
+      <button type="button" [ngClass]="selectedFilter === genre ? 'selected' : ''"
+              (click)="changeSelectedGenre(genre)">{{ genre }}
+      </button>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="!isLoading && filteredPerformances.length === 0">
     <div class="empty-month">
       Brak spektakli w tym miesiącu
     </div>
   </ng-container>
   <ng-container *ngIf="!isLoading">
-    <div *ngFor="let performance of performances">
+    <div *ngFor="let performance of filteredPerformances">
       <div class="performance-card" (click)="goToDetails(performance)">
         <div
           class="performance-card__bg"

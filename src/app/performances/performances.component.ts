@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { GenreService } from '../services/genre.service';
-import { Genre } from '../models/genre';
-import { PerformanceEventService } from '../services/performance-event.service';
-import { PerformanceEvent } from '../models/performance-event';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, Subscription, takeUntil} from 'rxjs';
+import {GenreService} from '../services/genre.service';
+import {Genre} from '../models/genre';
+import {PerformanceEventService} from '../services/performance-event.service';
+import {PerformanceEvent} from '../models/performance-event';
 import {MonthItem} from "../models/month-item";
 import {HelperFunctionsUtil} from "../shared/utils/helper-functions.util";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -15,11 +15,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class PerformancesComponent implements OnInit, OnDestroy {
   performances: PerformanceEvent[] = [];
+  filteredPerformances: PerformanceEvent[] = [];
   genres: Genre[] = [];
   months: MonthItem[] = [];
   activeMonth = '';
   isLoading = false;
-
+  genresForFilter = ['Wszystkie', 'Opera', 'Operetka', 'Bajka', 'Balet', 'Koncert'];
+  selectedFilter = this.genresForFilter[0];
   private subscription = new Subscription();
   private readonly destroy$ = new Subject<void>();
 
@@ -29,7 +31,8 @@ export class PerformancesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     protected helperFunctions: HelperFunctionsUtil
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -94,6 +97,11 @@ export class PerformancesComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (performances) => {
             this.performances = performances;
+            if (this.selectedFilter !== this.genresForFilter[0]) {
+              this.filteredPerformances = this.performances.filter(p => p.genre === this.selectedFilter);
+            } else {
+              this.filteredPerformances = this.performances;
+            }
             this.isLoading = false;
           },
           error: (error) => {
@@ -115,7 +123,7 @@ export class PerformancesComponent implements OnInit, OnDestroy {
 
   getMonthLabelPl(date: Date): string {
     return date
-      .toLocaleDateString('pl-PL', { month: 'long' })
+      .toLocaleDateString('pl-PL', {month: 'long'})
       .toUpperCase();
   }
 
@@ -152,18 +160,18 @@ export class PerformancesComponent implements OnInit, OnDestroy {
     return this.months.slice(start, end);
   }
 
-    getPerformanceBackground(mainImage?: string): string {
-      if (!mainImage) {
-        return `linear-gradient(
+  getPerformanceBackground(mainImage?: string): string {
+    if (!mainImage) {
+      return `linear-gradient(
           90deg,
           rgba(0, 0, 0, 0.92) 0%,
           rgba(0, 0, 0, 0.7) 24%,
           rgba(0, 0, 0, 0.25) 58%,
           rgba(0, 0, 0, 0.8) 100%
         )`;
-      }
+    }
 
-      return `linear-gradient(
+    return `linear-gradient(
           90deg,
           rgba(0, 0, 0, 0.92) 0%,
           rgba(0, 0, 0, 0.7) 24%,
@@ -171,7 +179,8 @@ export class PerformancesComponent implements OnInit, OnDestroy {
           rgba(0, 0, 0, 0.8) 100%
         ),
         url(data:image/jpeg;base64,${mainImage}) center 70% / cover no-repeat`;
-    }
+  }
+
   get activeMonthIndex(): number {
     return this.months.findIndex(m => m.value === this.activeMonth);
   }
@@ -241,6 +250,15 @@ export class PerformancesComponent implements OnInit, OnDestroy {
     }
 
     return months[months.length - 1].value;
+  }
+
+  changeSelectedGenre(genre: string): void {
+    this.selectedFilter = genre;
+    if (genre !== this.genresForFilter[0]) {
+      this.filteredPerformances = this.performances.filter(p => p.genre === genre);
+    } else {
+      this.filteredPerformances = this.performances;
+    }
   }
 
   ngOnDestroy(): void {
