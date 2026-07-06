@@ -2,36 +2,32 @@
   min-height: 100vh;
   background: #000;
   color: #fff;
-  padding: 120px 0 80px;
-  margin-top: 10vh;
 }
 
 .artist-details__inner {
-  width: min(1120px, calc(100% - 48px));
+  width: min(1240px, calc(100% - 96px));
   margin: 0 auto;
 }
 
-.artist-details__breadcrumb {
-  font-size: 16px;
-  color: #d5d5d5;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  a {
-    color: #d5d5d5;
-    text-decoration: none;
-    font-weight: 700;
-  }
+.artist-profile {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(470px, 1.4fr);
+  column-gap: 50px;
+  align-items: start;
+  padding-top: 30px;
 }
 
-.artist-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.artist-profile__line {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  margin-bottom: 52px;
 }
 
 .artist-hero__photo {
-  width: 290px;
-  height: 360px;
+  width: 100%;
+  max-width: 390px;
+  height: 470px;
   overflow: hidden;
   background: #050505;
 }
@@ -41,12 +37,39 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  filter: grayscale(100%);
-  transition: transform .35s ease, filter .35s ease;
-  &:hover {
-    filter: grayscale(0);
-    transform: scale(1.04);
-  }
+  display: block;
+}
+
+.artist-profile__right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.artist-hero__name {
+  margin: 0;
+  font-size: 56px;
+  line-height: 0.95;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.artist-hero__role {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.artist-description {
+  margin-top: 54px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #e2e2e2;
+  text-align: justify;
 }
 .loading-screen {
   width: 100%;
@@ -76,18 +99,6 @@
   color: #d5d5d5;
 }
 
-.artist-description {
-  width: min(780px, 100%);
-  margin: 44px auto 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: #e2e2e2;
-  text-align: justify;
-}
-
-.artist-description :where(p) {
-  margin: 0 0 16px;
-}
 
 .artist-gallery {
   margin-top: 48px;

@@ -7,38 +7,33 @@
 
 <section class="artist-details" *ngIf="artist && !isLoading">
   <div class="artist-details__inner">
+    <section class="artist-profile">
+      <div class="artist-profile__left">
+        <div class="artist-profile__line"></div>
 
-    <div class="artist-details__breadcrumb">
-      <a
-        [routerLink]="['/about/artists']"
-        [queryParams]="{ category: artist.category }"
-      >
-        {{ ArtistCategoryLabels[artist.category] }}
-      </a>
-      / {{ artist.firstName }} {{ artist.lastName }}
-    </div>
-
-    <header class="artist-hero">
-      <div class="artist-hero__photo">
-        <img
-          *ngIf="artist.photo"
-          [src]="getImage(artist.photo)"
-          [alt]="artist.firstName + ' ' + artist.lastName">
+        <div class="artist-hero__photo">
+          <img
+            *ngIf="artist.photo"
+            [src]="getImage(artist.photo)"
+            [alt]="artist.firstName + ' ' + artist.lastName">
+        </div>
       </div>
 
-      <h1 class="artist-hero__name">
-        {{ artist.firstName }} {{ artist.lastName }}
-      </h1>
+      <div class="artist-profile__right">
+        <h1 class="artist-hero__name">
+          {{ artist.firstName }} {{ artist.lastName }}
+        </h1>
 
-      <div class="artist-hero__role">
-        {{ getCategoryLabel(artist.category) }}
+        <div class="artist-hero__role">
+          {{ getCategoryLabel(artist.category) }}
+        </div>
+
+        <div
+          class="artist-description"
+          [innerHTML]="artist.description">
+        </div>
       </div>
-    </header>
-
-    <div
-      class="artist-description"
-      [innerHTML]="artist.description">
-    </div>
+    </section>
 
     <section class="artist-gallery" *ngIf="artistPhotos.length > 0">
       <div #galleryTrack class="artist-gallery__track">

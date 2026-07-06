@@ -90,6 +90,10 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
     this.applyFilter();
   }
 
+  get selectedCategoryLabel(): string {
+    return this.categories.find(c => c.value === this.selectedCategory)?.label ?? '';
+  }
+
   private applyFilter(): void {
     this.filteredArtists =
       this.selectedCategory === 'all'

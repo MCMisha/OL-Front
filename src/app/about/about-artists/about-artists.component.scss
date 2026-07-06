@@ -2,7 +2,6 @@
   background: #000;
   color: #fff;
   min-height: 100vh;
-  padding: 120px 0 80px;
   margin-top: 10vh;
 }
 
@@ -12,6 +11,11 @@
   display: grid;
   grid-template-columns: 210px 1fr;
   gap: 48px;
+}
+
+.artists-page-heading {
+  display: flex;
+  justify-content: end;
 }
 
 .artists-sidebar {
@@ -46,7 +50,6 @@
   font-size: 12px;
   line-height: 1;
   margin-bottom: 22px;
-  margin-left: 20px;
   padding: 0;
   text-align: left;
   cursor: pointer;
