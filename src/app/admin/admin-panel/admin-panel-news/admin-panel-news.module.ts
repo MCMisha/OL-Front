@@ -21,6 +21,7 @@ import {MatError, MatFormField, MatLabel, MatSuffix} from "@angular/material/for
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import { AdminPanelNewsEditComponent } from './admin-panel-news-edit/admin-panel-news-edit.component';
+import {MatOption, MatSelect} from "@angular/material/select";
 
 
 
@@ -55,7 +56,9 @@ import { AdminPanelNewsEditComponent } from './admin-panel-news-edit/admin-panel
     MatLabel,
     MatIcon,
     MatIconButton,
-    MatSuffix
+    MatSuffix,
+    MatSelect,
+    MatOption
   ]
 })
 export class AdminPanelNewsModule { }

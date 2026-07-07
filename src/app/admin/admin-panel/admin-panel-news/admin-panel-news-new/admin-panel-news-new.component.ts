@@ -4,6 +4,7 @@ import {AdminNewsService} from "../../../../services/admin/admin-news.service";
 import {News} from "../../../../models/news";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NewsCategoryLabels} from "../../../../models/enums/news-category-labels";
 
 @Component({
   selector: 'app-admin-panel-news-new',
@@ -20,6 +21,7 @@ export class AdminPanelNewsNewComponent implements OnInit, OnDestroy {
   selectedFile: string | undefined;
 
   isFileLoaded = false;
+  protected categories = NewsCategoryLabels;
 
   constructor(private newsService: AdminNewsService,
               private fb: FormBuilder,
@@ -39,7 +41,8 @@ export class AdminPanelNewsNewComponent implements OnInit, OnDestroy {
       subTitle: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       mainImage: [null, [Validators.required]],
       creationDate: [new Date(), [Validators.required]],
-      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(5000)]]
+      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(5000)]],
+      category: ['', [Validators.required]]
     });
   }
 
@@ -61,7 +64,7 @@ export class AdminPanelNewsNewComponent implements OnInit, OnDestroy {
       this.selectedFile = (reader.result as string).split(',')[1];
       this.mainImage = reader.result as string;
       this.isFileLoaded = true;
-      this.newNewsForm.patchValue({ mainImage: file.name });
+      this.newNewsForm.patchValue({mainImage: file.name});
       this.newNewsForm.get('mainImage')?.updateValueAndValidity();
     };
 
@@ -72,13 +75,13 @@ export class AdminPanelNewsNewComponent implements OnInit, OnDestroy {
     this.selectedFile = undefined;
     this.selectedFileName = undefined;
     this.isFileLoaded = false;
-    this.newNewsForm.patchValue({ mainImage: null });
+    this.newNewsForm.patchValue({mainImage: null});
     this.newNewsForm.get('mainImage')?.updateValueAndValidity();
     this.mainImage = 'data:image/jpeg;base64,';
   }
 
   saveNews() {
-    if(this.newNewsForm.invalid) {
+    if (this.newNewsForm.invalid) {
       console.error("Formularz jest nieprawidłowy lub plik nadal się ładuje!");
       return;
     }
@@ -91,7 +94,7 @@ export class AdminPanelNewsNewComponent implements OnInit, OnDestroy {
     };
 
     this.newsService.createNews(newsData).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+      this.router.navigate(['..'], {relativeTo: this.route});
     });
   }
 }

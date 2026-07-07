@@ -1,36 +1,58 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<div class="container py-5 page">
-  <h1 class="mb-4">Aktualności</h1>
 
-  <div class="row" *ngIf="news.length">
-    <div class="col-md-4 mb-4" *ngFor="let n of news">
-      <div class="card shadow-sm h-100 news-card">
+<section class="news-page">
+  <h1 class="news-page__title">AKTUALNOŚCI</h1>
 
-        <img
-          [src]="'data:image/jpeg;base64,' + n.mainImage"
-          alt="{{ n.title }}"
-          class="card-img-top"
-          *ngIf="n.mainImage"
-        >
+  <div class="news-categories">
+    <button
+      type="button"
+      *ngFor="let category of categoryFilters"
+      [class.active]="selectedCategory
+      === category.value"
+      (click)="selectCategory(category.value)">
+      {{ category.label }}
+    </button>
+  </div>
 
-        <div class="card-body">
-          <h5>{{ n.title }}</h5>
+  <div class="news-layout" *ngIf="news.length">
+    <aside class="news-seasons">
+      <div class="news-seasons__title">SEZON</div>
 
-          <p class="small">
-            {{ n.creationDate | date:'dd MMM yyyy' }}
-          </p>
+      <button
+        type="button"
+        *ngFor="let season of seasons"
+        [class.active]="selectedSeason === season"
+        (click)="selectSeason(season)">
+        {{ season }}
+      </button>
+    </aside>
 
-          <p>
-            {{ n.subtitle }}
-          </p>
+    <main class="news-list">
+      <article class="news-item" *ngFor="let n of filteredNews">
+        <div class="news-item__date">
+          {{ n.creationDate | date:'dd MMMM yyyy' }}
+        </div>
+
+        <h2 class="news-item__title">
+          {{ n.title }}
+        </h2>
+
+        <p class="news-item__subtitle">
+          {{ n.subtitle }}
+        </p>
+
+        <div class="news-item__bottom">
+          <span class="news-item__tag">
+            {{ getNewsCategoryLabel(n) | uppercase }}
+          </span>
 
           <a
-            [routerLink]="['/news', n.id]"
-            class="btn btn-outline-primary w-100 mt-2">
-            Czytaj więcej
+            class="news-item__link"
+            [routerLink]="['/news', n.id]">
+            CZYTAJ WIĘCEJ
           </a>
         </div>
-      </div>
-    </div>
+      </article>
+    </main>
   </div>
-</div>
+</section>

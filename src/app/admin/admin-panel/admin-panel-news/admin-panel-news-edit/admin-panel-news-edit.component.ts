@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {News} from "../../../../models/news";
 import {AdminNewsService} from "../../../../services/admin/admin-news.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NewsCategoryLabels} from "../../../../models/enums/news-category-labels";
 
 @Component({
   selector: 'app-admin-panel-news-edit',
@@ -20,6 +21,7 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
   selectedFile: string | undefined;
 
   isFileLoaded = false;
+  protected categories = NewsCategoryLabels;
   newsId?: number;
 
 
@@ -74,7 +76,8 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
       subTitle: this.editNewsForm.value.subTitle,
       mainImage: this.selectedFile,
       creationDate: this.editNewsForm.value.creationDate,
-      content: this.editNewsForm.value.content
+      content: this.editNewsForm.value.content,
+      category: this.editNewsForm.value.category
     };
 
     this.newsService.updateNews(newsData).subscribe(() => {
@@ -88,7 +91,8 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
       subTitle: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       mainImage: [null, [Validators.required]],
       creationDate: [new Date(), [Validators.required]],
-      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(5000)]]
+      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(5000)]],
+      category: ['', [Validators.required]]
     });
   }
 
@@ -101,7 +105,8 @@ export class AdminPanelNewsEditComponent implements OnInit, OnDestroy {
             title: news.title,
             subTitle: news.subtitle,
             creationDate: news.creationDate,
-            content: news.content
+            content: news.content,
+            category: news.category
           });
 
           if (news.mainImage) {

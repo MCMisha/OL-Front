@@ -1,22 +1,30 @@
 <mat-progress-bar class="mb-1" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<div class="container py-4 page" *ngIf="news">
-  <h1>{{ news.title }}</h1>
-  <h4 class="text-muted">{{ news.subtitle }}</h4>
 
-  <p class="text-muted mb-3">
-    {{ news.creationDate | date:'dd MMMM yyyy' }}
-  </p>
+<section class="news-details page">
+  <ng-container *ngIf="!!news">
+    <div class="news-details__inner">
 
-  <img
-    [src]="'data:image/jpeg;base64,' + news.mainImage"
-    *ngIf="news.mainImage"
-    class="w-100 rounded mb-4"
-    alt="Główny obrazek"
-  />
+      <div class="news-details__return">
+        <a routerLink="..">&lt; Powrót do aktualności</a>
+      </div>
 
-  <div [innerHTML]="safeContent"></div>
+      <header class="news-details__header">
+        <h1 class="news-details__title">
+          {{ news.title }}
+        </h1>
 
-  <button class="btn btn-secondary mt-4" routerLink="/news">
-    ← Powrót
-  </button>
-</div>
+        <h4 class="news-details__subtitle">
+          {{ news.subtitle }}
+        </h4>
+
+        <p class="news-details__date">
+          {{ news.creationDate | date:'dd MMMM yyyy' }}
+        </p>
+      </header>
+
+      <div class="news-details__content" [innerHTML]="safeContent"></div>
+
+    </div>
+  </ng-container>
+
+</section>

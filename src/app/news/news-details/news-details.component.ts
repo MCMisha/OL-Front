@@ -42,6 +42,7 @@ export class NewsDetailsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.newsService.getNewsById(id).subscribe(news => {
         this.news = news;
+        console.log(this.news);
         this.safeContent = this.sanitizer.bypassSecurityTrustHtml(news.content ?? '');
         this.isLoading = false;
       })
