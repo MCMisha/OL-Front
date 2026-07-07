@@ -1,0 +1,1 @@
+var l=function(a){return a[a.Repertuar=0]="Repertuar",a[a.Zespol=1]="Zespol",a[a.Edukacja=2]="Edukacja",a[a.Praca=3]="Praca",a[a.Komunikaty=4]="Komunikaty",a}(l||{});var r=[{value:l.Repertuar,label:"Repertuar"},{value:l.Zespol,label:"Zesp\xF3\u0142"},{value:l.Edukacja,label:"Edukacja"},{value:l.Praca,label:"Praca"},{value:l.Komunikaty,label:"Komunikaty"}];export{r as a};
