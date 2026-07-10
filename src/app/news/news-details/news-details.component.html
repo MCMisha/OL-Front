@@ -17,8 +17,8 @@
           {{ news.subtitle }}
         </h4>
 
-        <p class="news-details__date">
-          {{ news.creationDate | date:'dd MMMM yyyy' }}
+        <p class="news-category">
+          {{ getNewsCategoryLabel(news.category) }}
         </p>
       </header>
 

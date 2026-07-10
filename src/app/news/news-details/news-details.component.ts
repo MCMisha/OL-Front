@@ -4,6 +4,8 @@ import {Subscription} from "rxjs";
 import {NewsService} from "../../services/news.service";
 import {ActivatedRoute} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {NewsCategoryLabels} from "../../models/enums/news-category-labels";
+import {NewsCategory} from "../../models/enums/news-category.enum";
 
 @Component({
   selector: 'app-news-details',
@@ -47,5 +49,9 @@ export class NewsDetailsComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
+  }
+
+  protected getNewsCategoryLabel(n: NewsCategory | undefined) {
+    return NewsCategoryLabels.find(c => c.value === n)?.label ?? 'Nieznana kategoria';
   }
 }
