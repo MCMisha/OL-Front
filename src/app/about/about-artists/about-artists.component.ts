@@ -103,7 +103,7 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
 
   getImage(photo?: string): string {
     if (!photo) {
-      return 'assets/images/artist-placeholder.jpg';
+      return 'assets/artists/placeholder.png';
     }
 
     if (photo.startsWith('data:image') || photo.startsWith('assets/')) {

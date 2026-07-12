@@ -6,4 +6,5 @@ export interface PerformanceListAbout {
   breaksCount: number;
   premiereDate?: Date;
   directorName?: string;
+  nearestEvents: Date[];
 }

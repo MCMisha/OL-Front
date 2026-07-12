@@ -141,14 +141,22 @@
 }
 
 .performance-card-content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
   height: 100%;
+  padding: 60px 80px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px 100px;
+  gap: 60px;
+  align-items: stretch;
+
+  color: #fff;
   text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
-  align-items: flex-start;
-  padding-left: 80px;
+
 
   h2 {
     font-size: 48px;
@@ -162,6 +170,82 @@
   }
 }
 
+.performance-card-left{
+  align-self: center;
+}
+.performance-card-right {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto;
+  gap: 30px;
+  align-self: start;
+}
+
+.performance-card-dates {
+  align-self: start;
+}
+
+.performance-card-dates__title {
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.performance-card-date {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.performance-card-date__day {
+  min-width: 28px;
+
+  font-size: 23px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.performance-card-date__month {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+.performance-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: end;
+  gap: 12px;
+}
+
+.performance-card-buy {
+  padding: 9px 16px;
+
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.performance-card-buy:hover {
+  background: #fff;
+  color: #000;
+}
+
+.performance-card-reserve {
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
 .performance-card-base-info {
   display: flex;
   align-items: start;

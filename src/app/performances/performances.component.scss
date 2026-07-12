@@ -262,8 +262,8 @@
   height: 40px;
   padding: 0 18px;
 
-  background: #fff;
-  color: #000;
+  background: transparent;
+  color: #fff;
   border: 1px solid #fff;
 
   font-size: 12px;
@@ -277,8 +277,10 @@
 }
 
 .performances-buy-info a:hover {
-  background: transparent;
-  color: #fff;
+
+  background: #fff;
+  color: #000;
+  border: 1px solid #fff;
 }
 
 .performances-buy-info a {

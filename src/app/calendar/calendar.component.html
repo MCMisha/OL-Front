@@ -55,7 +55,7 @@
             <div class="messageCard__title">{{ selectedEvents[0]?.title }}</div>
 
             <div class="messageCard__bottom">
-              <button class="messageCard__btn">WIĘCEJ</button>
+              <button class="messageCard__btn" routerLink="/performances/details/{{selectedEvents[0]?.performanceId}}">WIĘCEJ</button>
             </div>
           </div>
         </ng-container>
