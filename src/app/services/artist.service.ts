@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {Artist} from "../models/artist";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {ArtistDetails} from "../models/artist-details";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ArtistService {
     return this.http.get<Artist[]>(`${environment.baseApiUri}/Artist/all-main`);
   }
 
-  getById(id: number): Observable<Artist> {
-    return this.http.get<Artist>(`${environment.baseApiUri}/Artist/by-id/${id}`)
+  getById(id: number): Observable<ArtistDetails> {
+    return this.http.get<ArtistDetails>(`${environment.baseApiUri}/Artist/by-id/${id}`)
   }
 }

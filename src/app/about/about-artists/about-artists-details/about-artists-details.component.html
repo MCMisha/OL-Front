@@ -15,13 +15,13 @@
           <img
             *ngIf="artist.photo"
             [src]="getImage(artist.photo)"
-            [alt]="artist.firstName + ' ' + artist.lastName">
+            [alt]="artist.fullName">
         </div>
       </div>
 
       <div class="artist-profile__right">
         <h1 class="artist-hero__name">
-          {{ artist.firstName }} {{ artist.lastName }}
+          {{ artist.fullName }}
         </h1>
 
         <div class="artist-hero__role">
@@ -40,7 +40,7 @@
         <img
           *ngFor="let artistPhoto of artistPhotos; trackBy: trackByPhotoId"
           [src]="getImage(artistPhoto.photo)"
-          [alt]="artist.firstName + ' ' + artist.lastName">
+          [alt]="artist.fullName">
       </div>
 
       <div class="artist-gallery__nav" *ngIf="artistPhotos.length > 1">
@@ -61,31 +61,34 @@
         (pointercancel)="onPointerUp($event)"
         (pointerleave)="onPointerUp($event)">
         <div class="track">
-          <article class="card text-white" *ngFor="let event of visibleEvents">
+          <article class="card text-white" [style.--bg]="getBackgroundImage(event.mainImage)"
+                   *ngFor="let event of artist.artistEvents">
             <div class="card__content">
               <div class="card__top">
                 <div class="date">
-                  <div class="date__day">{{ event.day }}</div>
+                  <div class="date__day">{{ event.startAt | date: 'd' }}</div>
 
                   <div class="date__meta">
-                    <div class="date__month">{{ event.month }}</div>
-                    <div class="date__weekday">{{ event.weekday }}</div>
+                    <div class="date__month">{{ event.startAt | date:'MMMM':'':'pl' | uppercase }}</div>
+
+                    <div class="date__weekday">{{ event.startAt | date:'EEEE':'':'pl' }}</div>
                   </div>
                 </div>
 
                 <div class="meta">
-                  <div class="meta__time">{{ event.time }}</div>
+                  <div class="meta__time">{{ event.startAt | date:'HH:mm' }}</div>
                   <div class="meta__place">{{ event.place }}</div>
                 </div>
               </div>
 
               <div class="card__mid">
-                <div class="tag">OPERA</div>
+                <div class="tag">{{ event.genre }}</div>
                 <div class="name">{{ event.title }}</div>
               </div>
 
               <div class="card__bottom">
-                <button class="btn btn--solid" type="button">KUP BILET</button>
+                <a class="btn btn--solid" *ngIf="helperFunctions.isSelling(event)" [href]="event.buyLink"
+                   target="_blank" rel="noreferrer">KUP BILET</a>
                 <a class="btn btn--link">Czytaj więcej</a>
               </div>
             </div>

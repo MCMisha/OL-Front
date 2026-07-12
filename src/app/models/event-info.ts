@@ -1,11 +1,11 @@
-export interface UpcomingEvent {
+export interface EventInfo {
   eventId: number;
   startAt: string;
   performanceId: number;
   title: string;
   genre: string;
   place: string;
-  mainImage: string | null;
+  mainImage: string;
   buyLink?: string;
   isActive: boolean;
 }

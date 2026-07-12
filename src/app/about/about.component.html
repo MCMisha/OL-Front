@@ -4,7 +4,7 @@
     <span routerLink="/about" (click)="selectedMenuItem = undefined;">O nas</span>
     <ng-container *ngIf="selectedMenuItem !== undefined">
       <span>/</span>
-      <span>{{ selectedMenuItem!.title }}</span>
+      <span>{{ selectedMenuItem?.title }}</span>
     </ng-container>
 
   </div>

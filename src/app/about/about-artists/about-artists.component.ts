@@ -4,8 +4,8 @@ import { Artist } from '../../models/artist';
 import { ArtistCategory } from '../../models/enums/artist-category.enum';
 import { ArtistCategoryLabels } from '../../models/enums/artist-category-labels';
 import { ArtistService } from '../../services/artist.service';
-import { HelperService } from '../../shared/services/helper.service';
 import {ActivatedRoute} from "@angular/router";
+import {HelperFunctionsUtil} from "../../shared/utils/helper-functions.util";
 
 type ArtistFilterCategory = ArtistCategory | 'all';
 
@@ -36,7 +36,7 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
 
   constructor(
     private artistsService: ArtistService,
-    private helperService: HelperService,
+    private helperFunctionsUtil: HelperFunctionsUtil,
     private route: ActivatedRoute
   ) {}
 
@@ -114,6 +114,6 @@ export class AboutArtistsComponent implements OnInit, OnDestroy {
   }
 
   protected getCategoryClass(category: ArtistCategory): string {
-    return this.helperService.getCategoryNgClass(category);
+    return this.helperFunctionsUtil.getCategoryNgClass(category);
   }
 }

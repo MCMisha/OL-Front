@@ -18,7 +18,7 @@
 }
 
 .artist-profile__line {
-  width: 100%;  
+  width: 100%;
   margin-bottom: 52px;
 }
 
@@ -174,13 +174,82 @@
 
 .card {
   position: relative;
-  flex: 0 0 300px;
-  height: 390px;
+  width: 325px;
+  height: 373px;
   overflow: hidden;
   user-select: none;
+  background: #2e2e2e;
+  padding: 16px 14px 12px;
+  border-radius: 0;
+}
 
-  background: #3a3a3a;
-  padding: 22px 22px 18px;
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1);
+  opacity: .42;
+  z-index: 0;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+
+  filter: grayscale(1) brightness(.75) contrast(1.05);
+  opacity: .45;
+  transform: scale(1);
+
+  transition:
+    filter .25s ease,
+    opacity .25s ease,
+    transform .25s ease;
+
+  z-index: 0;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, .18) 0%,
+      rgba(0, 0, 0, .22) 48%,
+      rgba(0, 0, 0, .42) 100%
+    ),
+    rgba(0, 0, 0, .28);
+
+  transition: background .25s ease, opacity .25s ease;
+
+  z-index: 1;
+}
+
+.card:hover::before {
+  filter: grayscale(.4) brightness(.95) contrast(1.08) saturate(1.2);
+  opacity: .62;
+  transform: scale(1.015);
+}
+
+.card:hover::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, .08) 0%,
+      rgba(0, 0, 0, .15) 48%,
+      rgba(0, 0, 0, .34) 50%
+    ),
+    rgba(0, 0, 0, .16);
 }
 
 .card__content {

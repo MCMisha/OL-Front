@@ -1,13 +1,13 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {forkJoin, Subscription} from 'rxjs';
 import {ArtistService} from '../../../services/artist.service';
-import {Artist} from '../../../models/artist';
 import {ActivatedRoute} from '@angular/router';
 import {ArtistCategory} from '../../../models/enums/artist-category.enum';
 import {ArtistCategoryLabels} from '../../../models/enums/artist-category-labels';
-import {HelperService} from '../../../shared/services/helper.service';
 import {ArtistPhotoService} from '../../../services/artist-photo.service';
 import {ArtistPhoto} from '../../../models/artist-photo';
+import {ArtistDetails} from "../../../models/artist-details";
+import {HelperFunctionsUtil} from "../../../shared/utils/helper-functions.util";
 
 @Component({
   selector: 'app-about-artists-details',
@@ -22,55 +22,16 @@ export class AboutArtistsDetailsComponent implements OnInit, OnDestroy {
   private startX = 0;
   private scrollLeft = 0;
 
-  artist!: Artist;
+  artist!: ArtistDetails;
   artistPhotos: ArtistPhoto[] = [];
 
   isLoading = true;
   subscription = new Subscription();
-
-  ArtistCategoryLabels = ArtistCategoryLabels;
-
-  visibleEvents = [
-    {
-      day: '12',
-      month: 'PAŹDZIERNIKA',
-      weekday: 'Piątek',
-      time: '18:00',
-      place: 'Sala operowa CSK',
-      title: 'HALKA'
-    },
-    {
-      day: '13',
-      month: 'PAŹDZIERNIKA',
-      weekday: 'Sobota',
-      time: '18:00',
-      place: 'Sala operowa CSK',
-      title: 'HALKA'
-    },
-    {
-      day: '21',
-      month: 'PAŹDZIERNIKA',
-      weekday: 'Piątek',
-      time: '18:00',
-      place: 'Sala operowa CSK',
-      title: 'ZEMSTA NIETOPERZA'
-    },
-    {
-      day: '22',
-      month: 'PAŹDZIERNIKA',
-      weekday: 'Sobota',
-      time: '18:00',
-      place: 'Sala operowa CSK',
-      title: 'ZEMSTA NIETOPERZA'
-    }
-  ];
-
   constructor(
     private route: ActivatedRoute,
     private artistService: ArtistService,
     private artistPhotoService: ArtistPhotoService,
-    private helperService: HelperService
-  ) {}
+    protected helperFunctions: HelperFunctionsUtil) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -160,15 +121,17 @@ export class AboutArtistsDetailsComponent implements OnInit, OnDestroy {
     return `data:image/jpeg;base64,${photo}`;
   }
 
+  getBackgroundImage(photo?: string): string {
+    return photo
+      ? `url("${this.getImage(photo)}")`
+      : 'none';
+  }
+
   getCategoryLabel(cat: number): string {
     return ArtistCategoryLabels[cat as ArtistCategory];
   }
 
   trackByPhotoId(index: number, photo: ArtistPhoto): number {
     return photo.id;
-  }
-
-  protected getCategoryClass(category: ArtistCategory): string {
-    return this.helperService.getCategoryNgClass(category);
   }
 }

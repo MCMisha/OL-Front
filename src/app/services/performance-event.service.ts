@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {UpcomingEventVm} from "../models/upcoming-event-vm";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
-import { UpcomingEvent } from "../models/upcoming-event";
+import { EventInfo } from "../models/event-info";
 import {PerformanceEvent} from "../models/performance-event";
 import {EventInstanceInfo} from "../models/event-instance-info";
 import {MinMaxDate} from "../models/min-max-date";
@@ -18,7 +18,7 @@ export class PerformanceEventService {
 
   getNearestSixEvents(): Observable<UpcomingEventVm[]> {
     return this.http
-      .get<UpcomingEvent[]>(`${environment.baseApiUri}/PerformanceEvent/nearest-six`)
+      .get<EventInfo[]>(`${environment.baseApiUri}/PerformanceEvent/nearest-six`)
       .pipe(
         map(dtos => (dtos ?? []).map(dto => ({
           eventId: dto.eventId,
