@@ -1,1 +1,0 @@
-import{b as o,p as n}from"./chunk-IOOEUMZT.js";import{da as e,ia as i}from"./chunk-MAPCNT5Z.js";var f=(()=>{class t{constructor(r){this.http=r}getGenres(){return this.http.get(`${n.baseApiUri}/Genre/all`)}static{this.\u0275fac=function(a){return new(a||t)(i(o))}}static{this.\u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{f as a};
