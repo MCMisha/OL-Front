@@ -133,7 +133,7 @@ export class AdminPanelCommentFormComponent implements OnInit, OnDestroy {
       photo: formValue.photo ?? '',
       firstName: formValue.firstName ?? '',
       stars: formValue.stars ?? 5,
-      performanceId: formValue.performanceId ?? 0,
+      performanceId: Number(formValue.performanceId),
       comment: formValue.comment ?? '',
       datePublished: new Date(formValue.datePublished ?? '').toISOString(),
       isShowing: formValue.isShowing ?? true

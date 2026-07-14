@@ -19,7 +19,7 @@ export class AboutComponent implements OnInit, OnDestroy {
   isLoading = true;
   menu: SectionList[] = [];
   sections: SectionList[] = [];
-  selectedMenuItem?: SectionList | undefined;
+  selectedMenuItem?: SectionList;
   subscription = new Subscription();
 
   constructor(

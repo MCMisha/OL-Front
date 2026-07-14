@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MainPageBackground} from "../../models/main-page-background";
 import {environment} from "../../../environments/environment";
+import {AdminMainPageBackgroundDto} from "../../models/admin-main-page-background-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class AdminMainPageBackgroundService {
     return this.http.post<MainPageBackground>(`${environment.baseApiUri}/AdminMainBackground/create`, mainPageBackground, {withCredentials: true});
   }
 
-  getAll(): Observable<MainPageBackground[]> {
-    return this.http.get<MainPageBackground[]>(`${environment.baseApiUri}/AdminMainBackground/all`, {withCredentials: true});
+  getAll(): Observable<AdminMainPageBackgroundDto[]> {
+    return this.http.get<AdminMainPageBackgroundDto[]>(`${environment.baseApiUri}/AdminMainBackground/all`, {withCredentials: true});
   }
 
   getById(id: number): Observable<MainPageBackground> {

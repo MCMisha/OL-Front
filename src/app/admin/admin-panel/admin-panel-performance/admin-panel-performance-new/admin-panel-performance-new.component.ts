@@ -88,6 +88,7 @@ export class AdminPanelPerformanceNewComponent implements OnInit, OnDestroy {
     }
 
     const performanceData = {
+      id: 0,
       title: this.newPerformanceForm.value.title,
       genre: this.newPerformanceForm.value.genre,
       place: this.newPerformanceForm.value.place,

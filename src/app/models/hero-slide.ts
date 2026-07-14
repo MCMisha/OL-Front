@@ -1,9 +1,8 @@
 export interface HeroSlide {
   id: number;
+  performanceId: number;
   title: string;
-  subtitle?: string; 
-  dateRange?: string;
+  genre: string;
   backgroundUrl: string;
-  buyUrl?: string;
-  detailsLink?: any[] | null;
+  nearestEvents: string[];
 }

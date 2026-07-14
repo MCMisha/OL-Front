@@ -1,9 +1,12 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Subscription} from "rxjs";
+import {forkJoin, of, Subscription} from "rxjs";
 import {AdminMainPageBackgroundService} from "../../../../services/admin/admin-main-page-background.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MainPageBackground} from "../../../../models/main-page-background";
+import {PerformanceOption} from "../../../../models/performance-option";
+import {AdminPerformanceService} from "../../../../services/admin/admin-performance.service";
 
 @Component({
   selector: 'app-admin-panel-slider-form',
@@ -18,10 +21,10 @@ export class AdminPanelSliderFormComponent implements OnInit, OnDestroy {
   protected isLoading: boolean = true;
   isEditMode = false;
   backgroundId: number | null = null;
-
+  performances: PerformanceOption[] = [];
   form = this.fb.group({
     id: [0],
-    title: ['', [Validators.required, Validators.maxLength(200)]],
+    performanceId: [0, Validators.required],
     mainImage: ['', Validators.required],
     isActive: [true],
     displayOrder: [0, [Validators.required, Validators.min(0)]],
@@ -38,6 +41,7 @@ export class AdminPanelSliderFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private adminMainPageBackgroundService: AdminMainPageBackgroundService,
+    private adminPerformanceService: AdminPerformanceService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -45,50 +49,70 @@ export class AdminPanelSliderFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.isEditMode = true;
+    const backgroundId = idParam ? Number(idParam) : null;
 
-      this.backgroundId = Number(idParam);
-      this.loadBackground(this.backgroundId);
-    } else {
-      this.form.patchValue({
-        createdAt: new Date()
-      });
-      this.isLoading = false;
-    }
+    this.isEditMode = backgroundId !== null;
+    this.backgroundId = backgroundId;
+
+    this.subscription.add(
+      forkJoin({
+        performances: this.adminPerformanceService.getPerformances(),
+        background: backgroundId
+          ? this.adminMainPageBackgroundService.getById(backgroundId)
+          : of(null)
+      }).subscribe({
+        next: ({ performances, background }) => {
+          this.performances = performances
+            .map(p => ({
+              id: p.id,
+              title: p.title
+            }))
+            .sort((a, b) =>
+              a.title.localeCompare(b.title, 'pl', {
+                sensitivity: 'base'
+              })
+            );
+
+          if (background) {
+            this.form.patchValue({
+              id: background.id,
+              performanceId: background.performanceId,
+              mainImage: background.mainImage,
+              isActive: background.isActive,
+              displayOrder: background.displayOrder,
+              createdAt: new Date(background.createdAt)
+            });
+
+            this.selectedFiles.mainImage = background.mainImage;
+            this.selectedFileNames.mainImage = 'Załadowane zdjęcie';
+            this.isFileLoaded.mainImage = true;
+            this.mainImage =
+              `data:image/jpeg;base64,${background.mainImage}`;
+          } else {
+            this.form.patchValue({
+              createdAt: new Date()
+            });
+          }
+
+          this.isLoading = false;
+        },
+        error: err => {
+          this.snackBar.open(
+            `Błąd ładowania danych: ${err?.error ?? 'Nieznany błąd'}`,
+            'Zamknij',
+            { duration: 5000 }
+          );
+
+          this.isLoading = false;
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private loadBackground(backgroundId: number) {
-    this.subscription.add(
-      this.adminMainPageBackgroundService.getById(backgroundId).subscribe({
-        next: (background) => {
-          this.form.patchValue({
-            id: background.id,
-            title: background.title,
-            mainImage: background.mainImage,
-            isActive: background.isActive,
-            displayOrder: background.displayOrder,
-            createdAt: new Date(background.createdAt)
-          });
-          this.selectedFiles.mainImage = background.mainImage;
-          this.selectedFileNames.mainImage = 'Załadowane zdjęcie';
-          this.isFileLoaded.mainImage = true;
-          this.mainImage = `data:image/jpeg;base64,${background.mainImage}`;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.snackBar.open(`Błąd ładowanie tła: ${err.error}`, 'Zamknij', {
-            duration: 5000
-          });
-          this.isLoading = false;
-        }
-      })
-    );
-  }
   protected onFileSelected($event: Event, field: 'mainImage') {
     const input = $event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -130,9 +154,9 @@ export class AdminPanelSliderFormComponent implements OnInit, OnDestroy {
 
     const formValue = this.form.getRawValue();
 
-    const payload = {
+    const payload: MainPageBackground = {
       id: formValue.id ?? 0,
-      title: (formValue.title ?? '').trim(),
+      performanceId: Number(formValue.performanceId),
       mainImage: formValue.mainImage ?? '',
       isActive: formValue.isActive ?? true,
       displayOrder: formValue.displayOrder ?? 0,

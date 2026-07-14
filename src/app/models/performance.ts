@@ -1,6 +1,6 @@
 export interface Performance {
-  id?: number;
-  title?: string;
+  id: number;
+  title: string;
   genre?: number;
   place?: number;
   duration?: string;

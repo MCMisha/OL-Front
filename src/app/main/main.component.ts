@@ -41,15 +41,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.mainPageBackgroundService.getAllActive().subscribe({
-        next: (backgrounds) => {
+        next: backgrounds => {
           this.slides = backgrounds.map(bg => ({
             id: bg.id,
-            subtitle: bg.title,
-            title: bg.title,
-            dateRange: '',
+            performanceId: bg.performanceId,
+            title: bg.performanceTitle,
+            genre: bg.genre,
             backgroundUrl: this.toImageUrl(bg.mainImage),
-            buyUrl: '',
-            detailsLink: null
+            nearestEvents: bg.nearestEvents ?? []
           }));
 
           this.active = 0;
@@ -58,8 +57,11 @@ export class MainComponent implements OnInit, OnDestroy {
             this.startAutoplay();
           }
         },
-        error: (err) => {
-          console.error('Ошибка загрузки фонов главной страницы', err);
+        error: err => {
+          console.error(
+            'Błąd ładowania tła',
+            err
+          );
         }
       })
     );

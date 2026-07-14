@@ -35,6 +35,72 @@
   z-index: 3;
 }
 
+.hero__performance {
+  position: absolute;
+  right: clamp(38px, 6vw, 100px);
+  bottom: clamp(72px, 11vh, 120px);
+  z-index: 3;
+
+  width: min(620px, 53vw);
+  color: #fff;
+}
+
+.hero__genre {
+  margin-bottom: 4px;
+
+  font-size: clamp(16px, 1.6vw, 23px);
+  line-height: 1.1;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.hero__title {
+  margin: 0;
+
+  font-size: clamp(48px, 5.4vw, 82px);
+  line-height: 0.88;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+
+  overflow-wrap: normal;
+}
+
+.hero__buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-width: 160px;
+  min-height: 40px;
+  padding: 0 28px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  color: #000;
+  background-color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hero__performance-bottom {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.hero__dates {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  span {
+    font-size: 18px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
 .performances-loading {
   color: #fff;
   font-size: 18px;

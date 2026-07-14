@@ -8,13 +8,14 @@
     <form [formGroup]="form" class="slider-form__body">
       <div class="form-grid">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Tytuł</mat-label>
-          <input matInput formControlName="title" placeholder="Wpisz tytuł slajdu" />
-          <mat-error *ngIf="form.get('title')?.hasError('required')">
-            Tytuł jest wymagany
-          </mat-error>
-          <mat-error *ngIf="form.get('title')?.hasError('maxlength')">
-            Tytuł może mieć maksymalnie 200 znaków
+          <mat-label>Spektakl</mat-label>
+          <mat-select formControlName="performanceId">
+            <mat-option *ngFor="let performance of performances" [value]="performance.id">
+              {{ performance.title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('performanceId')?.hasError('required')">
+            Spektakl jest wymagany
           </mat-error>
         </mat-form-field>
 

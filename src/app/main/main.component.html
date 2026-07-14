@@ -18,7 +18,35 @@
       class="hero__calendar"
       (emitLoadingEvent)="handleLoading($event)"
     ></app-calendar>
+    <div class="hero__performance">
+      <div class="hero__genre">
+        {{ activeSlide.genre }}
+      </div>
 
+      <h1 class="hero__title">
+        {{ activeSlide.title }}
+      </h1>
+
+      <div class="hero__performance-bottom">
+        <a
+          class="hero__buy"
+          [routerLink]="['/performances', 'details', activeSlide.performanceId]"
+        >
+          KUP BILET
+        </a>
+
+        <div
+          class="hero__dates"
+          *ngIf="activeSlide.nearestEvents?.length"
+        >
+      <span
+        *ngFor="let eventDate of activeSlide.nearestEvents | slice:0:2"
+      >
+        {{ eventDate | date:'dd.MM' }}
+      </span>
+        </div>
+      </div>
+    </div>
     <div class="hero__dots" *ngIf="slides.length > 1">
       <button
         class="dot"
@@ -29,6 +57,7 @@
         [attr.aria-label]="'Slide ' + (i + 1)"
       ></button>
     </div>
+
   </section>
 
   <app-upcoming-events></app-upcoming-events>

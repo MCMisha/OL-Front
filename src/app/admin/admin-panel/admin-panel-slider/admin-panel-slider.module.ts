@@ -9,6 +9,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatButton} from "@angular/material/button";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatButton} from "@angular/material/button";
     MatIcon,
     MatProgressSpinner,
     MatInput,
-    MatButton
+    MatButton,
+    MatSelectModule
   ]
 })
 export class AdminPanelSliderModule { }

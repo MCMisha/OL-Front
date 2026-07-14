@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MainPageBackground} from "../../../models/main-page-background";
 import {MatPaginator} from "@angular/material/paginator";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {AdminMainPageBackgroundService} from "../../../services/admin/admin-main-page-background.service";
 import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-confirm.component";
+import {AdminMainPageBackgroundDto} from "../../../models/admin-main-page-background-dto";
 
 @Component({
   selector: 'app-admin-panel-slider',
@@ -14,9 +14,9 @@ import {DialogConfirmComponent} from "../../../shared/dialog-confirm/dialog-conf
   styleUrl: './admin-panel-slider.component.scss'
 })
 export class AdminPanelSliderComponent implements OnInit, AfterViewInit, OnDestroy {
-  mainPageBackgrounds: MainPageBackground[] = [];
+  mainPageBackgrounds: AdminMainPageBackgroundDto[] = [];
   selectedRowIndex: any;
-  selectedRow?: MainPageBackground;
+  selectedRow?: AdminMainPageBackgroundDto;
   protected dataSourceWithPageSize = new MatTableDataSource(this.mainPageBackgrounds);
   protected displayedColumns = ['id', 'title', 'isActive', 'displayOrder', 'createdAt', 'mainImage'];
   protected pageSize = 10;
@@ -65,7 +65,7 @@ export class AdminPanelSliderComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  protected highlightRow(row: MainPageBackground) {
+  protected highlightRow(row: AdminMainPageBackgroundDto) {
     if (this.selectedRowIndex == row.id) {
       this.selectedRowIndex = 0;
       this.selectedRow = undefined;
